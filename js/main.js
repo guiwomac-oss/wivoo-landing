@@ -65,6 +65,12 @@
     });
   });
 
+  /* Observer TOUS les éléments .fade-in :
+     - ceux ajoutés par JS via targets (ci-dessus)
+     - ceux codés en dur dans le HTML des articles (.article-section, .article-gallery, etc.)
+     Sans ceci, les sections articles restent opacity:0 indéfiniment. */
+  var allFadeIns = document.querySelectorAll('.fade-in');
+
   if ('IntersectionObserver' in window) {
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -73,11 +79,11 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
 
-    targets.forEach(function (el) { observer.observe(el); });
+    allFadeIns.forEach(function (el) { observer.observe(el); });
   } else {
-    targets.forEach(function (el) { el.classList.add('is-visible'); });
+    allFadeIns.forEach(function (el) { el.classList.add('is-visible'); });
   }
 })();
 

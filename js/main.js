@@ -1,10 +1,10 @@
 /* =============================================
-   WIVOO — Interactions et animations
+   WIVOO — Interactions communes
    JavaScript vanilla — pas de framework
-   Dernière mise à jour : 27/05/2026
+   Dernière mise à jour : 28/05/2026
 ============================================== */
 
-/* ---- 1. Menu mobile : ouvrir / fermer ---- */
+/* ---- 1. Menu mobile : burger ---- */
 (function () {
   var burger = document.getElementById('navBurger');
   var links  = document.getElementById('navLinks');
@@ -16,8 +16,8 @@
     burger.setAttribute('aria-expanded', String(isOpen));
   });
 
-  /* Ferme le menu quand on clique sur un lien */
-  links.querySelectorAll('a').forEach(function (link) {
+  /* Ferme le menu quand on clique sur un lien direct (pas les dropdowns) */
+  links.querySelectorAll('a:not(.nav__item.has-dropdown > a)').forEach(function (link) {
     link.addEventListener('click', function () {
       links.classList.remove('is-open');
       burger.classList.remove('is-open');
@@ -25,7 +25,6 @@
     });
   });
 })();
-
 
 /* ---- 2. Navigation : ombre au scroll ---- */
 (function () {
@@ -39,57 +38,50 @@
   }, { passive: true });
 })();
 
-
-/* ---- 3. Apparition des éléments au scroll (fade-in) ---- */
+/* ---- 3. Fade-in au scroll (IntersectionObserver) ---- */
 (function () {
-  /* Cible : sections entières et cartes */
   var targets = document.querySelectorAll(
-    '.expertise__card, .rex__card, .chiffre__item, .rejoindre__arg, ' +
-    '.section__header, .hero__container, .rejoindre__inner, .footer__container'
+    '.expertise__card, .rex__card, .case-card, .chiffre__item, ' +
+    '.rejoindre__arg, .section__header, .hero__container, ' +
+    '.rejoindre__inner, .footer__container, .kpi-band, ' +
+    '.consultant-block, .client-quote'
   );
 
-  targets.forEach(function (el) {
-    el.classList.add('fade-in');
+  targets.forEach(function (el) { el.classList.add('fade-in'); });
+
+  /* Décalage en cascade pour les grilles */
+  var grids = [
+    '.expertises__grid .expertise__card',
+    '.chiffres__grid .chiffre__item',
+    '.rex__grid .rex__card',
+    '.cases-grid .case-card',
+    '.rejoindre__args .rejoindre__arg',
+    '.related-articles__grid .mini-card'
+  ];
+
+  grids.forEach(function (selector) {
+    document.querySelectorAll(selector).forEach(function (el, i) {
+      el.style.transitionDelay = (i * 0.07) + 's';
+    });
   });
 
-  /* Décalage progressif pour les grilles */
-  document.querySelectorAll('.expertises__grid .expertise__card').forEach(function (el, i) {
-    el.style.transitionDelay = (i * 0.08) + 's';
-  });
-  document.querySelectorAll('.chiffres__grid .chiffre__item').forEach(function (el, i) {
-    el.style.transitionDelay = (i * 0.07) + 's';
-  });
-  document.querySelectorAll('.rex__grid .rex__card').forEach(function (el, i) {
-    el.style.transitionDelay = (i * 0.07) + 's';
-  });
-  document.querySelectorAll('.rejoindre__args .rejoindre__arg').forEach(function (el, i) {
-    el.style.transitionDelay = (i * 0.08) + 's';
-  });
-
-  /* Observer les éléments et les révéler quand ils entrent dans le viewport */
   if ('IntersectionObserver' in window) {
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target); /* Ne se répète pas */
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
 
-    targets.forEach(function (el) {
-      observer.observe(el);
-    });
+    targets.forEach(function (el) { observer.observe(el); });
   } else {
-    /* Fallback pour anciens navigateurs : tout afficher */
-    targets.forEach(function (el) {
-      el.classList.add('is-visible');
-    });
+    targets.forEach(function (el) { el.classList.add('is-visible'); });
   }
 })();
 
-
-/* ---- 4. Filtrage des fiches REX par domaine ---- */
+/* ---- 4. Filtrage simple (index.html — si présent) ---- */
 (function () {
   var filters = document.querySelectorAll('.rex__filter');
   var cards   = document.querySelectorAll('.rex__card');
@@ -97,20 +89,14 @@
 
   filters.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      /* Mettre à jour le bouton actif */
       filters.forEach(function (b) { b.classList.remove('is-active'); });
       btn.classList.add('is-active');
-
       var selected = btn.dataset.filter;
 
-      /* Afficher / masquer les cartes selon le domaine */
       cards.forEach(function (card) {
         if (selected === 'all' || card.dataset.domain === selected) {
           card.classList.remove('is-hidden');
-          /* Relancer le fade-in si la carte était masquée */
-          setTimeout(function () {
-            card.classList.add('is-visible');
-          }, 10);
+          setTimeout(function () { card.classList.add('is-visible'); }, 10);
         } else {
           card.classList.add('is-hidden');
         }

@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nos réalisations — Wivoo</title>
+  <meta name="description" content="+600 missions livrées. Découvrez les cas clients Wivoo en Product, Data, IA et Design." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ---- Styles spécifiques à la page réalisations ---- */
+
+    /* Hero compact (pas plein écran) */
+    .hero--compact {
+      min-height: 60vh;
+      padding: 9rem 1.5rem 4rem;
+    }
+
+    /* Filtres multi-dropdowns */
+    .filters-bar {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+      padding: 1rem 1.5rem;
+    }
+
+    .filters-bar__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .filters-bar__label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-right: 0.25rem;
+    }
+
+    /* Dropdown custom */
+    .filter-dropdown {
+      position: relative;
+    }
+
+    .filter-dropdown__btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 100px;
+      font-family: var(--font-family);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .filter-dropdown__btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .filter-dropdown__btn.has-selection {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: var(--color-white);
+    }
+
+    .filter-dropdown__arrow {
+      font-size: 0.55rem;
+      transition: transform 0.2s;
+      opacity: 0.7;
+    }
+
+    .filter-dropdown.is-open .filter-dropdown__arrow {
+      transform: rotate(180deg);
+    }
+
+    .filter-dropdown__menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      min-width: 180px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      z-index: 400;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .filter-dropdown.is-open .filter-dropdown__menu {
+      display: flex;
+    }
+
+    .filter-dropdown__option {
+      padding: 0.5rem 0.875rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      color: var(--color-text);
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .filter-dropdown__option:hover {
+      background: var(--color-light-bg);
+    }
+
+    .filter-dropdown__option.is-selected {
+      background: var(--color-primary);
+      color: var(--color-white);
+      font-weight: 600;
+    }
+
+    /* Bouton reset */
+    .filters-reset {
+      padding: 0.5rem 0.875rem;
+      background: none;
+      border: none;
+      font-family: var(--font-family);
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.2s;
+      display: none;
+    }
+    .filters-reset.is-visible { display: inline; }
+    .filters-reset:hover { color: var(--color-text); }
+
+    /* Compteur de résultats */
+    .results-count {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      margin-left: auto;
+    }
+
+    /* Page réalisations : grille 2 colonnes + cards riches */
+    .realisations-page {
+      background: var(--color-light-bg);
+      padding: 4rem 1.5rem 6rem;
+    }
+
+    .realisations-page__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    /* Card riche */
+    .case-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.25s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .case-card:hover {
+      box-shadow: 0 12px 40px rgba(69,29,199,0.12);
+      transform: translateY(-4px);
+    }
+
+    .case-card.is-hidden { display: none; }
+
+    /* Image de garde */
+    .case-card__img {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    }
+
+    .case-card__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .case-card:hover .case-card__img img { transform: scale(1.04); }
+
+    /* Badge "Article bientôt" */
+    .case-card__coming {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(23,2,60,0.75);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Corps de la card */
+    .case-card__body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .case-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .case-card__title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .case-card__client {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+
+    /* KPIs de la card */
+    .case-card__kpis {
+      display: flex;
+      gap: 1.25rem;
+      padding-top: 0.875rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .case-card__kpi { display: flex; flex-direction: column; gap: 0.15rem; }
+
+    .case-card__kpi-number {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    .case-card__kpi-label {
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      line-height: 1.3;
+    }
+
+    /* Pied de card : consultant + CTA */
+    .case-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--color-border);
+      background: var(--color-light-bg);
+      gap: 1rem;
+    }
+
+    .case-card__consultant {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .case-card__avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .case-card__avatar svg { color: rgba(255,255,255,0.8); }
+
+    .case-card__consultant-info { display: flex; flex-direction: column; gap: 1px; }
+
+    .case-card__consultant-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .case-card__consultant-role {
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+    }
+
+    .case-card__cta {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      white-space: nowrap;
+      transition: opacity 0.2s;
+      flex-shrink: 0;
+    }
+    .case-card__cta:hover { opacity: 0.7; }
+
+    /* Grille des cards */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* Message aucun résultat */
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--color-text-muted);
+      grid-column: 1 / -1;
+    }
+    .no-results.is-visible { display: block; }
+    .no-results p { font-size: 1rem; margin-top: 0.5rem; }
+
+    /* CTA bas de page */
+    .cta-contact {
+      text-align: center;
+      padding: 4rem 1.5rem;
+      background: var(--color-secondary);
+    }
+    .cta-contact__title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--color-white);
+      margin-bottom: 1rem;
+    }
+    .cta-contact__sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .filters-bar { top: 68px; padding: 0.75rem 1.25rem; }
+      .filters-bar__inner { gap: 0.5rem; }
+      .filter-dropdown__btn { font-size: 0.8rem; padding: 0.4rem 0.75rem; }
+      .cases-grid { grid-template-columns: 1fr; }
+      .case-card__footer { flex-direction: column; align-items: flex-start; }
+      .results-count { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a class="nav__logo" href="index.html">
+        <img src="images/logo-wivoo.png" alt="Wivoo" />
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li class="nav__item has-dropdown">
+          <a href="#">Nos solutions <span class="nav__arrow">▾</span></a>
+          <div class="nav__dropdown">
+            <a href="#">Data et IA</a>
+            <a href="#">Product Management</a>
+            <a href="#">Product Design</a>
+            <a href="#">Formations WiAC!</a>
+          </div>
+        </li>
+        <li class="nav__item">
+          <a href="realisations.html" class="is-active">Réussite client</a>
+        </li>
+        <li class="nav__item has-dropdown">
+          <a href="#">Nos contenus <span class="nav__arrow">▾</span></a>
+          <div class="nav__dropdown">
+            <a href="#">L'Observatoire des Tendances</a>
+            <a href="#">Nos Podcasts</a>
+            <a href="#">Nos Émissions</a>
+            <a href="#">Notre Blog</a>
+          </div>
+        </li>
+        <li class="nav__item has-dropdown">
+          <a href="#">À propos <span class="nav__arrow">▾</span></a>
+          <div class="nav__dropdown">
+            <a href="#">Notre ADN</a>
+            <a href="#">Nos engagements</a>
+          </div>
+        </li>
+        <li class="nav__item has-dropdown">
+          <a href="#">Carrière <span class="nav__arrow">▾</span></a>
+          <div class="nav__dropdown">
+            <a href="#">La vie chez Wivoo</a>
+            <a href="#">Nous rejoindre</a>
+          </div>
+        </li>
+        <li class="nav__item">
+          <a href="mailto:guido.macaluso@wivoo.fr?subject=Prise de RDV Wivoo" class="nav__cta">Prendre RDV</a>
+        </li>
+      </ul>
+      <button class="nav__burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO COMPACT -->
+  <section class="hero hero--compact">
+    <div class="hero__container">
+      <p class="hero__label">La preuve par les faits</p>
+      <h1 class="hero__title">Nos<br>réalisations.</h1>
+      <p class="hero__subtitle">+600 missions livrées depuis 2018. Des résultats concrets en Product, Data, IA &amp; Design.</p>
+      <div class="hero__stats">
+        <div class="hero__stat"><span class="hero__stat-number">+600</span><span class="hero__stat-label">missions réalisées</span></div>
+        <div class="hero__stat"><span class="hero__stat-number">+80</span><span class="hero__stat-label">clients accompagnés</span></div>
+        <div class="hero__stat"><span class="hero__stat-number">90 %</span><span class="hero__stat-label">de renouvellement</span></div>
+        <div class="hero__stat"><span class="hero__stat-number">+100</span><span class="hero__stat-label">consultants experts</span></div>
+      </div>
+      <div class="hero__ctas">
+        <a href="mailto:guido.macaluso@wivoo.fr?subject=Prise de RDV Wivoo" class="btn btn--primary">Parlons de votre projet →</a>
+        <a href="index.html#rejoindre" class="btn btn--outline">Rejoindre l'équipe</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BARRE DE FILTRES STICKY -->
+  <div class="filters-bar" id="filtersBar">
+    <div class="filters-bar__inner">
+      <span class="filters-bar__label">Filtrer par</span>
+
+      <!-- Filtre Expertise -->
+      <div class="filter-dropdown" id="dd-expertise">
+        <button class="filter-dropdown__btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          Expertise <span class="filter-dropdown__arrow">▾</span>
+        </button>
+        <div class="filter-dropdown__menu" role="listbox">
+          <div class="filter-dropdown__option is-selected" data-value="all">Toutes les expertises</div>
+          <div class="filter-dropdown__option" data-value="ai">AI</div>
+          <div class="filter-dropdown__option" data-value="data">Data</div>
+          <div class="filter-dropdown__option" data-value="produit">Produit</div>
+          <div class="filter-dropdown__option" data-value="design">Design</div>
+        </div>
+      </div>
+
+      <!-- Filtre Secteur -->
+      <div class="filter-dropdown" id="dd-secteur">
+        <button class="filter-dropdown__btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          Secteur <span class="filter-dropdown__arrow">▾</span>
+        </button>
+        <div class="filter-dropdown__menu" role="listbox">
+          <div class="filter-dropdown__option is-selected" data-value="all">Tous les secteurs</div>
+          <div class="filter-dropdown__option" data-value="banque">Banque</div>
+          <div class="filter-dropdown__option" data-value="retail">Retail</div>
+          <div class="filter-dropdown__option" data-value="pharma">Pharma</div>
+          <div class="filter-dropdown__option" data-value="beaute">Beauté</div>
+          <div class="filter-dropdown__option" data-value="media">Média</div>
+          <div class="filter-dropdown__option" data-value="btp">BTP</div>
+        </div>
+      </div>
+
+      <!-- Filtre Format -->
+      <div class="filter-dropdown" id="dd-format">
+        <button class="filter-dropdown__btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          Format <span class="filter-dropdown__arrow">▾</span>
+        </button>
+        <div class="filter-dropdown__menu" role="listbox">
+          <div class="filter-dropdown__option is-selected" data-value="all">Tous les formats</div>
+          <div class="filter-dropdown__option" data-value="rex">REX</div>
+          <div class="filter-dropdown__option" data-value="use-case">Use case</div>
+          <div class="filter-dropdown__option" data-value="etude">Baromètre / études</div>
+        </div>
+      </div>
+
+      <!-- Filtre Type de produit -->
+      <div class="filter-dropdown" id="dd-type">
+        <button class="filter-dropdown__btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          Type de produit <span class="filter-dropdown__arrow">▾</span>
+        </button>
+        <div class="filter-dropdown__menu" role="listbox">
+          <div class="filter-dropdown__option is-selected" data-value="all">Tous les types</div>
+          <div class="filter-dropdown__option" data-value="ecommerce">E-commerce</div>
+          <div class="filter-dropdown__option" data-value="marketplace">Marketplace</div>
+          <div class="filter-dropdown__option" data-value="saas">SaaS</div>
+        </div>
+      </div>
+
+      <button class="filters-reset" id="filtersReset" type="button">Réinitialiser</button>
+      <span class="results-count" id="resultsCount">8 résultats</span>
+    </div>
+  </div>
+
+  <!-- GRILLE DES CAS CLIENTS -->
+  <section class="realisations-page">
+    <div class="realisations-page__inner">
+      <div class="cases-grid" id="casesGrid">
+
+        <!-- Card 1 — Chatbot GenAI Banque -->
+        <article class="case-card fade-in"
+          data-expertise="ai data"
+          data-secteur="banque"
+          data-format="use-case"
+          data-type="saas"
+          onclick="window.location='articles/chatbot-banque.html'">
+          <div class="case-card__img">
+            <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&h=200&fit=crop&q=80"
+                 alt="Secteur bancaire — Chatbot GenAI"
+                 onerror="this.style.display='none'" />
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__tags">
+              <span class="tag tag--ai">AI</span>
+              <span class="tag tag--banque">Banque</span>
+              <span class="tag tag--usecase">Use case</span>
+            </div>
+            <h2 class="case-card__title">Refonte du chatbot client avec intégration de technologies GenAI</h2>
+            <p class="case-card__client">Acteur majeur du secteur bancaire · Direction Service Client</p>
+            <div class="case-card__kpis">
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">+35 %</span>
+                <span class="case-card__kpi-label">features redesignées</span>
+              </div>
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">39 000</span>
+                <span class="case-card__kpi-label">variations intégrées</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-card__footer">
+            <div class="case-card__consultant">
+              <div class="case-card__avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="case-card__consultant-info">
+                <span class="case-card__consultant-name">Consultant Wivoo</span>
+                <span class="case-card__consultant-role">Expert Data & AI</span>
+              </div>
+            </div>
+            <a href="articles/chatbot-banque.html" class="case-card__cta" onclick="event.stopPropagation()">Voir le cas client →</a>
+          </div>
+        </article>
+
+        <!-- Card 2 — Retail Sportif -->
+        <article class="case-card fade-in"
+          data-expertise="produit design"
+          data-secteur="retail"
+          data-format="rex"
+          data-type="ecommerce"
+          onclick="window.location='articles/retail-sport.html'">
+          <div class="case-card__img">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=200&fit=crop&q=80"
+                 alt="Retail sportif européen"
+                 onerror="this.style.display='none'" />
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__tags">
+              <span class="tag tag--produit">Produit</span>
+              <span class="tag tag--design">Design</span>
+              <span class="tag tag--retail">Retail</span>
+              <span class="tag tag--rex">REX</span>
+            </div>
+            <h2 class="case-card__title">Renforcement de l'engagement utilisateur pour un leader du retail sportif européen</h2>
+            <p class="case-card__client">Leader retail sportif européen · Direction E-Commerce</p>
+            <div class="case-card__kpis">
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">+300 %</span>
+                <span class="case-card__kpi-label">trafic brand pages</span>
+              </div>
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">100 000+</span>
+                <span class="case-card__kpi-label">inscriptions événements</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-card__footer">
+            <div class="case-card__consultant">
+              <div class="case-card__avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="case-card__consultant-info">
+                <span class="case-card__consultant-name">Consultant Wivoo</span>
+                <span class="case-card__consultant-role">Expert Product Management</span>
+              </div>
+            </div>
+            <a href="articles/retail-sport.html" class="case-card__cta" onclick="event.stopPropagation()">Voir le cas client →</a>
+          </div>
+        </article>
+
+        <!-- Card 3 — Pharma E-commerce -->
+        <article class="case-card fade-in"
+          data-expertise="produit"
+          data-secteur="pharma"
+          data-format="rex"
+          data-type="ecommerce"
+          onclick="window.location='articles/ecommerce-pharma.html'">
+          <div class="case-card__img">
+            <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?w=600&h=200&fit=crop&q=80"
+                 alt="Pharma — E-commerce mondial"
+                 onerror="this.style.display='none'" />
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__tags">
+              <span class="tag tag--produit">Produit</span>
+              <span class="tag tag--pharma">Pharma</span>
+              <span class="tag tag--rex">REX</span>
+            </div>
+            <h2 class="case-card__title">Création et déploiement de sites e-commerce pour un leader mondial du secteur pharmaceutique</h2>
+            <p class="case-card__client">Leader mondial pharma · Direction Marketing</p>
+            <div class="case-card__kpis">
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">+200 %</span>
+                <span class="case-card__kpi-label">visibilité digitale</span>
+              </div>
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">10 pays</span>
+                <span class="case-card__kpi-label">déployés</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-card__footer">
+            <div class="case-card__consultant">
+              <div class="case-card__avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="case-card__consultant-info">
+                <span class="case-card__consultant-name">Consultant Wivoo</span>
+                <span class="case-card__consultant-role">Expert Product Management</span>
+              </div>
+            </div>
+            <a href="articles/ecommerce-pharma.html" class="case-card__cta" onclick="event.stopPropagation()">Voir le cas client →</a>
+          </div>
+        </article>
+
+        <!-- Card 4 — Beauté -->
+        <article class="case-card fade-in"
+          data-expertise="design"
+          data-secteur="beaute"
+          data-format="use-case"
+          data-type="ecommerce"
+          onclick="window.location='articles/beaute-magasin.html'">
+          <div class="case-card__img">
+            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=200&fit=crop&q=80"
+                 alt="Beauté — Expérience client en magasin"
+                 onerror="this.style.display='none'" />
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__tags">
+              <span class="tag tag--design">Design</span>
+              <span class="tag tag--beaute">Beauté</span>
+              <span class="tag tag--usecase">Use case</span>
+            </div>
+            <h2 class="case-card__title">Transformation de l'expérience client en magasin pour un leader mondial de la beauté</h2>
+            <p class="case-card__client">Leader mondial beauté & cosmétiques · Direction Digitale</p>
+            <div class="case-card__kpis">
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">+75 %</span>
+                <span class="case-card__kpi-label">conversion en magasin</span>
+              </div>
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">350</span>
+                <span class="case-card__kpi-label">stores déployés</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-card__footer">
+            <div class="case-card__consultant">
+              <div class="case-card__avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="case-card__consultant-info">
+                <span class="case-card__consultant-name">Consultant Wivoo</span>
+                <span class="case-card__consultant-role">Expert Product Design</span>
+              </div>
+            </div>
+            <a href="articles/beaute-magasin.html" class="case-card__cta" onclick="event.stopPropagation()">Voir le cas client →</a>
+          </div>
+        </article>
+
+        <!-- Card 5 — Abonnements Média -->
+        <article class="case-card fade-in"
+          data-expertise="produit data"
+          data-secteur="media"
+          data-format="rex"
+          data-type="saas"
+          onclick="return false">
+          <div class="case-card__img">
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=200&fit=crop&q=80"
+                 alt="Média — Abonnements numériques"
+                 onerror="this.style.display='none'" />
+            <span class="case-card__coming">Article bientôt</span>
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__tags">
+              <span class="tag tag--produit">Produit</span>
+              <span class="tag tag--data">Data</span>
+              <span class="tag tag--media">Média</span>
+              <span class="tag tag--rex">REX</span>
+            </div>
+            <h2 class="case-card__title">Optimisation des abonnements numériques pour un grand média français</h2>
+            <p class="case-card__client">Grand média français · Direction Numérique</p>
+            <div class="case-card__kpis">
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">+65 %</span>
+                <span class="case-card__kpi-label">abonnés digitaux</span>
+              </div>
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">−80 %</span>
+                <span class="case-card__kpi-label">taux de churn</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-card__footer">
+            <div class="case-card__consultant">
+              <div class="case-card__avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="case-card__consultant-info">
+                <span class="case-card__consultant-name">Consultant Wivoo</span>
+                <span class="case-card__consultant-role">Expert Product & Data</span>
+              </div>
+            </div>
+            <span class="case-card__cta" style="color:var(--color-text-muted);cursor:default;">Article bientôt disponible</span>
+          </div>
+        </article>
+
+        <!-- Card 6 — Data Retail -->
+        <article class="case-card fade-in"
+          data-expertise="data"
+          data-secteur="retail"
+          data-format="rex"
+          data-type="saas"
+          onclick="return false">
+          <div class="case-card__img">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=200&fit=crop&q=80"
+                 alt="Data — Gestion retail"
+                 onerror="this.style.display='none'" />
+            <span class="case-card__coming">Article bientôt</span>
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__tags">
+              <span class="tag tag--data">Data</span>
+              <span class="tag tag--retail">Retail</span>
+              <span class="tag tag--rex">REX</span>
+            </div>
+            <h2 class="case-card__title">Révolution de la gestion des données chez un leader du secteur retail</h2>
+            <p class="case-card__client">Leader retail · Direction des Achats</p>
+            <div class="case-card__kpis">
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">−40 %</span>
+                <span class="case-card__kpi-label">temps de préparation data</span>
+              </div>
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">−7 %</span>
+                <span class="case-card__kpi-label">coûts catégoriels</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-card__footer">
+            <div class="case-card__consultant">
+              <div class="case-card__avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="case-card__consultant-info">
+                <span class="case-card__consultant-name">Consultant Wivoo</span>
+                <span class="case-card__consultant-role">Expert Data</span>
+              </div>
+            </div>
+            <span class="case-card__cta" style="color:var(--color-text-muted);cursor:default;">Article bientôt disponible</span>
+          </div>
+        </article>
+
+        <!-- Card 7 — Scores prédictifs Retail -->
+        <article class="case-card fade-in"
+          data-expertise="ai data"
+          data-secteur="retail"
+          data-format="rex"
+          data-type="ecommerce"
+          onclick="return false">
+          <div class="case-card__img">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=200&fit=crop&q=80"
+                 alt="Data & AI — Scores prédictifs"
+                 onerror="this.style.display='none'" />
+            <span class="case-card__coming">Article bientôt</span>
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__tags">
+              <span class="tag tag--ai">AI</span>
+              <span class="tag tag--data">Data</span>
+              <span class="tag tag--retail">Retail</span>
+              <span class="tag tag--rex">REX</span>
+            </div>
+            <h2 class="case-card__title">Optimisation des scores prédictifs et segmentation client pour une personnalisation accrue</h2>
+            <p class="case-card__client">Leader retail · Direction Data & Innovation</p>
+            <div class="case-card__kpis">
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">ML</span>
+                <span class="case-card__kpi-label">modèles déployés</span>
+              </div>
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">+1</span>
+                <span class="case-card__kpi-label">segment personnalisé</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-card__footer">
+            <div class="case-card__consultant">
+              <div class="case-card__avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="case-card__consultant-info">
+                <span class="case-card__consultant-name">Consultant Wivoo</span>
+                <span class="case-card__consultant-role">Expert AI & Data Science</span>
+              </div>
+            </div>
+            <span class="case-card__cta" style="color:var(--color-text-muted);cursor:default;">Article bientôt disponible</span>
+          </div>
+        </article>
+
+        <!-- Card 8 — Service client BTP -->
+        <article class="case-card fade-in"
+          data-expertise="produit design"
+          data-secteur="btp"
+          data-format="rex"
+          data-type="saas"
+          onclick="return false">
+          <div class="case-card__img">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=200&fit=crop&q=80"
+                 alt="BTP — Service client digital"
+                 onerror="this.style.display='none'" />
+            <span class="case-card__coming">Article bientôt</span>
+          </div>
+          <div class="case-card__body">
+            <div class="case-card__tags">
+              <span class="tag tag--produit">Produit</span>
+              <span class="tag tag--design">Design</span>
+              <span class="tag tag--btp">BTP</span>
+              <span class="tag tag--rex">REX</span>
+            </div>
+            <h2 class="case-card__title">Optimisation du service client digital pour un acteur majeur du matériel de BTP</h2>
+            <p class="case-card__client">Acteur majeur BTP · Digital Factory</p>
+            <div class="case-card__kpis">
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">UX</span>
+                <span class="case-card__kpi-label">refonte complète</span>
+              </div>
+              <div class="case-card__kpi">
+                <span class="case-card__kpi-number">SAT</span>
+                <span class="case-card__kpi-label">satisfaction améliorée</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-card__footer">
+            <div class="case-card__consultant">
+              <div class="case-card__avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="case-card__consultant-info">
+                <span class="case-card__consultant-name">Consultant Wivoo</span>
+                <span class="case-card__consultant-role">Expert Product & Design</span>
+              </div>
+            </div>
+            <span class="case-card__cta" style="color:var(--color-text-muted);cursor:default;">Article bientôt disponible</span>
+          </div>
+        </article>
+
+        <!-- Message aucun résultat -->
+        <div class="no-results" id="noResults">
+          <p style="font-size:2rem;">🔍</p>
+          <p>Aucune réalisation ne correspond à vos filtres.</p>
+          <p style="margin-top:0.5rem;"><button onclick="document.getElementById('filtersReset').click()" style="color:var(--color-primary);background:none;border:none;font-family:var(--font-family);font-size:1rem;font-weight:600;cursor:pointer;text-decoration:underline;">Réinitialiser les filtres</button></p>
+        </div>
+
+      </div><!-- /.cases-grid -->
+    </div>
+  </section>
+
+  <!-- CTA BAS DE PAGE -->
+  <div class="cta-contact">
+    <h2 class="cta-contact__title">Un projet en tête ?</h2>
+    <p class="cta-contact__sub">Parlons-en — nos consultants sont disponibles pour un premier échange sans engagement.</p>
+    <a href="mailto:guido.macaluso@wivoo.fr?subject=Prise de RDV Wivoo" class="btn btn--accent">Prendre RDV →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__container">
+      <p class="footer__logo"><img src="images/logo-wivoo.png" alt="Wivoo" /></p>
+      <p class="footer__tagline">Expertise. Résultats. Impact.</p>
+      <p class="footer__email"><a href="mailto:guido.macaluso@wivoo.fr">guido.macaluso@wivoo.fr</a></p>
+      <p class="footer__copy">© 2026 Wivoo — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/filters.js"></script>
+</body>
+</html>

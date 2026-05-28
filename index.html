@@ -8,21 +8,55 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- =============================================
-       NAVIGATION — fixe en haut de page
-  ============================================== -->
+  <!-- NAVIGATION -->
   <nav class="nav" id="nav">
     <div class="nav__container">
-      <a class="nav__logo" href="#">Wivoo</a>
+      <a class="nav__logo" href="index.html">
+        <img src="images/logo-wivoo.png" alt="Wivoo" />
+      </a>
       <ul class="nav__links" id="navLinks">
-        <li><a href="#expertises">Nos expertises</a></li>
-        <li><a href="#realisations">Nos réalisations</a></li>
-        <li><a href="#rejoindre">Nous rejoindre</a></li>
-        <li><a href="#contact" class="nav__cta">Contact</a></li>
+        <li class="nav__item has-dropdown">
+          <a href="#">Nos solutions <span class="nav__arrow">▾</span></a>
+          <div class="nav__dropdown">
+            <a href="#">Data et IA</a>
+            <a href="#">Product Management</a>
+            <a href="#">Product Design</a>
+            <a href="#">Formations WiAC!</a>
+          </div>
+        </li>
+        <li class="nav__item">
+          <a href="realisations.html">Réussite client</a>
+        </li>
+        <li class="nav__item has-dropdown">
+          <a href="#">Nos contenus <span class="nav__arrow">▾</span></a>
+          <div class="nav__dropdown">
+            <a href="#">L'Observatoire des Tendances</a>
+            <a href="#">Nos Podcasts</a>
+            <a href="#">Nos Émissions</a>
+            <a href="#">Notre Blog</a>
+          </div>
+        </li>
+        <li class="nav__item has-dropdown">
+          <a href="#">À propos <span class="nav__arrow">▾</span></a>
+          <div class="nav__dropdown">
+            <a href="#">Notre ADN</a>
+            <a href="#">Nos engagements</a>
+          </div>
+        </li>
+        <li class="nav__item has-dropdown">
+          <a href="#">Carrière <span class="nav__arrow">▾</span></a>
+          <div class="nav__dropdown">
+            <a href="#">La vie chez Wivoo</a>
+            <a href="#">Nous rejoindre</a>
+          </div>
+        </li>
+        <li class="nav__item">
+          <a href="mailto:guido.macaluso@wivoo.fr?subject=Prise de RDV Wivoo" class="nav__cta">Prendre RDV</a>
+        </li>
       </ul>
       <button class="nav__burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -30,9 +64,7 @@
     </div>
   </nav>
 
-  <!-- =============================================
-       HERO — première impression, double CTA
-  ============================================== -->
+  <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero__container">
       <p class="hero__label">Cabinet de conseil indépendant</p>
@@ -42,8 +74,6 @@
         en Produit, Data &amp; IA — sélectionnés parmi les meilleurs,
         engagés sur vos résultats.
       </p>
-
-      <!-- Chiffres de preuve -->
       <div class="hero__stats">
         <div class="hero__stat">
           <span class="hero__stat-number">+600</span>
@@ -62,18 +92,14 @@
           <span class="hero__stat-label">des candidats recrutés</span>
         </div>
       </div>
-
-      <!-- Double appel à l'action -->
       <div class="hero__ctas">
-        <a href="#contact" class="btn btn--primary">Parlons de votre projet →</a>
+        <a href="mailto:guido.macaluso@wivoo.fr?subject=Prise de RDV Wivoo" class="btn btn--primary">Parlons de votre projet →</a>
         <a href="#rejoindre" class="btn btn--outline">Rejoindre l'équipe</a>
       </div>
     </div>
   </section>
 
-  <!-- =============================================
-       NOS EXPERTISES — les 4 domaines
-  ============================================== -->
+  <!-- NOS EXPERTISES -->
   <section class="expertises" id="expertises">
     <div class="section__container">
       <div class="section__header">
@@ -81,250 +107,66 @@
         <h2 class="section__title">Nos expertises</h2>
         <p class="section__subtitle">Quatre domaines complémentaires pour couvrir l'intégralité de votre transformation produit et data.</p>
       </div>
-
       <div class="expertises__grid">
-
-        <!-- Product Management -->
         <div class="expertise__card">
           <div class="expertise__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
-              <line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/>
-              <line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
-            </svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
           </div>
           <h3 class="expertise__title">Product Management</h3>
           <p class="expertise__description">De la discovery à la livraison — on structure, on priorise, on livre. Cycle de vie produit complet, méthodes agiles, roadmaps qui tiennent.</p>
         </div>
-
-        <!-- Product Design -->
         <div class="expertise__card">
           <div class="expertise__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 20h9"/>
-              <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
-            </svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           </div>
           <h3 class="expertise__title">Product Design</h3>
           <p class="expertise__description">Des produits utiles, inclusifs et éco-conçus — du prototype au design system. UX research, interfaces, expérience utilisateur de bout en bout.</p>
         </div>
-
-        <!-- Data & IA -->
         <div class="expertise__card">
           <div class="expertise__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
-              <line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
-            </svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
           </div>
           <h3 class="expertise__title">Data &amp; IA</h3>
           <p class="expertise__description">Stratégie data, gouvernance, dashboards et implémentation IA/LLM. On transforme vos données en avantage compétitif mesurable.</p>
         </div>
-
-        <!-- Formation -->
         <div class="expertise__card">
           <div class="expertise__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-            </svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
           </div>
           <h3 class="expertise__title">Formation — WiAcademy</h3>
           <p class="expertise__description">80 jours de formation interne par an. On monte en compétences vos équipes — parce que l'excellence ne s'improvise pas.</p>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- =============================================
-       NOS RÉALISATIONS — chiffres + fiches REX
-  ============================================== -->
+  <!-- NOS RÉALISATIONS (aperçu — lien vers la page dédiée) -->
   <section class="realisations" id="realisations">
     <div class="section__container">
       <div class="section__header">
         <span class="section__label">La preuve par les faits</span>
         <h2 class="section__title">Nos réalisations</h2>
-        <p class="section__subtitle">Pas des slides — des résultats. Voici ce qu'on a livré depuis 2018.</p>
+        <p class="section__subtitle">+600 missions livrées. Voici quelques cas concrets — des chiffres, pas des slides.</p>
       </div>
-
-      <!-- Métriques globales -->
       <div class="chiffres__grid">
-        <div class="chiffre__item">
-          <span class="chiffre__number">+600</span>
-          <span class="chiffre__label">missions réalisées depuis 2018</span>
-        </div>
-        <div class="chiffre__item">
-          <span class="chiffre__number">+80</span>
-          <span class="chiffre__label">clients accompagnés</span>
-        </div>
-        <div class="chiffre__item">
-          <span class="chiffre__number">90 %</span>
-          <span class="chiffre__label">de renouvellement clients</span>
-        </div>
-        <div class="chiffre__item">
-          <span class="chiffre__number">+100</span>
-          <span class="chiffre__label">consultants experts</span>
-        </div>
+        <div class="chiffre__item"><span class="chiffre__number">+600</span><span class="chiffre__label">missions réalisées depuis 2018</span></div>
+        <div class="chiffre__item"><span class="chiffre__number">+80</span><span class="chiffre__label">clients accompagnés</span></div>
+        <div class="chiffre__item"><span class="chiffre__number">90 %</span><span class="chiffre__label">de renouvellement clients</span></div>
+        <div class="chiffre__item"><span class="chiffre__number">+100</span><span class="chiffre__label">consultants experts</span></div>
       </div>
-
-      <!-- Filtres par domaine -->
-      <div class="rex__filters" role="group" aria-label="Filtrer les réalisations par domaine">
-        <button class="rex__filter is-active" data-filter="all">Tous</button>
-        <button class="rex__filter" data-filter="product">Product</button>
-        <button class="rex__filter" data-filter="data">Data &amp; IA</button>
-        <button class="rex__filter" data-filter="design">Design</button>
-        <button class="rex__filter" data-filter="ia">IA</button>
+      <div style="text-align:center; margin-top: 1rem;">
+        <a href="realisations.html" class="btn btn--violet">Voir toutes nos réalisations →</a>
       </div>
-
-      <!-- Grille de fiches REX -->
-      <div class="rex__grid" id="rexGrid">
-
-        <!-- Fiche 1 — Product Management -->
-        <article class="rex__card" data-domain="product">
-          <div class="rex__card-top">
-            <span class="rex__domain rex__domain--product">Product Management</span>
-          </div>
-          <h3 class="rex__title">Structuration de roadmap dans un retailer e-commerce</h3>
-          <dl class="rex__body">
-            <div class="rex__row">
-              <dt class="rex__row-label">Contexte</dt>
-              <dd class="rex__row-value">Retailer e-commerce, 500 collaborateurs, roadmap non structurée</dd>
-            </div>
-            <div class="rex__row">
-              <dt class="rex__row-label">Problème</dt>
-              <dd class="rex__row-value">Pas de priorisation claire, délais systématiquement dépassés</dd>
-            </div>
-            <div class="rex__row">
-              <dt class="rex__row-label">Ce qu'on a fait</dt>
-              <dd class="rex__row-value">Cadre de discovery, structuration de roadmap, accompagnement des POs</dd>
-            </div>
-          </dl>
-          <div class="rex__results">
-            <div class="rex__result">
-              <span class="rex__result-number">+40 %</span>
-              <span class="rex__result-label">de vélocité de livraison</span>
-            </div>
-            <div class="rex__result">
-              <span class="rex__result-number">0</span>
-              <span class="rex__result-label">dépassement de délai sur 6 mois</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Fiche 2 — Data & IA -->
-        <article class="rex__card" data-domain="data">
-          <div class="rex__card-top">
-            <span class="rex__domain rex__domain--data">Data &amp; IA</span>
-          </div>
-          <h3 class="rex__title">Unification des données client dans un assureur mid-market</h3>
-          <dl class="rex__body">
-            <div class="rex__row">
-              <dt class="rex__row-label">Contexte</dt>
-              <dd class="rex__row-value">Assureur mid-market, données éparpillées dans 4 systèmes</dd>
-            </div>
-            <div class="rex__row">
-              <dt class="rex__row-label">Problème</dt>
-              <dd class="rex__row-value">Impossible de piloter en temps réel, décisions prises "à l'instinct"</dd>
-            </div>
-            <div class="rex__row">
-              <dt class="rex__row-label">Ce qu'on a fait</dt>
-              <dd class="rex__row-value">Audit data, data warehouse unifié, dashboards exécutifs</dd>
-            </div>
-          </dl>
-          <div class="rex__results">
-            <div class="rex__result">
-              <span class="rex__result-number">3j → 2h</span>
-              <span class="rex__result-label">temps de reporting</span>
-            </div>
-            <div class="rex__result">
-              <span class="rex__result-number">100 %</span>
-              <span class="rex__result-label">adoption par les managers</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Fiche 3 — Product Design -->
-        <article class="rex__card" data-domain="design">
-          <div class="rex__card-top">
-            <span class="rex__domain rex__domain--design">Product Design</span>
-          </div>
-          <h3 class="rex__title">Refonte UX d'une interface SaaS B2B pour réduire le churn</h3>
-          <dl class="rex__body">
-            <div class="rex__row">
-              <dt class="rex__row-label">Contexte</dt>
-              <dd class="rex__row-value">Scale-up SaaS B2B, interface vieillissante, taux de churn en hausse</dd>
-            </div>
-            <div class="rex__row">
-              <dt class="rex__row-label">Problème</dt>
-              <dd class="rex__row-value">UX perçue comme un frein à la rétention et à l'expansion</dd>
-            </div>
-            <div class="rex__row">
-              <dt class="rex__row-label">Ce qu'on a fait</dt>
-              <dd class="rex__row-value">UX research, refonte de l'interface, design system partagé</dd>
-            </div>
-          </dl>
-          <div class="rex__results">
-            <div class="rex__result">
-              <span class="rex__result-number">−25 %</span>
-              <span class="rex__result-label">de churn</span>
-            </div>
-            <div class="rex__result">
-              <span class="rex__result-number">28 → 54</span>
-              <span class="rex__result-label">NPS en 4 mois</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Fiche 4 — IA -->
-        <article class="rex__card" data-domain="ia">
-          <div class="rex__card-top">
-            <span class="rex__domain rex__domain--ia">Intelligence Artificielle</span>
-          </div>
-          <h3 class="rex__title">Automatisation du traitement des demandes clients par LLM</h3>
-          <dl class="rex__body">
-            <div class="rex__row">
-              <dt class="rex__row-label">Contexte</dt>
-              <dd class="rex__row-value">Groupe bancaire, traitement des demandes 100 % manuel</dd>
-            </div>
-            <div class="rex__row">
-              <dt class="rex__row-label">Problème</dt>
-              <dd class="rex__row-value">Délais trop longs, coûts opérationnels élevés</dd>
-            </div>
-            <div class="rex__row">
-              <dt class="rex__row-label">Ce qu'on a fait</dt>
-              <dd class="rex__row-value">PoC LLM pour classification automatique, intégration au SI existant</dd>
-            </div>
-          </dl>
-          <div class="rex__results">
-            <div class="rex__result">
-              <span class="rex__result-number">70 %</span>
-              <span class="rex__result-label">des demandes automatisées</span>
-            </div>
-            <div class="rex__result">
-              <span class="rex__result-number">5j → 4h</span>
-              <span class="rex__result-label">délai de traitement</span>
-            </div>
-          </div>
-        </article>
-
-      </div><!-- /.rex__grid -->
     </div>
   </section>
 
-  <!-- =============================================
-       REJOINDRE WIVOO — section recrutement
-  ============================================== -->
+  <!-- REJOINDRE WIVOO -->
   <section class="rejoindre" id="rejoindre">
     <div class="section__container">
       <div class="rejoindre__inner">
         <span class="section__label section__label--light">Recrutement</span>
         <h2 class="rejoindre__title">Vous êtes parmi les meilleurs.<br>Rejoignez-les.</h2>
-        <p class="rejoindre__subtitle">
-          2 à 3 % des candidats rejoignent Wivoo. Si vous êtes expert en Produit,
-          Data, Design ou IA — on veut vous rencontrer.
-        </p>
-
+        <p class="rejoindre__subtitle">2 à 3 % des candidats rejoignent Wivoo. Si vous êtes expert en Produit, Data, Design ou IA — on veut vous rencontrer.</p>
         <div class="rejoindre__args">
           <div class="rejoindre__arg">
             <span class="rejoindre__arg-number">80 jours</span>
@@ -339,24 +181,17 @@
             <span class="rejoindre__arg-label">collaborateurs dans une communauté humaine et sélective</span>
           </div>
         </div>
-
-        <a href="mailto:guido.macaluso@wivoo.fr?subject=Candidature Wivoo" class="btn btn--accent">
-          Postuler →
-        </a>
+        <a href="mailto:guido.macaluso@wivoo.fr?subject=Candidature Wivoo" class="btn btn--accent">Postuler →</a>
       </div>
     </div>
   </section>
 
-  <!-- =============================================
-       FOOTER — contact et mentions légales
-  ============================================== -->
+  <!-- FOOTER -->
   <footer class="footer" id="contact">
     <div class="footer__container">
-      <p class="footer__logo">Wivoo</p>
+      <p class="footer__logo"><img src="images/logo-wivoo.png" alt="Wivoo" /></p>
       <p class="footer__tagline">Expertise. Résultats. Impact.</p>
-      <p class="footer__email">
-        <a href="mailto:guido.macaluso@wivoo.fr">guido.macaluso@wivoo.fr</a>
-      </p>
+      <p class="footer__email"><a href="mailto:guido.macaluso@wivoo.fr">guido.macaluso@wivoo.fr</a></p>
       <p class="footer__copy">© 2026 Wivoo — Tous droits réservés</p>
     </div>
   </footer>

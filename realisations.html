@@ -170,6 +170,12 @@
       margin: 0 auto;
     }
 
+    /* Card lien : annule les styles par défaut du <a> */
+    a.case-card {
+      text-decoration: none;
+      color: inherit;
+    }
+
     /* Card — style ustwo : image dominante, design épuré */
     .case-card {
       background: var(--color-white);
@@ -684,12 +690,12 @@
       <div class="cases-grid" id="casesGrid">
 
         <!-- Card 1 — Chatbot GenAI Banque -->
-        <article class="case-card fade-in"
+        <a class="case-card fade-in"
+          href="articles/chatbot-banque.html"
           data-expertise="ai data"
           data-secteur="banque"
           data-format="use-case"
-          data-type="saas"
-          onclick="window.location='articles/chatbot-banque.html'">
+          data-type="saas">
           <div class="case-card__img">
             <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&h=200&fit=crop&q=80"
                  alt="Secteur bancaire — Chatbot GenAI"
@@ -710,18 +716,15 @@
               </div>
             </div>
           </div>
-          <div class="case-card__footer">
-            <a href="articles/chatbot-banque.html" class="case-card__cta" onclick="event.stopPropagation()">Voir le cas client →</a>
-          </div>
-        </article>
+        </a>
 
         <!-- Card 2 — Retail Sportif -->
-        <article class="case-card fade-in"
+        <a class="case-card fade-in"
+          href="articles/retail-sport.html"
           data-expertise="produit design"
           data-secteur="retail"
           data-format="rex"
-          data-type="ecommerce"
-          onclick="window.location='articles/retail-sport.html'">
+          data-type="ecommerce">
           <div class="case-card__img">
             <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=200&fit=crop&q=80"
                  alt="Retail sportif européen"
@@ -742,18 +745,15 @@
               </div>
             </div>
           </div>
-          <div class="case-card__footer">
-            <a href="articles/retail-sport.html" class="case-card__cta" onclick="event.stopPropagation()">Voir le cas client →</a>
-          </div>
-        </article>
+        </a>
 
         <!-- Card 3 — Pharma E-commerce -->
-        <article class="case-card fade-in"
+        <a class="case-card fade-in"
+          href="articles/ecommerce-pharma.html"
           data-expertise="produit"
           data-secteur="pharma"
           data-format="rex"
-          data-type="ecommerce"
-          onclick="window.location='articles/ecommerce-pharma.html'">
+          data-type="ecommerce">
           <div class="case-card__img">
             <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?w=600&h=200&fit=crop&q=80"
                  alt="Pharma — E-commerce mondial"
@@ -774,18 +774,15 @@
               </div>
             </div>
           </div>
-          <div class="case-card__footer">
-            <a href="articles/ecommerce-pharma.html" class="case-card__cta" onclick="event.stopPropagation()">Voir le cas client →</a>
-          </div>
-        </article>
+        </a>
 
         <!-- Card 4 — Beauté -->
-        <article class="case-card fade-in"
+        <a class="case-card fade-in"
+          href="articles/beaute-magasin.html"
           data-expertise="design"
           data-secteur="beaute"
           data-format="use-case"
-          data-type="ecommerce"
-          onclick="window.location='articles/beaute-magasin.html'">
+          data-type="ecommerce">
           <div class="case-card__img">
             <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=200&fit=crop&q=80"
                  alt="Beauté — Expérience client en magasin"
@@ -806,10 +803,7 @@
               </div>
             </div>
           </div>
-          <div class="case-card__footer">
-            <a href="articles/beaute-magasin.html" class="case-card__cta" onclick="event.stopPropagation()">Voir le cas client →</a>
-          </div>
-        </article>
+        </a>
 
         <!-- Card 5 — Abonnements Média -->
         <article class="case-card fade-in"
@@ -817,7 +811,7 @@
           data-secteur="media"
           data-format="rex"
           data-type="saas"
-          onclick="return false">
+>
           <div class="case-card__img">
             <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=200&fit=crop&q=80"
                  alt="Média — Abonnements numériques"
@@ -865,7 +859,7 @@
           data-secteur="retail"
           data-format="rex"
           data-type="saas"
-          onclick="return false">
+>
           <div class="case-card__img">
             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=200&fit=crop&q=80"
                  alt="Data — Gestion retail"
@@ -913,7 +907,7 @@
           data-secteur="retail"
           data-format="rex"
           data-type="ecommerce"
-          onclick="return false">
+>
           <div class="case-card__img">
             <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=200&fit=crop&q=80"
                  alt="Data & AI — Scores prédictifs"
@@ -961,7 +955,7 @@
           data-secteur="btp"
           data-format="rex"
           data-type="saas"
-          onclick="return false">
+>
           <div class="case-card__img">
             <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=200&fit=crop&q=80"
                  alt="BTP — Service client digital"

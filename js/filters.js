@@ -1,163 +1,181 @@
 /* =============================================
-   WIVOO — Filtres multi-critères
-   Page realisations.html
-   Dernière mise à jour : 28/05/2026
+   WIVOO — Filtres pills multi-sélection
+   Page realisations.html — Option A + B
+   - Option A : compteurs de résultats + pills grisées si vides
+   - Option B : fond teinté + checkmark sur pills actives
+   Logique : OR au sein de chaque dimension, AND entre dimensions
+   Dernière mise à jour : 29/05/2026
 ============================================== */
 
 (function () {
-  /* État actuel des filtres */
-  var activeFilters = {
-    expertise: 'all',
-    secteur:   'all',
-    format:    'all',
-    type:      'all'
-  };
 
-  var cards        = document.querySelectorAll('.case-card');
-  var resetBtn     = document.getElementById('filtersReset');
-  var countEl      = document.getElementById('resultsCount');
-  var noResultsEl  = document.getElementById('noResults');
-  var dropdowns    = document.querySelectorAll('.filter-dropdown');
+  /* ---- État des filtres ---- */
+  var activeExpertise = new Set(['all']);
+  var activeSecteur   = new Set(['all']);
 
-  /* ---- Ouvrir / fermer les dropdowns ---- */
-  dropdowns.forEach(function (dd) {
-    var btn  = dd.querySelector('.filter-dropdown__btn');
-    var menu = dd.querySelector('.filter-dropdown__menu');
-    if (!btn || !menu) return;
+  /* ---- Éléments DOM ---- */
+  var cards       = document.querySelectorAll('.case-card');
+  var resetBtn    = document.getElementById('filtersReset');
+  var countEl     = document.getElementById('resultsCount');
+  var noResultsEl = document.getElementById('noResults');
 
-    /* Ouvrir au clic sur le bouton */
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var isOpen = dd.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', String(isOpen));
+  /* ---- Mémoriser les labels originaux des pills (avant tout innerHTML) ---- */
+  var pillLabels = new Map();
+  document.querySelectorAll('.pill').forEach(function (pill) {
+    pillLabels.set(pill, pill.textContent.trim());
+  });
 
-      /* Ferme les autres dropdowns */
-      dropdowns.forEach(function (other) {
-        if (other !== dd) {
-          other.classList.remove('is-open');
-          var otherBtn = other.querySelector('.filter-dropdown__btn');
-          if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+  /* ---- Brancher les clics sur les pills ---- */
+  document.querySelectorAll('.pills-group').forEach(function (group) {
+    var dimension = group.dataset.dimension;
+
+    group.querySelectorAll('.pill').forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var value = pill.dataset.value;
+
+        if (dimension === 'expertise') {
+          togglePill(activeExpertise, value);
+        } else if (dimension === 'secteur') {
+          togglePill(activeSecteur, value);
         }
-      });
-    });
 
-    /* Sélection d'une option */
-    menu.querySelectorAll('.filter-dropdown__option').forEach(function (opt) {
-      opt.addEventListener('click', function () {
-        /* Dé-sélectionner toutes les options de ce dropdown */
-        menu.querySelectorAll('.filter-dropdown__option').forEach(function (o) {
-          o.classList.remove('is-selected');
-        });
-        opt.classList.add('is-selected');
-
-        /* Identifier quel filtre c'est */
-        var filterKey = dd.id.replace('dd-', '');
-        var filterVal = opt.dataset.value;
-        activeFilters[filterKey] = filterVal;
-
-        /* Mettre à jour le label du bouton */
-        btn.innerHTML = (filterVal === 'all'
-          ? btn.innerHTML.replace(/^[^<]+/, getLabelForKey(filterKey) + ' ')
-          : opt.textContent + ' ') + '<span class="filter-dropdown__arrow">▾</span>';
-
-        /* Style actif du bouton */
-        btn.classList.toggle('has-selection', filterVal !== 'all');
-
-        /* Fermer le dropdown */
-        dd.classList.remove('is-open');
-        btn.setAttribute('aria-expanded', 'false');
-
+        syncPillStates(group, dimension === 'expertise' ? activeExpertise : activeSecteur);
         applyFilters();
+        updateCounts();
+        syncResetBtn();
       });
     });
   });
 
-  /* Ferme tous les dropdowns au clic hors */
-  document.addEventListener('click', function () {
-    dropdowns.forEach(function (dd) {
-      dd.classList.remove('is-open');
-      var btn = dd.querySelector('.filter-dropdown__btn');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
-    });
-  });
+  /* ---- Logique de bascule dans un Set ---- */
+  function togglePill (activeSet, value) {
+    if (value === 'all') {
+      activeSet.clear();
+      activeSet.add('all');
+      return;
+    }
+    activeSet.delete('all');
+    if (activeSet.has(value)) {
+      activeSet.delete(value);
+      if (activeSet.size === 0) activeSet.add('all');
+    } else {
+      activeSet.add(value);
+    }
+  }
 
-  /* ---- Application des filtres ---- */
+  /* ---- Synchronise l'état visuel (is-active) des pills d'un groupe ---- */
+  function syncPillStates (group, activeSet) {
+    group.querySelectorAll('.pill').forEach(function (p) {
+      p.classList.toggle('is-active', activeSet.has(p.dataset.value));
+    });
+  }
+
+  /* ---- Application des filtres sur les cards ---- */
   function applyFilters () {
     var visible = 0;
 
     cards.forEach(function (card) {
-      var matchExpertise = matches(card.dataset.expertise, activeFilters.expertise);
-      var matchSecteur   = matches(card.dataset.secteur,   activeFilters.secteur);
-      var matchFormat    = matches(card.dataset.format,    activeFilters.format);
-      var matchType      = matches(card.dataset.type,      activeFilters.type);
+      var match = matchesDimension(card.dataset.expertise, activeExpertise) &&
+                  matchesDimension(card.dataset.secteur,   activeSecteur);
 
-      if (matchExpertise && matchSecteur && matchFormat && matchType) {
-        card.classList.remove('is-hidden');
-        visible++;
-      } else {
-        card.classList.add('is-hidden');
-      }
+      card.classList.toggle('is-hidden', !match);
+      if (match) visible++;
     });
 
-    /* Mise à jour du compteur */
     if (countEl) {
       countEl.textContent = visible + (visible <= 1 ? ' résultat' : ' résultats');
     }
-
-    /* Afficher le message "aucun résultat" */
     if (noResultsEl) {
       noResultsEl.classList.toggle('is-visible', visible === 0);
     }
-
-    /* Afficher/masquer le bouton reset */
-    var hasActiveFilter = Object.values(activeFilters).some(function (v) { return v !== 'all'; });
-    if (resetBtn) resetBtn.classList.toggle('is-visible', hasActiveFilter);
   }
 
-  /* Vérifie si la valeur du dataset correspond au filtre actif */
-  function matches (dataValue, filterValue) {
-    if (!filterValue || filterValue === 'all') return true;
+  /* ---- Vérifie si une card correspond à un Set de filtres (OR intra-dimension) ---- */
+  function matchesDimension (dataValue, activeSet) {
+    if (activeSet.has('all')) return true;
     if (!dataValue) return false;
-    /* Gère les valeurs multiples séparées par espace (ex: "ai data") */
-    return dataValue.split(' ').indexOf(filterValue) !== -1;
+    return dataValue.split(' ').some(function (v) { return activeSet.has(v); });
   }
 
-  /* Labels par défaut des dropdowns */
-  function getLabelForKey (key) {
-    var labels = {
-      expertise: 'Expertise',
-      secteur:   'Secteur',
-      format:    'Format',
-      type:      'Type de produit'
-    };
-    return labels[key] || key;
+  /* ============================================================
+     Option A — Compteurs de résultats
+     Pour chaque pill : nombre de cards qui matcheraient SI cette
+     valeur était sélectionnée, compte tenu de l'autre dimension.
+  ============================================================ */
+
+  function updateCounts () {
+    document.querySelectorAll('.pills-group').forEach(function (group) {
+      var dimension = group.dataset.dimension;
+
+      group.querySelectorAll('.pill').forEach(function (pill) {
+        var value = pill.dataset.value;
+        var label = pillLabels.get(pill);  /* label original, jamais altéré */
+        var count = getCountForPill(dimension, value);
+
+        /* Mettre à jour le texte : "Label · N" */
+        pill.innerHTML = label + '<span class="pill__count"> · ' + count + '</span>';
+
+        /* Griser si 0 résultat (jamais sur "Tous") */
+        if (value !== 'all') {
+          pill.classList.toggle('is-empty', count === 0);
+        }
+      });
+    });
   }
 
-  /* ---- Reset ---- */
+  /* Compte les cards qui correspondraient à cette pill + l'autre dimension active */
+  function getCountForPill (dimension, value) {
+    var count = 0;
+
+    cards.forEach(function (card) {
+      var expertiseMatch, secteurMatch;
+
+      if (dimension === 'expertise') {
+        /* Pour les pills d'expertise : fixer cette valeur, garder le filtre secteur actuel */
+        expertiseMatch = (value === 'all')
+          ? true
+          : matchesDimension(card.dataset.expertise, new Set([value]));
+        secteurMatch = matchesDimension(card.dataset.secteur, activeSecteur);
+      } else {
+        /* Pour les pills de secteur : garder le filtre expertise actuel, fixer cette valeur */
+        expertiseMatch = matchesDimension(card.dataset.expertise, activeExpertise);
+        secteurMatch = (value === 'all')
+          ? true
+          : matchesDimension(card.dataset.secteur, new Set([value]));
+      }
+
+      if (expertiseMatch && secteurMatch) count++;
+    });
+
+    return count;
+  }
+
+  /* ---- Affiche/masque le bouton reset ---- */
+  function syncResetBtn () {
+    var hasFilter = !activeExpertise.has('all') || !activeSecteur.has('all');
+    if (resetBtn) resetBtn.classList.toggle('is-visible', hasFilter);
+  }
+
+  /* ---- Reset complet ---- */
   if (resetBtn) {
     resetBtn.addEventListener('click', function () {
-      /* Réinitialiser l'état */
-      Object.keys(activeFilters).forEach(function (k) { activeFilters[k] = 'all'; });
+      activeExpertise.clear(); activeExpertise.add('all');
+      activeSecteur.clear();   activeSecteur.add('all');
 
-      /* Réinitialiser les boutons */
-      dropdowns.forEach(function (dd) {
-        var filterKey = dd.id.replace('dd-', '');
-        var btn  = dd.querySelector('.filter-dropdown__btn');
-        var menu = dd.querySelector('.filter-dropdown__menu');
-
-        if (btn) {
-          btn.innerHTML = getLabelForKey(filterKey) + ' <span class="filter-dropdown__arrow">▾</span>';
-          btn.classList.remove('has-selection');
-        }
-
-        if (menu) {
-          menu.querySelectorAll('.filter-dropdown__option').forEach(function (o, i) {
-            o.classList.toggle('is-selected', i === 0);
-          });
-        }
+      document.querySelectorAll('.pills-group').forEach(function (group) {
+        var dimension = group.dataset.dimension;
+        syncPillStates(group, dimension === 'expertise' ? activeExpertise : activeSecteur);
       });
 
       applyFilters();
+      updateCounts();
+      syncResetBtn();
     });
   }
+
+  /* ---- Initialisation au chargement ---- */
+  applyFilters();
+  updateCounts();
+  syncResetBtn();
+
 })();

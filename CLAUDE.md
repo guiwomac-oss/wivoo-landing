@@ -99,9 +99,9 @@ Challange Showcase Claude/
 | **Neutre texte** | Gris foncé | `#1A1A2E` | Corps de texte sur fond clair |
 
 ### Typographie (Google Fonts — chargement automatique)
-- **Titres :** `Inter` — poids 700 (bold)
-- **Corps de texte :** `Inter` — poids 400 (regular)
-- **Accent / labels :** `Inter` — poids 600 (semi-bold), lettrage espacé
+- **Titres :** `Poppins` — poids 700 (bold)
+- **Corps de texte :** `Poppins` — poids 400 (regular)
+- **Accent / labels :** `Poppins` — poids 600 (semi-bold), lettrage espacé
 
 ### Style général
 - Sobre & Corporate

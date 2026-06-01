@@ -1,11 +1,493 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Expérience client beauté — 350 stores · Wivoo</title>
+  <link rel="icon" type="image/png" href="https://www.google.com/s2/favicons?domain=wivoo.fr&sz=32" />
+  <link rel="apple-touch-icon" href="https://www.google.com/s2/favicons?domain=wivoo.fr&sz=180" />
   <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="../css/article.css" />
+
+  <style>
+  /* ============================================================
+     CASE STUDY v3 — Sections pleine largeur, contrastes forts
+     Rythme visuel : blanc → teinté → sombre → vert
+     Test beaute-magasin.html
+  ============================================================ */
+
+  body { background: #fff; }
+
+  /* ---- Sections plein écran ---- */
+  .cs                  { width: 100%; }
+  .cs--white           { background: #ffffff; }
+  .cs--tint            { background: #F5F4FB; }
+  .cs--dark            { background: #17023C; }
+  .cs--charcoal        { background: #111827; }
+  .cs--green           { background: #04F06A; }
+
+  /* Contenu intérieur centré (large) */
+  .cs__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem;
+  }
+
+  /* Variante étroite pour paragraphes de lecture */
+  .cs__inner--narrow { max-width: 820px; }
+
+  /* ---- Hero ---- */
+  .cs-hero {
+    position: relative;
+    height: 580px;
+    overflow: hidden;
+    margin-top: 68px;
+  }
+  .cs-hero img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
+  }
+  .cs-hero__overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(23,2,60,0.06) 0%, rgba(23,2,60,0.82) 100%);
+    display: flex; align-items: flex-end;
+    padding: 4rem 5rem;
+  }
+  .cs-hero__content { max-width: 900px; }
+  .cs-hero__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+  .cs-hero__title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700; color: #fff;
+    line-height: 1.12; letter-spacing: -0.01em;
+  }
+
+  /* ---- Breadcrumb ---- */
+  .cs-breadcrumb {
+    background: #fff;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 0.75rem 2.5rem;
+  }
+  .cs-breadcrumb__inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.82rem; color: #9CA3AF;
+  }
+  .cs-breadcrumb__inner a { color: #451DC7; font-weight: 500; }
+  .cs-breadcrumb__inner a:hover { opacity: 0.7; }
+  .cs-breadcrumb__sep { color: #D1D5DB; }
+
+  /* ---- Eyebrow label ---- */
+  .cs-label {
+    display: block;
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    margin-bottom: 1.25rem;
+  }
+  .cs-label--violet { color: #451DC7; }
+  .cs-label--green  { color: #04F06A; }
+  .cs-label--muted  { color: #9CA3AF; }
+  .cs-label--white  { color: rgba(255,255,255,0.45); }
+
+  /* ---- Grand titre section ---- */
+  .cs-title {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.25rem;
+  }
+  .cs-title--dark  { color: #111827; }
+  .cs-title--white { color: #ffffff; }
+
+  /* ---- Metadata: tags + client ---- */
+  .cs-meta {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #E5E7EB;
+    margin-bottom: 2rem;
+  }
+  .cs-meta__tags { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .cs-meta__client { font-size: 0.82rem; color: #9CA3AF; margin-left: 0.25rem; }
+
+  /* ---- KPIs (grands chiffres) ---- */
+  .cs-kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .cs-kpi + .cs-kpi {
+    border-left: 1px solid #E5E7EB;
+    padding-left: 3.5rem;
+  }
+  .cs-kpi__number {
+    display: block;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 700; color: #451DC7;
+    line-height: 1; letter-spacing: -0.03em;
+    margin-bottom: 0.625rem;
+  }
+  .cs-kpi__label {
+    font-size: 0.9375rem; color: #6B7280; line-height: 1.5;
+    max-width: 240px;
+  }
+
+  /* ---- Corps texte ---- */
+  .cs-text {
+    font-size: 1.0625rem; color: #374151;
+    line-height: 1.85; margin-bottom: 1rem;
+  }
+  .cs-text:last-child { margin-bottom: 0; }
+  .cs-text--light { color: rgba(255,255,255,0.72); }
+
+  /* ---- Image pleine largeur ---- */
+  /* margin: 0 corrige la marge par défaut des <figure> dans les navigateurs */
+  .cs-img { width: 100%; overflow: hidden; position: relative; margin: 0; display: block; }
+  .cs-img img {
+    width: 100%; height: 520px;
+    object-fit: cover; display: block;
+  }
+  .cs-img figcaption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.65));
+    color: rgba(255,255,255,0.9);
+    padding: 2rem 5rem;
+    font-size: 0.9rem; font-style: italic; line-height: 1.5;
+  }
+
+  /* ---- Paire d'images côte à côte ---- */
+  .cs-img-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px; background: #111827;
+    width: 100%;
+  }
+  .cs-img-pair figure { position: relative; overflow: hidden; margin: 0; }
+  .cs-img-pair img {
+    width: 100%; height: 380px;
+    object-fit: cover; display: block;
+    transition: transform 0.4s ease;
+  }
+  .cs-img-pair figure:hover img { transform: scale(1.03); }
+  .cs-img-pair figcaption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.62));
+    color: rgba(255,255,255,0.9);
+    padding: 1.25rem 1.5rem;
+    font-size: 0.82rem; font-style: italic;
+  }
+
+  /* ---- Timeline étapes ---- */
+  .cs-timeline {
+    list-style: none; margin-top: 1rem;
+    display: flex; flex-direction: column; gap: 1.25rem;
+  }
+  .cs-step {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 0 1.75rem;
+    align-items: flex-start;
+  }
+  .cs-step__num {
+    font-size: 0.68rem; font-weight: 700;
+    color: #451DC7;
+    background: rgba(69,29,199,0.1);
+    border-radius: 100px;
+    padding: 0.3rem 0.625rem;
+    text-align: center;
+    letter-spacing: 0.05em;
+    margin-top: 0.15rem;
+    white-space: nowrap;
+  }
+  .cs-step strong {
+    display: block; font-size: 1rem;
+    font-weight: 700; color: #111827;
+    margin-bottom: 0.35rem;
+  }
+  .cs-step p {
+    font-size: 0.9375rem; color: #6B7280;
+    line-height: 1.7; margin: 0;
+  }
+
+  /* ---- Device frames (sur fond sombre) ---- */
+  .cs-demos {
+    display: flex; gap: 2rem;
+    justify-content: center; align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .cs-frame {
+    background: #fff; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    flex: 0 0 auto; max-width: 320px; width: 100%;
+  }
+  .cs-frame--wide { max-width: 480px; }
+  .cs-frame__bar {
+    background: #E8E8E8; padding: 0.6rem 0.875rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .cs-frame__dots { display: flex; gap: 5px; }
+  .cs-frame__dot { width: 10px; height: 10px; border-radius: 50%; }
+  .cs-frame__dot:nth-child(1) { background: #ff5f57; }
+  .cs-frame__dot:nth-child(2) { background: #febc2e; }
+  .cs-frame__dot:nth-child(3) { background: #28c840; }
+  .cs-frame__url {
+    flex: 1; background: #fff; border-radius: 4px;
+    height: 20px; font-size: 0.68rem; color: #aaa;
+    display: flex; align-items: center; padding: 0 0.5rem; overflow: hidden;
+  }
+  .cs-frame img { width: 100%; display: block; }
+  .cs-demos__caption {
+    width: 100%; text-align: center;
+    font-size: 0.875rem; color: rgba(255,255,255,0.4);
+    font-style: italic; margin-top: 0.75rem;
+  }
+
+  /* ---- Résultats (liste) ---- */
+  .cs-results {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .cs-results li {
+    font-size: 1.0625rem; color: #374151;
+    line-height: 1.7; padding-left: 1.75rem; position: relative;
+  }
+  .cs-results li::before {
+    content: "";
+    position: absolute; left: 0; top: 0.65em;
+    width: 6px; height: 6px;
+    border-radius: 50%; background: #451DC7;
+  }
+
+  /* ---- Diagramme de flux ---- */
+  .cs-flow-label {
+    display: block; text-align: center;
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: #9CA3AF; margin-bottom: 2.5rem;
+  }
+  .cs-flow {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; row-gap: 1.5rem;
+    max-width: 960px; margin: 0 auto;
+  }
+  .cs-node {
+    background: #fff; border: 2px solid #E5E7EB;
+    border-radius: 12px; padding: 1.125rem 1.375rem;
+    text-align: center; min-width: 130px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .cs-node:hover { border-color: #451DC7; box-shadow: 0 6px 24px rgba(69,29,199,0.14); transform: translateY(-2px); }
+  .cs-node--accent { background: #451DC7; border-color: #451DC7; }
+  .cs-node--accent .cs-node__label { color: #fff; }
+  .cs-node--accent .cs-node__sub { color: rgba(255,255,255,0.65); }
+  .cs-node--green { background: rgba(4,240,106,0.12); border-color: #04F06A; }
+  .cs-node--green .cs-node__label { color: #024d22; }
+  .cs-node__icon { font-size: 1.375rem; margin-bottom: 0.35rem; display: block; }
+  .cs-node__label { font-size: 0.8rem; font-weight: 700; color: #111827; line-height: 1.3; }
+  .cs-node__sub { font-size: 0.7rem; color: #9CA3AF; margin-top: 0.2rem; }
+  .cs-arrow { font-size: 1.125rem; color: #9CA3AF; padding: 0 0.625rem; flex-shrink: 0; }
+
+  /* ---- Wireframes ---- */
+  .cs-wf-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem; margin-top: 2rem;
+  }
+  .cs-wf {
+    background: #fff; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.22s, box-shadow 0.22s;
+  }
+  .cs-wf:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.14); }
+  .cs-wf img {
+    width: 100%; display: block;
+    filter: grayscale(1) contrast(0.9) brightness(1.04);
+  }
+  .cs-wf__label {
+    padding: 0.625rem 1rem; font-size: 0.75rem; color: #9CA3AF;
+    text-align: center; background: #fafafa;
+    border-top: 1px solid #E5E7EB;
+  }
+
+  /* ---- Livrables ---- */
+  .cs-deliverables {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 0.875rem; margin-top: 2rem;
+  }
+  .cs-deliverable {
+    background: #fff; border-radius: 10px;
+    padding: 1.25rem 1.375rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    border-left: 3px solid #451DC7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s;
+  }
+  .cs-deliverable:hover { box-shadow: 0 6px 22px rgba(0,0,0,0.1); }
+  .cs-deliverable__icon { font-size: 1.5rem; flex-shrink: 0; }
+  .cs-deliverable__name { font-size: 0.9rem; font-weight: 700; color: #111827; margin-bottom: 0.2rem; }
+  .cs-deliverable__desc { font-size: 0.8rem; color: #6B7280; line-height: 1.45; }
+
+  /* ---- Méthodes ---- */
+  .cs-methods { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+  .cs-method {
+    padding: 0.4rem 1rem; background: #fff;
+    border: 1px solid #E5E7EB; border-radius: 100px;
+    font-size: 0.82rem; font-weight: 500; color: #374151;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .cs-method:hover { border-color: #451DC7; color: #451DC7; }
+
+  /* ---- Consultant ---- */
+  .cs-consultant { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .cs-consultant__avatar {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, #451DC7, #17023C);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .cs-consultant__avatar svg { color: rgba(255,255,255,0.75); }
+  .cs-consultant__name { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 0.15rem; }
+  .cs-consultant__role { font-size: 0.82rem; color: #451DC7; font-weight: 600; margin-bottom: 0.875rem; }
+  .cs-consultant__quote {
+    font-size: 1rem; color: #374151; line-height: 1.75;
+    font-style: italic; margin: 0;
+    border-left: 2px solid #E5E7EB; padding-left: 1.25rem;
+  }
+
+  /* ---- Citation client (sur fond sombre) ---- */
+  .cs-blockquote {
+    font-size: clamp(1.375rem, 2.8vw, 2.125rem);
+    font-weight: 700; color: #fff; line-height: 1.38;
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  .cs-blockquote::before {
+    content: "\201C";
+    position: absolute; left: 0; top: -0.5rem;
+    font-size: 4rem; font-family: Georgia, serif;
+    color: #04F06A; line-height: 1;
+    font-style: normal;
+  }
+  .cs-blockquote cite {
+    display: block; font-size: 0.9rem;
+    color: rgba(255,255,255,0.45); font-weight: 400;
+    font-style: normal; margin-top: 1.75rem;
+    padding-left: 0;
+  }
+
+  /* ---- CTA (fond vert) ---- */
+  .cs-cta__title {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700; color: #17023C;
+    line-height: 1.12; letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+  .cs-cta__sub {
+    font-size: 1.0625rem;
+    color: rgba(23,2,60,0.6);
+    margin-bottom: 2.5rem;
+    max-width: 460px;
+    line-height: 1.65;
+  }
+
+  /* ---- Layout deux colonnes (titre gauche / contenu droite) ---- */
+  .cs-two-col {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 4rem;
+    align-items: flex-start;
+  }
+  /* Le titre colle au scroll pour rester visible pendant la lecture */
+  .cs-two-col .cs-col-head {
+    position: sticky;
+    top: 5.5rem;
+  }
+  .cs-two-col .cs-col-head .cs-title {
+    font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+    margin-bottom: 0;
+  }
+
+  /* ---- Lien retour ---- */
+  .cs-back-bar {
+    padding: 1.75rem 2.5rem;
+    border-top: 1px solid #E5E7EB;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .cs-back {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: #451DC7; font-weight: 500; font-size: 0.875rem;
+    transition: opacity 0.2s;
+  }
+  .cs-back:hover { opacity: 0.7; }
+
+  /* ---- Articles liés ---- */
+  .cs-related { background: #F5F4FB; padding: 3rem 2.5rem; }
+  .cs-related__inner { max-width: 1100px; margin: 0 auto; }
+  .cs-related__title { font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 1.75rem; }
+  .cs-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.125rem; }
+  .cs-mini {
+    background: #fff; border: 1px solid #E5E7EB;
+    border-radius: 10px; overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: box-shadow 0.25s, transform 0.2s;
+  }
+  .cs-mini:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); transform: translateY(-3px); }
+  .cs-mini__img { height: 140px; overflow: hidden; }
+  .cs-mini__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+  .cs-mini:hover .cs-mini__img img { transform: scale(1.04); }
+  .cs-mini__body { padding: 1rem 1.125rem; flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+  .cs-mini__tags { display: flex; gap: 0.375rem; flex-wrap: wrap; }
+  .cs-mini__title { font-size: 0.875rem; font-weight: 700; color: #111827; line-height: 1.4; flex: 1; }
+  .cs-mini__link { font-size: 0.8rem; font-weight: 600; color: #451DC7; margin-top: 0.25rem; }
+
+  /* ---- Fade-in ---- */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .fade-in.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1024px) {
+    .cs-hero__overlay { padding: 3rem; }
+    .cs-kpi + .cs-kpi { padding-left: 2rem; }
+    .cs-wf-grid { grid-template-columns: repeat(2, 1fr); }
+    .cs-img-pair img { height: 300px; }
+  }
+
+  @media (max-width: 900px) {
+    .cs-two-col {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .cs-two-col .cs-col-head {
+      position: static;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cs__inner { padding: 2rem 1.25rem; }
+    .cs-hero { height: 280px; }
+    .cs-hero__overlay { padding: 1.5rem; }
+    .cs-hero__title { font-size: 1.5rem; }
+    .cs-kpis { grid-template-columns: 1fr; }
+    .cs-kpi { padding: 1.25rem 0; border-bottom: 1px solid #E5E7EB; }
+    .cs-kpi:last-child { border-bottom: none; }
+    .cs-kpi + .cs-kpi { border-left: none; padding-left: 0; }
+    .cs-img img { height: 240px; }
+    .cs-img figcaption { padding: 1.5rem 1.25rem; }
+    .cs-img-pair { grid-template-columns: 1fr; }
+    .cs-img-pair img { height: 220px; }
+    .cs-demos { flex-direction: column; align-items: center; }
+    .cs-frame { max-width: 100%; }
+    .cs-flow { flex-direction: column; align-items: center; }
+    .cs-arrow { transform: rotate(90deg); display: block; text-align: center; padding: 0.25rem 0; }
+    .cs-wf-grid { grid-template-columns: 1fr; }
+    .cs-deliverables { grid-template-columns: 1fr; }
+    .cs-consultant { flex-direction: column; gap: 1rem; }
+    .cs-blockquote { font-size: 1.25rem; padding-left: 1.75rem; }
+    .cs-related__grid { grid-template-columns: 1fr; }
+    .cs-back-bar { padding: 1.5rem 1.25rem; }
+    .cs-related { padding: 3rem 1.25rem; }
+  }
+  </style>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -19,178 +501,462 @@
       <ul class="nav__links" id="navLinks">
         <li class="nav__item has-dropdown"><a href="#">Nos solutions <span class="nav__arrow">▾</span></a>
           <div class="nav__dropdown"><a href="#">Data et IA</a><a href="#">Product Management</a><a href="#">Product Design</a><a href="#">Formations WiAC!</a></div></li>
-        <li class="nav__item"><a href="../realisations.html" class="is-active">Réussite client</a></li>
+        <li class="nav__item"><a href="../realisations.html" class="is-active">Nos réalisations</a></li>
         <li class="nav__item has-dropdown"><a href="#">Nos contenus <span class="nav__arrow">▾</span></a>
           <div class="nav__dropdown"><a href="#">L'Observatoire des Tendances</a><a href="#">Nos Podcasts</a><a href="#">Nos Émissions</a><a href="#">Notre Blog</a></div></li>
         <li class="nav__item has-dropdown"><a href="#">À propos <span class="nav__arrow">▾</span></a>
           <div class="nav__dropdown"><a href="#">Notre ADN</a><a href="#">Nos engagements</a></div></li>
         <li class="nav__item has-dropdown"><a href="#">Carrière <span class="nav__arrow">▾</span></a>
           <div class="nav__dropdown"><a href="#">La vie chez Wivoo</a><a href="#">Nous rejoindre</a></div></li>
-        <li class="nav__item"><a href="mailto:guido.macaluso@wivoo.fr?subject=Prise de RDV Wivoo" class="nav__cta">Prendre RDV</a></li>
+        <li class="nav__item"><a href="https://www.wivoo.fr/contact" class="nav__cta">Prendre RDV</a></li>
       </ul>
       <button class="nav__burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <div class="article-hero">
-    <img class="article-hero__img"
-      src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&h=420&fit=crop&q=80"
-      alt="Leader mondial beauté — Expérience client en magasin" />
-    <div class="article-hero__overlay">
-      <div class="article-hero__content">
-        <div class="article-hero__tags">
+  <!-- ① HERO — Image plein écran avec titre en overlay -->
+  <div class="cs-hero">
+    <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1400&h=580&fit=crop&q=80"
+         alt="Leader mondial beauté — Expérience client en magasin" />
+    <div class="cs-hero__overlay">
+      <div class="cs-hero__content">
+        <h1 class="cs-hero__title">Transformation de l'expérience client<br>en magasin pour un leader mondial<br>de la beauté et des cosmétiques</h1>
+        <div class="cs-hero__tags">
           <span class="tag tag--design">Design</span>
           <span class="tag tag--beaute">Beauté</span>
           <span class="tag tag--usecase">Use case</span>
         </div>
-        <h1 class="article-hero__title">Transformation de l'expérience client en magasin pour un leader mondial de la beauté et des cosmétiques</h1>
       </div>
     </div>
   </div>
 
-  <!-- BREADCRUMB -->
-  <nav class="breadcrumb" aria-label="Fil d'Ariane">
-    <div class="breadcrumb__inner">
+  <!-- Breadcrumb -->
+  <nav class="cs-breadcrumb" aria-label="Fil d'Ariane">
+    <div class="cs-breadcrumb__inner">
       <a href="../realisations.html">Nos réalisations</a>
-      <span class="breadcrumb__sep">›</span>
-      <span class="breadcrumb__current">Expérience client beauté — 350 stores</span>
+      <span class="cs-breadcrumb__sep">›</span>
+      <span>Expérience client beauté — 350 stores</span>
     </div>
   </nav>
 
-  <main class="article-body">
+  <!-- ② INTRO + KPIs — Fond blanc -->
+  <section class="cs cs--white">
+    <div class="cs__inner">
 
-    <header class="article-header">
-      <div class="article-header__meta">
-        <span class="tag tag--design">Product Design</span>
-        <span class="tag tag--beaute">Beauté & Cosmétiques</span>
-        <span class="tag tag--usecase">Use case</span>
-        <span class="article-client">· Leader mondial beauté & cosmétiques</span>
-        <span class="article-client">· Direction Digitale</span>
+      <!-- Metadata -->
+      <div class="cs-meta">
+        <div class="cs-meta__tags">
+          <span class="tag tag--design">Product Design</span>
+          <span class="tag tag--beaute">Beauté &amp; Cosmétiques</span>
+          <span class="tag tag--usecase">Use case</span>
+          <span class="cs-meta__client">· Leader mondial beauté &amp; cosmétiques &nbsp;·&nbsp; Direction Digitale</span>
+        </div>
       </div>
-    </header>
 
-    <!-- KPIs -->
-    <div class="kpi-band fade-in">
-      <div class="kpi-band__item">
-        <span class="kpi-band__number">+70–80 %</span>
-        <span class="kpi-band__label">de taux de conversion dans les magasins pilotes</span>
+      <!-- KPIs — grands chiffres -->
+      <div class="cs-kpis fade-in">
+        <div class="cs-kpi">
+          <span class="cs-kpi__number">+70–80 %</span>
+          <span class="cs-kpi__label">de taux de conversion dans les magasins pilotes</span>
+        </div>
+        <div class="cs-kpi">
+          <span class="cs-kpi__number">350 stores</span>
+          <span class="cs-kpi__label">ciblés pour le déploiement européen sur 12 mois</span>
+        </div>
+        <div class="cs-kpi">
+          <span class="cs-kpi__number">4–6 pays</span>
+          <span class="cs-kpi__label">activés pour la prise de rendez-vous beauté en ligne</span>
+        </div>
       </div>
-      <div class="kpi-band__item">
-        <span class="kpi-band__number">350 stores</span>
-        <span class="kpi-band__label">ciblés pour le déploiement européen sur 12 mois</span>
-      </div>
-      <div class="kpi-band__item">
-        <span class="kpi-band__number">4–6 pays</span>
-        <span class="kpi-band__label">activés pour le service de prise de rendez-vous en ligne</span>
+
+    </div>
+  </section>
+
+  <!-- ③ CONTEXTE — Fond teinté violet clair -->
+  <section class="cs cs--tint">
+    <div class="cs__inner fade-in">
+      <div class="cs-two-col">
+        <div class="cs-col-head">
+          <span class="cs-label cs-label--violet">Contexte &amp; challenge</span>
+          <h2 class="cs-title cs-title--dark">Un double enjeu : innover vite, tout en garantissant l'adoption terrain</h2>
+        </div>
+        <div class="cs-col-content">
+          <p class="cs-text">Face à une concurrence accrue et à l'évolution rapide des attentes clients, ce leader mondial de la beauté cherchait à équiper ses conseillers beauté avec des outils intuitifs pour des diagnostics de peau personnalisés et des interactions client optimisées.</p>
+          <p class="cs-text">Le défi central : développer rapidement un MVP tout en garantissant l'adoption par les utilisateurs terrain — les conseillers beauté — et en préparant un déploiement à grande échelle dans 19 pays. La rapidité d'exécution était critique pour maintenir l'avantage concurrentiel.</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Contexte -->
-    <section class="article-section fade-in">
-      <h2 class="article-section__title"><span class="section-icon">📍</span> Contexte & challenge</h2>
-      <p>Face à une concurrence accrue et à l'évolution rapide des attentes clients, ce leader mondial de la beauté cherchait à équiper ses conseillers beauté avec des outils intuitifs pour des diagnostics de peau personnalisés et des interactions client optimisées.</p>
-      <p>Le défi central : développer rapidement un MVP tout en garantissant l'adoption par les utilisateurs terrain — les conseillers beauté — et en préparant un déploiement à grande échelle dans 19 pays. La rapidité d'exécution était critique pour maintenir l'avantage concurrentiel.</p>
-    </section>
+  <!-- ④ IMAGE PLEINE LARGEUR — Photo atelier Discovery -->
+  <figure class="cs-img fade-in">
+    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1400&h=520&fit=crop&q=80"
+         alt="Phase Discovery — interviews conseillers beauté en magasin pilote" />
+    <figcaption>Phase Discovery : interviews utilisateurs et observation terrain avec les conseillers beauté dans les magasins pilotes (France &amp; Moyen-Orient)</figcaption>
+  </figure>
 
-    <!-- Galerie pleine largeur -->
-    <figure class="article-gallery article-gallery--single fade-in">
-      <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1200&h=320&fit=crop&q=80"
-           alt="Conseillère beauté avec outil digital de diagnostic" />
-      <figcaption>Prototype du diagnostic peau personnalisé utilisé en pilote dans 17 magasins (France et Moyen-Orient)</figcaption>
+  <!-- ⑤ APPROCHE — Fond blanc -->
+  <section class="cs cs--white">
+    <div class="cs__inner fade-in">
+      <div class="cs-two-col">
+        <div class="cs-col-head">
+          <span class="cs-label cs-label--violet">Notre intervention</span>
+          <h2 class="cs-title cs-title--dark">5 phases, de la discovery au déploiement national</h2>
+        </div>
+        <div class="cs-col-content">
+      <ol class="cs-timeline">
+        <li class="cs-step">
+          <span class="cs-step__num">01</span>
+          <div>
+            <strong>Phase Discovery</strong>
+            <p>Interviews utilisateurs, focus groups avec conseillers beauté et clients finaux, identification des pain points sur le parcours en magasin.</p>
+          </div>
+        </li>
+        <li class="cs-step">
+          <span class="cs-step__num">02</span>
+          <div>
+            <strong>Conception MVP</strong>
+            <p>Design d'un outil de diagnostic peau/teint personnalisé intégrant les critères de la marque, wireframes validés avec les équipes terrain.</p>
+          </div>
+        </li>
+        <li class="cs-step">
+          <span class="cs-step__num">03</span>
+          <div>
+            <strong>Prise de RDV en ligne</strong>
+            <p>Intégration d'un module de réservation de consultations beauté en boutique, connecté au système de gestion de magasin existant.</p>
+          </div>
+        </li>
+        <li class="cs-step">
+          <span class="cs-step__num">04</span>
+          <div>
+            <strong>Pilote 17 magasins</strong>
+            <p>Déploiement en conditions réelles en France et au Moyen-Orient, avec collecte de feedback en temps réel et itérations hebdomadaires.</p>
+          </div>
+        </li>
+        <li class="cs-step">
+          <span class="cs-step__num">05</span>
+          <div>
+            <strong>Formation &amp; Analytics</strong>
+            <p>Formation des conseillers beauté à l'outil, mise en place de dashboards de suivi KPI pour les équipes de direction.</p>
+          </div>
+        </li>
+      </ol>
+        </div><!-- /cs-col-content -->
+      </div><!-- /cs-two-col -->
+    </div>
+  </section>
+
+  <!-- ⑥ DÉMOS PRODUIT — Fond sombre (contraste fort) -->
+  <section class="cs cs--dark">
+    <div class="cs__inner fade-in">
+      <span class="cs-label cs-label--green">Outil produit</span>
+      <h2 class="cs-title cs-title--white" style="margin-bottom:3rem">Le diagnostic peau en magasin — MVP sur tablette conseiller</h2>
+      <div class="cs-demos">
+        <div class="cs-frame cs-frame--wide">
+          <div class="cs-frame__bar">
+            <div class="cs-frame__dots">
+              <span class="cs-frame__dot"></span>
+              <span class="cs-frame__dot"></span>
+              <span class="cs-frame__dot"></span>
+            </div>
+            <div class="cs-frame__url">App tablette — Diagnostic peau personnalisé</div>
+          </div>
+          <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=480&h=340&fit=crop&q=80"
+               alt="Interface de diagnostic peau sur tablette — outil conseiller beauté" />
+        </div>
+        <div class="cs-frame">
+          <div class="cs-frame__bar">
+            <div class="cs-frame__dots">
+              <span class="cs-frame__dot"></span>
+              <span class="cs-frame__dot"></span>
+              <span class="cs-frame__dot"></span>
+            </div>
+            <div class="cs-frame__url">Web — Prise de RDV en ligne</div>
+          </div>
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=320&h=340&fit=crop&q=80"
+               alt="Module de réservation de consultations beauté en boutique" />
+        </div>
+        <p class="cs-demos__caption">MVP déployé sur tablette dans 17 magasins pilotes + module de prise de RDV web intégré au système existant</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ RÉSULTATS — Fond teinté -->
+  <section class="cs cs--tint">
+    <div class="cs__inner fade-in">
+      <div class="cs-two-col">
+        <div class="cs-col-head">
+          <span class="cs-label cs-label--violet">Résultats détaillés</span>
+          <h2 class="cs-title cs-title--dark">Des chiffres qui valident l'approche</h2>
+        </div>
+        <div class="cs-col-content">
+          <ul class="cs-results">
+            <li>+70–80 % de taux de conversion dans les magasins pilotes vs. baseline initial</li>
+            <li>350 stores ciblés pour le déploiement européen à horizon 12 mois</li>
+            <li>4–6 nouveaux pays activés pour la prise de RDV beauté en ligne</li>
+            <li>+50–70 % de croissance des abonnements digitaux au programme fidélité</li>
+            <li>Adoption outil par 100 % des conseillers beauté pilotes dès le 1<sup>er</sup> mois</li>
+            <li>NPS conseiller : amélioration de 18 points sur la facilité d'utilisation de l'outil</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑧ GRILLE 2 IMAGES — Pleine largeur -->
+  <div class="cs-img-pair fade-in">
+    <figure>
+      <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=700&h=380&fit=crop&q=80"
+           alt="Expérience client en magasin avec outil diagnostic beauté" />
+      <figcaption>Conseillère beauté en situation réelle — magasin pilote France</figcaption>
     </figure>
+    <figure>
+      <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=700&h=380&fit=crop&q=80"
+           alt="Atelier de co-conception avec les équipes terrain" />
+      <figcaption>Atelier de co-conception — validation wireframes avec les équipes</figcaption>
+    </figure>
+  </div>
 
-    <!-- Ce qu'on a fait -->
-    <section class="article-section fade-in">
-      <h2 class="article-section__title"><span class="section-icon">🛠️</span> Notre intervention — 5 phases</h2>
-      <ul>
-        <li><strong>Phase Discovery</strong> — Interviews utilisateurs, focus groups avec conseillers beauté et clients finaux, identification des pain points sur le parcours en magasin</li>
-        <li><strong>Conception MVP</strong> — Design d'un outil de diagnostic peau/teint personnalisé intégrant les critères de la marque, wireframes validés avec les équipes terrain</li>
-        <li><strong>Prise de RDV en ligne</strong> — Intégration d'un module de réservation de consultations beauté en boutique, connecté au système existant</li>
-        <li><strong>Pilote 17 magasins</strong> — Déploiement en conditions réelles en France et au Moyen-Orient, avec collecte de feedback en temps réel</li>
-        <li><strong>Formation &amp; Analytics</strong> — Formation des conseillers beauté à l'outil, mise en place de dashboards de suivi pour les équipes de direction</li>
-      </ul>
-    </section>
-
-    <!-- Méthodologies -->
-    <section class="article-section fade-in">
-      <h2 class="article-section__title"><span class="section-icon">⚙️</span> Méthodologies utilisées</h2>
-      <div class="methodologies">
-        <span class="methodo-tag">User Interviews</span>
-        <span class="methodo-tag">Focus Groups</span>
-        <span class="methodo-tag">Prototypage rapide</span>
-        <span class="methodo-tag">Test utilisateur terrain</span>
-        <span class="methodo-tag">Design System</span>
-        <span class="methodo-tag">Pilot Deployment</span>
-        <span class="methodo-tag">Dashboard Analytics</span>
-        <span class="methodo-tag">Change Management</span>
+  <!-- ⑨ DIAGRAMME DE FLUX — Fond blanc -->
+  <section class="cs cs--white">
+    <div class="cs__inner fade-in">
+      <div class="cs-two-col">
+        <div class="cs-col-head">
+          <span class="cs-label cs-label--violet">Parcours client</span>
+          <h2 class="cs-title cs-title--dark">De l'entrée en magasin à la fidélisation digitale</h2>
+        </div>
+        <div class="cs-col-content">
+      <span class="cs-flow-label">Parcours client augmenté — 5 étapes clés</span>
+      <div class="cs-flow">
+        <div class="cs-node">
+          <span class="cs-node__icon">🏪</span>
+          <span class="cs-node__label">Entrée en magasin</span>
+          <span class="cs-node__sub">Accueil conseiller</span>
+        </div>
+        <span class="cs-arrow">→</span>
+        <div class="cs-node cs-node--accent">
+          <span class="cs-node__icon">🔬</span>
+          <span class="cs-node__label">Diagnostic peau</span>
+          <span class="cs-node__sub">Outil MVP tablette</span>
+        </div>
+        <span class="cs-arrow">→</span>
+        <div class="cs-node">
+          <span class="cs-node__icon">💡</span>
+          <span class="cs-node__label">Recommandations</span>
+          <span class="cs-node__sub">Personnalisées</span>
+        </div>
+        <span class="cs-arrow">→</span>
+        <div class="cs-node cs-node--accent">
+          <span class="cs-node__icon">🛒</span>
+          <span class="cs-node__label">Achat</span>
+          <span class="cs-node__sub">+75 % conversion</span>
+        </div>
+        <span class="cs-arrow">→</span>
+        <div class="cs-node cs-node--green">
+          <span class="cs-node__icon">📅</span>
+          <span class="cs-node__label">RDV suivi</span>
+          <span class="cs-node__sub">Fidélisation digitale</span>
+        </div>
       </div>
-    </section>
+        </div><!-- /cs-col-content -->
+      </div><!-- /cs-two-col -->
+    </div>
+  </section>
 
-    <!-- Résultats détaillés -->
-    <section class="article-section fade-in">
-      <h2 class="article-section__title"><span class="section-icon">📊</span> Résultats détaillés</h2>
-      <ul>
-        <li>+70-80 % de taux de conversion dans les magasins pilotes vs. baseline</li>
-        <li>350 stores ciblés pour le déploiement européen sur 12 mois</li>
-        <li>4-6 nouveaux pays activés pour la prise de RDV beauté en ligne</li>
-        <li>+50-70 % de croissance des abonnements digitaux programme fidélité</li>
-        <li>Adoption outil par 100 % des conseillers beauté pilotes dès le 1er mois</li>
-        <li>NPS conseiller : amélioration de 18 points sur la facilité d'utilisation</li>
-      </ul>
-    </section>
-
-    <!-- Consultant -->
-    <div class="consultant-block fade-in">
-      <div class="consultant-avatar">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  <!-- ⑩ WIREFRAMES — Fond teinté -->
+  <section class="cs cs--tint">
+    <div class="cs__inner fade-in">
+      <div class="cs-two-col">
+        <div class="cs-col-head">
+          <span class="cs-label cs-label--violet">Process design</span>
+          <h2 class="cs-title cs-title--dark">Wireframes — de la discovery au prototype testé</h2>
+        </div>
+        <div class="cs-col-content">
+      <div class="cs-wf-grid">
+        <div class="cs-wf">
+          <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=400&h=280&fit=crop&q=80"
+               alt="Wireframe — Accueil outil diagnostic" />
+          <div class="cs-wf__label">Accueil — Sélection type de peau</div>
+        </div>
+        <div class="cs-wf">
+          <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=400&h=280&fit=crop&q=80"
+               alt="Wireframe — Questionnaire diagnostic personnalisé" />
+          <div class="cs-wf__label">Diagnostic — Questionnaire personnalisé</div>
+        </div>
+        <div class="cs-wf">
+          <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=400&h=280&fit=crop&q=80"
+               alt="Wireframe — Résultats et recommandations" />
+          <div class="cs-wf__label">Résultats — Recommandations &amp; prise de RDV</div>
+        </div>
       </div>
-      <div class="consultant-info">
-        <p class="consultant-name">Consultant Wivoo</p>
-        <p class="consultant-role">Expert Product Design · Retail & Beauté</p>
-        <blockquote class="consultant-quote">
-          Le vrai enjeu de ce projet était l'adoption terrain. Un outil aussi sophistiqué n'a de valeur que si les conseillers beauté l'utilisent naturellement. On a consacré autant de temps à la formation et au change management qu'au design lui-même — et c'est ce qui a fait les +70-80 % de conversion.
-        </blockquote>
+        </div><!-- /cs-col-content -->
+      </div><!-- /cs-two-col -->
+    </div>
+  </section>
+
+  <!-- ⑪ LIVRABLES + MÉTHODES — Fond blanc -->
+  <section class="cs cs--white">
+    <div class="cs__inner fade-in">
+      <div class="cs-two-col">
+        <div class="cs-col-head">
+          <span class="cs-label cs-label--violet">Ce que Wivoo a livré</span>
+          <h2 class="cs-title cs-title--dark">Livrables &amp; méthodologies</h2>
+        </div>
+        <div class="cs-col-content">
+      <div class="cs-deliverables">
+        <div class="cs-deliverable">
+          <span class="cs-deliverable__icon">🔍</span>
+          <div>
+            <p class="cs-deliverable__name">Rapport Discovery</p>
+            <p class="cs-deliverable__desc">Synthèse des interviews et insights terrain — pain points conseillers &amp; clients</p>
+          </div>
+        </div>
+        <div class="cs-deliverable">
+          <span class="cs-deliverable__icon">📱</span>
+          <div>
+            <p class="cs-deliverable__name">Prototype interactif</p>
+            <p class="cs-deliverable__desc">MVP outil diagnostic peau — 17 scénarios de skin type couverts</p>
+          </div>
+        </div>
+        <div class="cs-deliverable">
+          <span class="cs-deliverable__icon">📊</span>
+          <div>
+            <p class="cs-deliverable__name">KPI Dashboard pilote</p>
+            <p class="cs-deliverable__desc">Suivi temps réel : taux de conversion, NPS conseiller, usage par magasin</p>
+          </div>
+        </div>
+        <div class="cs-deliverable">
+          <span class="cs-deliverable__icon">🎓</span>
+          <div>
+            <p class="cs-deliverable__name">Kit de formation</p>
+            <p class="cs-deliverable__desc">Guide conseiller, vidéos de prise en main, FAQ — 100 % adoption dès le 1<sup>er</sup> mois</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#9CA3AF; margin-top:3rem; margin-bottom:0.5rem;">Méthodologies utilisées</h3>
+      <div class="cs-methods">
+        <span class="cs-method">User Interviews</span>
+        <span class="cs-method">Focus Groups</span>
+        <span class="cs-method">Prototypage rapide</span>
+        <span class="cs-method">Test utilisateur terrain</span>
+        <span class="cs-method">Design System</span>
+        <span class="cs-method">Pilot Deployment</span>
+        <span class="cs-method">Dashboard Analytics</span>
+        <span class="cs-method">Change Management</span>
+      </div>
+        </div><!-- /cs-col-content -->
+      </div><!-- /cs-two-col -->
+    </div>
+  </section>
+
+  <!-- ⑫ CONSULTANT — Fond teinté -->
+  <section class="cs cs--tint">
+    <div class="cs__inner fade-in">
+      <span class="cs-label cs-label--violet">Le consultant</span>
+      <div class="cs-consultant">
+        <div class="cs-consultant__avatar">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div>
+          <p class="cs-consultant__name">Consultant Wivoo</p>
+          <p class="cs-consultant__role">Expert Product Design · Retail &amp; Beauté</p>
+          <blockquote class="cs-consultant__quote">
+            Le vrai enjeu de ce projet était l'adoption terrain. Un outil aussi sophistiqué n'a de valeur que si les conseillers beauté l'utilisent naturellement. On a consacré autant de temps à la formation et au change management qu'au design lui-même — et c'est ce qui a fait les +70–80 % de conversion.
+          </blockquote>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Verbatim client -->
-    <div class="client-quote fade-in">
-      <p class="client-quote__text">
+  <!-- ⑬ CITATION CLIENT — Fond sombre (contraste fort) -->
+  <section class="cs cs--dark">
+    <div class="cs__inner cs__inner--narrow fade-in">
+      <span class="cs-label cs-label--white">Verbatim client</span>
+      <blockquote class="cs-blockquote">
         "Wivoo a parfaitement compris notre double enjeu : créer un outil techniquement robuste ET adopté par nos équipes terrain. Leur approche centrée utilisateur, combinée à une gestion de projet rigoureuse, nous a permis de lancer le pilote en 4 mois et d'envisager un déploiement dans 350 stores en confiance."
-      </p>
-      <p class="client-quote__author">— Directrice Digitale Europe, Leader mondial beauté & cosmétiques</p>
+        <cite>— Directrice Digitale Europe, Leader mondial beauté &amp; cosmétiques</cite>
+      </blockquote>
     </div>
+  </section>
 
-  </main>
+  <!-- ⑭ CTA — Fond vert accent -->
+  <section class="cs cs--green">
+    <div class="cs__inner fade-in">
+      <p class="cs-cta__title">Vous avez un défi similaire ?</p>
+      <p class="cs-cta__sub">Parlons-en avec un de nos consultants Wivoo.<br>On répond en moins de 24 h.</p>
+      <a href="https://www.wivoo.fr/contact" class="btn btn--violet">Prendre RDV →</a>
+    </div>
+  </section>
 
-  <!-- ARTICLES LIÉS -->
-  <section class="related-articles">
-    <div class="related-articles__inner">
-      <h2 class="related-articles__title">D'autres réalisations</h2>
-      <div class="related-articles__grid">
-        <a class="mini-card" href="chatbot-banque.html">
-          <div class="mini-card__img"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&h=140&fit=crop&q=80" alt="Banque" /></div>
-          <div class="mini-card__body"><div class="mini-card__tags"><span class="tag tag--ai">AI</span><span class="tag tag--banque">Banque</span></div><p class="mini-card__title">Chatbot GenAI — Secteur bancaire</p><span class="mini-card__link">Lire →</span></div>
+  <!-- Lien retour -->
+  <div class="cs-back-bar">
+    <a href="../realisations.html" class="cs-back">← Tous les cas clients</a>
+  </div>
+
+  <!-- ⑮ ARTICLES LIÉS -->
+  <section class="cs-related">
+    <div class="cs-related__inner">
+      <p class="cs-related__title">D'autres réalisations</p>
+      <div class="cs-related__grid">
+        <a class="cs-mini" href="chatbot-banque.html">
+          <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&h=140&fit=crop&q=80" alt="Banque" /></div>
+          <div class="cs-mini__body">
+            <div class="cs-mini__tags"><span class="tag tag--ai">AI</span><span class="tag tag--banque">Banque</span></div>
+            <p class="cs-mini__title">Chatbot GenAI — Secteur bancaire</p>
+            <span class="cs-mini__link">Lire →</span>
+          </div>
         </a>
-        <a class="mini-card" href="retail-sport.html">
-          <div class="mini-card__img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=140&fit=crop&q=80" alt="Retail sport" /></div>
-          <div class="mini-card__body"><div class="mini-card__tags"><span class="tag tag--produit">Produit</span><span class="tag tag--retail">Retail</span></div><p class="mini-card__title">Engagement utilisateur — Retail sportif européen</p><span class="mini-card__link">Lire →</span></div>
+        <a class="cs-mini" href="retail-sport.html">
+          <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=140&fit=crop&q=80" alt="Retail sport" /></div>
+          <div class="cs-mini__body">
+            <div class="cs-mini__tags"><span class="tag tag--produit">Produit</span><span class="tag tag--retail">Retail</span></div>
+            <p class="cs-mini__title">Engagement utilisateur — Retail sportif européen</p>
+            <span class="cs-mini__link">Lire →</span>
+          </div>
         </a>
-        <a class="mini-card" href="ecommerce-pharma.html">
-          <div class="mini-card__img"><img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&h=140&fit=crop&q=80" alt="Pharma" /></div>
-          <div class="mini-card__body"><div class="mini-card__tags"><span class="tag tag--produit">Produit</span><span class="tag tag--pharma">Pharma</span></div><p class="mini-card__title">E-commerce mondial — Secteur pharmaceutique</p><span class="mini-card__link">Lire →</span></div>
+        <a class="cs-mini" href="ecommerce-pharma.html">
+          <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&h=140&fit=crop&q=80" alt="Pharma" /></div>
+          <div class="cs-mini__body">
+            <div class="cs-mini__tags"><span class="tag tag--produit">Produit</span><span class="tag tag--pharma">Pharma</span></div>
+            <p class="cs-mini__title">E-commerce mondial — Secteur pharmaceutique</p>
+            <span class="cs-mini__link">Lire →</span>
+          </div>
         </a>
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer__container">
-      <p class="footer__logo"><img src="../images/logo-wivoo.png" alt="Wivoo" /></p>
-      <p class="footer__tagline">Expertise. Résultats. Impact.</p>
-      <p class="footer__email"><a href="mailto:guido.macaluso@wivoo.fr">guido.macaluso@wivoo.fr</a></p>
-      <p class="footer__copy">© 2026 Wivoo — Tous droits réservés</p>
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="../index.html" class="footer__logo">
+            <img src="https://cdn.prod.website-files.com/64f8703aba9a3b126e920e3a/68761c360a7be01af5693330_Wivoo%20Logo%20RGB%20White.svg" alt="Wivoo" />
+          </a>
+          <p class="footer__tagline">Un collectif expert en Produit, Data et IA<br>au service de la transformation de votre entreprise</p>
+          <a href="https://www.wivoo.fr/contact" class="btn btn--primary">Prendre RDV</a>
+        </div>
+        <div class="footer__social">
+          <p class="footer__social-title">Restez connectés !</p>
+          <div class="footer__social-links">
+            <a href="https://www.linkedin.com/company/wivoo/" class="footer__social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <img src="https://cdn.prod.website-files.com/64f8703aba9a3b126e920e3a/686b8ab18b27cc7f082f638f_f391d0437d3ab9b5c9ed263ade102128_LinkedIn%20Big%20Logo.svg" alt="LinkedIn" />
+            </a>
+            <a href="https://www.welcometothejungle.com/fr/companies/wivoo" class="footer__social-link" aria-label="Welcome to the Jungle" target="_blank" rel="noopener">
+              <img src="https://cdn.prod.website-files.com/64f8703aba9a3b126e920e3a/686b8ab11602c22034ea503e_2e0cb108efb9c38c96721b2bada0469e_Welcome%20to%20the%20Jungle%20Logo%20Icon.svg" alt="Welcome to the Jungle" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">@Wivoo - 2026</p>
+        <a href="#" class="footer__legal">Mentions légales</a>
+      </div>
     </div>
   </footer>
 

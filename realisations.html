@@ -223,22 +223,30 @@
     }
     .case-card:hover .case-card__img::after { opacity: 1; }
 
-    /* Badge "Article bientôt" */
+    /* Badge "Bientôt disponible" — bouton déclencheur */
     .case-card__coming {
       position: absolute;
       top: 14px;
       right: 14px;
-      background: rgba(23,2,60,0.8);
-      color: rgba(255,255,255,0.75);
+      background: rgba(23,2,60,0.82);
+      color: rgba(255,255,255,0.85);
       font-size: 0.68rem;
       font-weight: 600;
-      padding: 0.3rem 0.7rem;
+      padding: 0.35rem 0.75rem;
       border-radius: 100px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0.05em;
       backdrop-filter: blur(4px);
-      z-index: 1;
+      z-index: 2;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-family);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: background 0.2s;
     }
+    .case-card__coming:hover { background: rgba(69,29,199,0.9); }
+    .case-card__coming.is-active { background: var(--color-primary); color: #fff; }
 
     /* Corps de la card */
     .case-card__body {
@@ -437,79 +445,21 @@
     }
 
     /* =============================================
-       FORMULAIRE NOTIFICATION — cards "bientôt"
+       PANNEAU NOTIFICATION — glisse depuis le bas
     ============================================= */
 
-    /* Bouton déclencheur */
-    .card-notify-btn {
-      font-family: var(--font-family);
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--color-primary);
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      transition: opacity 0.2s;
-      white-space: nowrap;
+    /* Conteneur glissant */
+    .notify-panel {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1.5rem;
+      border-top: 0px solid var(--color-border);
     }
-    .card-notify-btn:hover { opacity: 0.65; }
-
-    /* Conteneur du formulaire (masqué par défaut) */
-    .card-notify-form {
-      padding: 0 1.5rem 1.25rem;
-      border-top: 1px solid var(--color-border);
-      margin-top: -0.25rem;
-    }
-    .card-notify-form[hidden] { display: none; }
-
-    /* Séparateur discret */
-    .notify-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--color-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.6rem;
-      margin-top: 1rem;
-      display: block;
-    }
-
-    /* Toggle Candidat / Entreprise */
-    .notify-profile {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-      margin-bottom: 0.75rem;
-    }
-    .notify-profile__btn {
-      padding: 0.5rem 0.5rem;
-      border: 1.5px solid #DDD8F5;
-      border-radius: 8px;
-      background: #F5F4FB;
-      font-family: var(--font-family);
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--color-text-muted);
-      cursor: pointer;
-      text-align: center;
-      transition: border-color 0.15s, background 0.15s, color 0.15s;
-    }
-    .notify-profile__btn:hover { border-color: #9CA3AF; color: var(--color-text); }
-    .notify-profile__btn.is-active[data-value="candidat"] {
-      background: rgba(4,240,106,0.1);
-      border-color: #04B84E;
-      color: #065f46;
-      font-weight: 700;
-    }
-    .notify-profile__btn.is-active[data-value="entreprise"] {
-      background: rgba(69,29,199,0.08);
-      border-color: var(--color-primary);
-      color: var(--color-primary);
-      font-weight: 700;
+    .notify-panel.is-open {
+      max-height: 100px;
+      padding: 1rem 1.5rem 1.25rem;
+      border-top-width: 1px;
     }
 
     /* Champ email + bouton submit */
@@ -562,11 +512,6 @@
       font-size: 0.82rem;
       font-weight: 500;
       color: #065f46;
-      background: rgba(4,240,106,0.1);
-      border: 1px solid rgba(4,240,106,0.35);
-      border-radius: 8px;
-      padding: 0.65rem 0.875rem;
-      margin-top: 1rem;
       line-height: 1.4;
     }
     .notify-success[hidden] { display: none; }
@@ -816,7 +761,7 @@
             <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=200&fit=crop&q=80"
                  alt="Média — Abonnements numériques"
                  onerror="this.style.display='none'" />
-            <span class="case-card__coming">Article bientôt disponible</span>
+            <button class="case-card__coming" type="button" aria-label="Me notifier à la publication">🔔 Bientôt disponible</button>
             <div class="card-img-overlay">
               <div class="card-img-tags">
                 <span class="tag tag--produit">Produit</span>
@@ -833,23 +778,15 @@
               </div>
             </div>
           </div>
-          <div class="case-card__footer">
-            <button class="card-notify-btn" type="button">🔔 Me notifier à la publication</button>
-          </div>
-          <div class="card-notify-form" hidden>
-            <span class="notify-label">Je suis…</span>
+          <div class="notify-panel">
             <form class="notify-form" novalidate>
-              <div class="notify-profile">
-                <button type="button" class="notify-profile__btn" data-value="candidat">👤 Candidat</button>
-                <button type="button" class="notify-profile__btn" data-value="entreprise">🏢 Entreprise</button>
-              </div>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
                 <button type="submit" class="notify-submit">Me notifier →</button>
               </div>
-              <p class="notify-error" hidden>Sélectionnez un profil et entrez votre email.</p>
+              <p class="notify-error" hidden>Email invalide.</p>
             </form>
-            <p class="notify-success" hidden>✓ Noté ! Vous serez notifié lors de la publication de cet article.</p>
+            <p class="notify-success" hidden>✓ Vous serez notifié à la publication !</p>
           </div>
         </article>
 
@@ -864,7 +801,7 @@
             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=200&fit=crop&q=80"
                  alt="Data — Gestion retail"
                  onerror="this.style.display='none'" />
-            <span class="case-card__coming">Article bientôt disponible</span>
+            <button class="case-card__coming" type="button" aria-label="Me notifier à la publication">🔔 Bientôt disponible</button>
             <div class="card-img-overlay">
               <div class="card-img-tags">
                 <span class="tag tag--data">Data</span>
@@ -881,23 +818,15 @@
               </div>
             </div>
           </div>
-          <div class="case-card__footer">
-            <button class="card-notify-btn" type="button">🔔 Me notifier à la publication</button>
-          </div>
-          <div class="card-notify-form" hidden>
-            <span class="notify-label">Je suis…</span>
+          <div class="notify-panel">
             <form class="notify-form" novalidate>
-              <div class="notify-profile">
-                <button type="button" class="notify-profile__btn" data-value="candidat">👤 Candidat</button>
-                <button type="button" class="notify-profile__btn" data-value="entreprise">🏢 Entreprise</button>
-              </div>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
                 <button type="submit" class="notify-submit">Me notifier →</button>
               </div>
-              <p class="notify-error" hidden>Sélectionnez un profil et entrez votre email.</p>
+              <p class="notify-error" hidden>Email invalide.</p>
             </form>
-            <p class="notify-success" hidden>✓ Noté ! Vous serez notifié lors de la publication de cet article.</p>
+            <p class="notify-success" hidden>✓ Vous serez notifié à la publication !</p>
           </div>
         </article>
 
@@ -912,7 +841,7 @@
             <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=200&fit=crop&q=80"
                  alt="Data & AI — Scores prédictifs"
                  onerror="this.style.display='none'" />
-            <span class="case-card__coming">Article bientôt disponible</span>
+            <button class="case-card__coming" type="button" aria-label="Me notifier à la publication">🔔 Bientôt disponible</button>
             <div class="card-img-overlay">
               <div class="card-img-tags">
                 <span class="tag tag--ai">AI</span>
@@ -929,23 +858,15 @@
               </div>
             </div>
           </div>
-          <div class="case-card__footer">
-            <button class="card-notify-btn" type="button">🔔 Me notifier à la publication</button>
-          </div>
-          <div class="card-notify-form" hidden>
-            <span class="notify-label">Je suis…</span>
+          <div class="notify-panel">
             <form class="notify-form" novalidate>
-              <div class="notify-profile">
-                <button type="button" class="notify-profile__btn" data-value="candidat">👤 Candidat</button>
-                <button type="button" class="notify-profile__btn" data-value="entreprise">🏢 Entreprise</button>
-              </div>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
                 <button type="submit" class="notify-submit">Me notifier →</button>
               </div>
-              <p class="notify-error" hidden>Sélectionnez un profil et entrez votre email.</p>
+              <p class="notify-error" hidden>Email invalide.</p>
             </form>
-            <p class="notify-success" hidden>✓ Noté ! Vous serez notifié lors de la publication de cet article.</p>
+            <p class="notify-success" hidden>✓ Vous serez notifié à la publication !</p>
           </div>
         </article>
 
@@ -960,7 +881,7 @@
             <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=200&fit=crop&q=80"
                  alt="BTP — Service client digital"
                  onerror="this.style.display='none'" />
-            <span class="case-card__coming">Article bientôt disponible</span>
+            <button class="case-card__coming" type="button" aria-label="Me notifier à la publication">🔔 Bientôt disponible</button>
             <div class="card-img-overlay">
               <div class="card-img-tags">
                 <span class="tag tag--produit">Produit</span>
@@ -977,23 +898,15 @@
               </div>
             </div>
           </div>
-          <div class="case-card__footer">
-            <button class="card-notify-btn" type="button">🔔 Me notifier à la publication</button>
-          </div>
-          <div class="card-notify-form" hidden>
-            <span class="notify-label">Je suis…</span>
+          <div class="notify-panel">
             <form class="notify-form" novalidate>
-              <div class="notify-profile">
-                <button type="button" class="notify-profile__btn" data-value="candidat">👤 Candidat</button>
-                <button type="button" class="notify-profile__btn" data-value="entreprise">🏢 Entreprise</button>
-              </div>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
                 <button type="submit" class="notify-submit">Me notifier →</button>
               </div>
-              <p class="notify-error" hidden>Sélectionnez un profil et entrez votre email.</p>
+              <p class="notify-error" hidden>Email invalide.</p>
             </form>
-            <p class="notify-success" hidden>✓ Noté ! Vous serez notifié lors de la publication de cet article.</p>
+            <p class="notify-success" hidden>✓ Vous serez notifié à la publication !</p>
           </div>
         </article>
 
@@ -1049,72 +962,41 @@
   <script src="js/filters.js"></script>
 
   <script>
-  /* =============================================
-     FORMULAIRE NOTIFICATION — cards "bientôt"
-  ============================================= */
   (function () {
 
-    document.querySelectorAll('.card-notify-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var card   = btn.closest('.case-card');
-        var panel  = card.querySelector('.card-notify-form');
-        var isOpen = !panel.hidden;
-
-        if (isOpen) {
-          panel.hidden = true;
-          btn.innerHTML = '🔔 Me notifier à la publication';
-        } else {
-          panel.hidden = false;
-          btn.innerHTML = '✕ Annuler';
-          panel.querySelector('.notify-input').focus();
-        }
+    /* Cloche — ouvre / ferme le panneau */
+    document.querySelectorAll('.case-card__coming').forEach(function (badge) {
+      badge.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var panel  = badge.closest('.case-card').querySelector('.notify-panel');
+        var isOpen = panel.classList.contains('is-open');
+        panel.classList.toggle('is-open', !isOpen);
+        badge.classList.toggle('is-active', !isOpen);
+        if (!isOpen) { panel.querySelector('.notify-input').focus(); }
       });
     });
 
+    /* Soumission du formulaire */
     document.querySelectorAll('.notify-form').forEach(function (form) {
-      var profileBtns  = form.querySelectorAll('.notify-profile__btn');
-      var errorEl      = form.querySelector('.notify-error');
-      var successEl    = form.closest('.card-notify-form').querySelector('.notify-success');
-      var selectedProfile = null;
+      var errorEl   = form.querySelector('.notify-error');
+      var panel     = form.closest('.notify-panel');
+      var successEl = panel.querySelector('.notify-success');
 
-      /* Sélection du profil */
-      profileBtns.forEach(function (pbtn) {
-        pbtn.addEventListener('click', function () {
-          profileBtns.forEach(function (b) { b.classList.remove('is-active'); });
-          pbtn.classList.add('is-active');
-          selectedProfile = pbtn.dataset.value;
-          errorEl.hidden = true;
-        });
-      });
-
-      /* Soumission */
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-
         var email = form.querySelector('.notify-input').value.trim();
-        var emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-        if (!selectedProfile || !emailValid) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
           errorEl.hidden = false;
-          errorEl.textContent = !selectedProfile
-            ? 'Sélectionnez un profil (Candidat ou Entreprise).'
-            : 'Entrez une adresse email valide.';
           return;
         }
-
         errorEl.hidden = true;
-
-        /* TODO : envoyer { email, profile: selectedProfile, article: ... } au backend */
-        console.log('[Notify] Email:', email, '| Profil:', selectedProfile);
-
-        /* Afficher le succès */
+        console.log('[Notify]', email);
         form.hidden = true;
         successEl.hidden = false;
-
-        /* Mettre à jour le bouton */
-        var card = form.closest('.case-card');
-        var btn  = card.querySelector('.card-notify-btn');
-        if (btn) { btn.style.display = 'none'; }
+        var badge = panel.closest('.case-card').querySelector('.case-card__coming');
+        badge.textContent = '✓ Notifié';
+        badge.disabled = true;
+        badge.style.background = 'rgba(4,184,78,0.88)';
       });
     });
 

@@ -54,27 +54,57 @@
     padding: 4rem 5rem;
   }
   .cs-hero__content { max-width: 900px; }
-  .cs-hero__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
   .cs-hero__title {
-    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
     font-weight: 700; color: #fff;
-    line-height: 1.12; letter-spacing: -0.01em;
+    line-height: 1.18; letter-spacing: -0.01em;
   }
 
-  /* ---- Breadcrumb ---- */
-  .cs-breadcrumb {
+  /* Breadcrumb — overlay top-left dans le hero */
+  .cs-hero__breadcrumb {
+    position: absolute;
+    top: 1.5rem;
+    left: 5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.55);
+    z-index: 2;
+  }
+  .cs-hero__breadcrumb a {
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .cs-hero__breadcrumb a:hover { color: #fff; }
+  .cs-hero__breadcrumb__sep { color: rgba(255,255,255,0.3); }
+
+  /* Barre de tags — sticky, toujours visible au scroll */
+  .cs-tags-bar {
     background: #fff;
     border-bottom: 1px solid #E5E7EB;
-    padding: 0.75rem 2.5rem;
+    padding: 0.6rem 2.5rem;
+    position: sticky;
+    top: 68px;
+    z-index: 100;
   }
-  .cs-breadcrumb__inner {
-    max-width: 1100px; margin: 0 auto;
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.82rem; color: #9CA3AF;
+  .cs-tags-bar__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
   }
-  .cs-breadcrumb__inner a { color: #451DC7; font-weight: 500; }
-  .cs-breadcrumb__inner a:hover { opacity: 0.7; }
-  .cs-breadcrumb__sep { color: #D1D5DB; }
+  .cs-tags-bar__client {
+    margin-left: auto;
+    font-size: 0.78rem;
+    color: #9CA3AF;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   /* ---- Eyebrow label ---- */
   .cs-label {
@@ -559,7 +589,7 @@
   <!-- NAVIGATION -->
   <nav class="nav" id="nav">
     <div class="nav__container">
-      <a class="nav__logo" href="../index.html"><img src="../images/logo-wivoo.png" alt="Wivoo" /></a>
+      <a class="nav__logo" href="../index.html"><img src="../images/6867e3036e5069059dfe3a76_LOGO-Wivoo-RGB_BLUE-p-1600.png" alt="Wivoo" /></a>
       <ul class="nav__links" id="navLinks">
         <li class="nav__item has-dropdown"><a href="#">Nos solutions <span class="nav__arrow">&#9662;</span></a>
           <div class="nav__dropdown"><a href="#">Data et IA</a><a href="#">Product Management</a><a href="#">Product Design</a><a href="#">Formations WiAC!</a></div></li>
@@ -580,40 +610,31 @@
   <div class="cs-hero">
     <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&h=580&fit=crop&q=80"
          alt="Chatbot GenAI &#8212; Refonte pour un acteur majeur du secteur bancaire" />
+    <!-- Breadcrumb top-left -->
+    <nav class="cs-hero__breadcrumb" aria-label="Fil d'Ariane">
+      <a href="../realisations.html">Nos r&#233;alisations</a>
+      <span class="cs-hero__breadcrumb__sep">&#8250;</span>
+      <span>Chatbot GenAI &#8212; Secteur bancaire</span>
+    </nav>
     <div class="cs-hero__overlay">
       <div class="cs-hero__content">
         <h1 class="cs-hero__title">Refonte du chatbot client avec int&#233;gration<br>de technologies GenAI pour un acteur<br>majeur du secteur bancaire</h1>
-        <div class="cs-hero__tags">
-          <span class="tag tag--ai">AI</span>
-          <span class="tag tag--banque">Banque</span>
-          <span class="tag tag--usecase">Use case</span>
-        </div>
       </div>
     </div>
   </div>
 
-  <!-- Breadcrumb -->
-  <nav class="cs-breadcrumb" aria-label="Fil d'Ariane">
-    <div class="cs-breadcrumb__inner">
-      <a href="../realisations.html">Nos r&#233;alisations</a>
-      <span class="cs-breadcrumb__sep">&#8250;</span>
-      <span>Chatbot GenAI &#8212; Secteur bancaire</span>
+  <!-- Barre sticky : tags + contexte client -->
+  <div class="cs-tags-bar">
+    <div class="cs-tags-bar__inner">
+      <span class="tag tag--ai">AI</span>
+      <span class="tag tag--banque">Banque</span>
+      <span class="cs-tags-bar__client">Acteur majeur du secteur bancaire &nbsp;&#183;&nbsp; Direction Service Client</span>
     </div>
-  </nav>
+  </div>
 
   <!-- ② KPIs — Fond blanc -->
   <section class="cs cs--white">
     <div class="cs__inner">
-
-      <!-- Metadata -->
-      <div class="cs-meta">
-        <div class="cs-meta__tags">
-          <span class="tag tag--ai">AI</span>
-          <span class="tag tag--banque">Banque</span>
-          <span class="tag tag--usecase">Use case</span>
-          <span class="cs-meta__client">&#183; Acteur majeur du secteur bancaire &nbsp;&#183;&nbsp; Direction Service Client</span>
-        </div>
-      </div>
 
       <!-- KPIs — grands chiffres -->
       <div class="cs-kpis fade-in">
@@ -626,8 +647,8 @@
           <span class="cs-kpi__label">variations int&#233;gr&#233;es pour r&#233;duire les erreurs de compr&#233;hension</span>
         </div>
         <div class="cs-kpi">
-          <span class="cs-kpi__number">&#8593; Engagement</span>
-          <span class="cs-kpi__label">multim&#233;dia &#8212; images, vid&#233;os, GIFs int&#233;gr&#233;s dans les dialogues</span>
+          <span class="cs-kpi__number">+48 %</span>
+          <span class="cs-kpi__label">satisfaction client &#8212; mesure post-interaction sur les nouveaux dialogues</span>
         </div>
       </div>
 

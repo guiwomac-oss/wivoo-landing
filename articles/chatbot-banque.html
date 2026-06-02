@@ -387,47 +387,45 @@
   .cs-value-card__title { font-size: 0.9rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem; }
   .cs-value-card__text { font-size: 0.85rem; color: #6B7280; line-height: 1.65; }
 
-  /* ---- A : Profil consultant enrichi ---- */
-  .cs-profile {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem;
-    align-items: flex-start;
-  }
+  /* ---- Profil consultant épuré ---- */
+  .cs-profile { display: grid; grid-template-columns: auto 1fr; gap: 1.75rem; align-items: flex-start; }
   .cs-profile__avatar {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: linear-gradient(135deg, #451DC7, #17023C);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    font-size: 1.375rem; font-weight: 700; color: #fff;
-    letter-spacing: 0.02em;
+    width: 52px; height: 52px; border-radius: 50%;
+    object-fit: cover; object-position: center top;
+    flex-shrink: 0; border: 2px solid #F3F4F6;
   }
-  .cs-profile__header {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    margin-bottom: 0.25rem;
+  .cs-profile__name { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 0.15rem; }
+  .cs-profile__title { font-size: 0.78rem; color: #9CA3AF; margin-bottom: 1rem; }
+  .cs-profile__tools { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 1.25rem; }
+  .cs-profile__tool {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.22rem 0.6rem;
+    border: 1px solid #E5E7EB; border-radius: 6px;
+    background: #FAFAFA;
+    font-size: 0.72rem; font-weight: 500; color: #6B7280;
   }
-  .cs-profile__name { font-size: 1.125rem; font-weight: 700; color: #111827; }
-  .cs-profile__seniority {
-    font-size: 0.72rem; font-weight: 700;
-    background: rgba(69,29,199,0.08);
-    color: #451DC7;
-    padding: 0.2rem 0.6rem;
-    border-radius: 100px;
-    letter-spacing: 0.04em;
-  }
-  .cs-profile__title { font-size: 0.82rem; color: #6B7280; margin-bottom: 0.75rem; }
-  .cs-profile__tags { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 1rem; }
-  .cs-profile__bio {
-    font-size: 0.9rem; color: #374151; line-height: 1.7;
-    margin-bottom: 1.25rem;
-  }
+  .cs-profile__tool-icon { font-size: 0.78rem; line-height: 1; }
   .cs-profile__quote {
     font-size: 0.9375rem; color: #374151; line-height: 1.75;
     font-style: italic; margin: 0;
-    border-left: 3px solid #451DC7; padding-left: 1.25rem;
+    border-left: 2px solid #E5E7EB; padding-left: 1.25rem;
+  }
+  .cs-profile__kpis {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin-top: 2rem;
+    background: #F5F4FB; border-radius: 12px; overflow: hidden;
+  }
+  .cs-profile__kpi { display: flex; flex-direction: column; gap: 0.375rem; padding: 1.25rem 1.5rem; }
+  .cs-profile__kpi + .cs-profile__kpi { border-left: 2px solid #fff; }
+  .cs-profile__kpi-number {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700; color: #451DC7; line-height: 1; letter-spacing: -0.03em;
+  }
+  .cs-profile__kpi-label { font-size: 0.75rem; color: #6B7280; line-height: 1.4; }
+  @media (max-width: 768px) {
+    .cs-profile { grid-template-columns: 1fr; }
+    .cs-profile__kpis { grid-template-columns: 1fr; border-radius: 10px; }
+    .cs-profile__kpi + .cs-profile__kpi { border-left: none; border-top: 2px solid #fff; }
   }
 
   /* ---- CTA double cible (milieu d'article) ---- */
@@ -801,25 +799,37 @@
     <div class="cs__inner fade-in">
       <span class="cs-label cs-label--violet">L&#8217;expert Wivoo sur la mission</span>
       <div class="cs-profile">
-        <div class="cs-profile__avatar" aria-hidden="true">SM</div>
+        <img class="cs-profile__avatar"
+             src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=104&h=104&fit=crop&crop=faces&q=80"
+             alt="Sophie Marchand, Senior Consultant Data &amp; IA" />
         <div>
-          <div class="cs-profile__header">
-            <span class="cs-profile__name">Sophie Marchand</span>
-            <span class="cs-profile__seniority">8 ans d&#8217;exp&#233;rience</span>
+          <p class="cs-profile__name">Sophie Marchand</p>
+          <p class="cs-profile__title">Senior Consultant Data &amp; IA · Wivoo · 8 ans d&#8217;exp&#233;rience</p>
+          <div class="cs-profile__tools">
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">🤖</span>Watson Assistant</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">🐍</span>Python</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">☁️</span>Azure AI</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">📊</span>Looker</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">📋</span>Jira</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">🗺️</span>Figma</span>
           </div>
-          <p class="cs-profile__title">Senior Consultant Data &amp; IA · Wivoo</p>
-          <div class="cs-profile__tags">
-            <span class="tag tag--ai">IA G&#233;n&#233;rative</span>
-            <span class="tag tag--data">NLP &amp; Chatbots</span>
-            <span class="tag tag--banque">Banque</span>
-            <span class="tag tag--produit">Product Management</span>
-          </div>
-          <p class="cs-profile__bio">
-            Sp&#233;cialis&#233;e dans le d&#233;ploiement de solutions IA conversationnelles dans les services financiers, Sophie a men&#233; plus de 12 projets NLP de l&#8217;ideation au run. Avant Wivoo, elle &#233;tait Lead Data Scientist dans un groupe bancaire europ&#233;en.
-          </p>
           <blockquote class="cs-profile__quote">
-            La cl&#233; de ce projet a &#233;t&#233; de combiner la rigueur des sp&#233;cifications m&#233;tier avec la flexibilit&#233; des mod&#232;les g&#233;n&#233;ratifs. En couvrant 400+ intentions et 39&#160;000 variations, on a cr&#233;&#233; un chatbot qui comprend vraiment les clients — pas juste un arbre d&#233;cisionnel glorifi&#233;.
+            La cl&#233; de ce projet a &#233;t&#233; de combiner la rigueur des sp&#233;cifications m&#233;tier avec la flexibilit&#233; des mod&#232;les g&#233;n&#233;ratifs. En couvrant 400+ intentions et 39&#160;000 variations, on a cr&#233;&#233; un chatbot qui comprend vraiment les clients &#8212; pas juste un arbre d&#233;cisionnel glorifi&#233;.
           </blockquote>
+          <div class="cs-profile__kpis">
+            <div class="cs-profile__kpi">
+              <span class="cs-profile__kpi-number">+35%</span>
+              <span class="cs-profile__kpi-label">features redesign&#233;es</span>
+            </div>
+            <div class="cs-profile__kpi">
+              <span class="cs-profile__kpi-number">39 000</span>
+              <span class="cs-profile__kpi-label">variations int&#233;gr&#233;es</span>
+            </div>
+            <div class="cs-profile__kpi">
+              <span class="cs-profile__kpi-number">+48%</span>
+              <span class="cs-profile__kpi-label">satisfaction client</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -851,37 +861,17 @@
     </div>
   </section>
 
-  <!-- ④ KPIs — Fond blanc -->
-  <section class="cs cs--white">
-    <div class="cs__inner">
-      <div class="cs-kpis fade-in">
-        <div class="cs-kpi">
-          <span class="cs-kpi__number">+35%</span>
-          <span class="cs-kpi__label">features redesign&#233;es &#8212; de 280 &#224; 400+ intentions couvertes</span>
-        </div>
-        <div class="cs-kpi">
-          <span class="cs-kpi__number">39 000</span>
-          <span class="cs-kpi__label">variations int&#233;gr&#233;es pour r&#233;duire les erreurs de compr&#233;hension</span>
-        </div>
-        <div class="cs-kpi">
-          <span class="cs-kpi__number">+48 %</span>
-          <span class="cs-kpi__label">satisfaction client &#8212; mesure post-interaction sur les nouveaux dialogues</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ⑤ CONTEXTE — Fond teinté -->
-  <section class="cs cs--tint">
+  <!-- ⑤ CONTEXTE — Fond sombre -->
+  <section class="cs cs--dark">
     <div class="cs__inner fade-in">
       <div class="cs-two-col">
         <div class="cs-col-head">
-          <span class="cs-label cs-label--violet">Contexte &amp; challenge</span>
-          <h2 class="cs-title cs-title--dark">G&#233;rer une scope &#233;largie tout en rendant les dialogues plus fluides et contextuels</h2>
+          <span class="cs-label cs-label--white">Contexte &amp; challenge</span>
+          <h2 class="cs-title cs-title--white">G&#233;rer une scope &#233;largie tout en rendant les dialogues plus fluides et contextuels</h2>
         </div>
         <div class="cs-col-content">
-          <p class="cs-text">Un acteur majeur du secteur bancaire faisait face &#224; deux obstacles : g&#233;rer une scope &#233;largie avec des intentions diversifi&#233;es et des sc&#233;narios complexes li&#233;s aux nouveaux lancements produits, tout en am&#233;liorant l'exp&#233;rience utilisateur par des dialogues plus fluides, pertinents et contextuels.</p>
-          <p class="cs-text">La demande d'interactions digitales ne cessant de cro&#238;tre, l'organisation avait besoin de supporter de nouvelles offres de services tout en r&#233;duisant les erreurs de compr&#233;hension du chatbot. Le d&#233;fi central : faire &#233;voluer un outil existant en un v&#233;ritable conseiller digital, sans rupture de service pour des millions d'utilisateurs.</p>
+          <p class="cs-text cs-text--light">Un acteur majeur du secteur bancaire faisait face &#224; deux obstacles : g&#233;rer une scope &#233;largie avec des intentions diversifi&#233;es et des sc&#233;narios complexes li&#233;s aux nouveaux lancements produits, tout en am&#233;liorant l'exp&#233;rience utilisateur par des dialogues plus fluides, pertinents et contextuels.</p>
+          <p class="cs-text cs-text--light">La demande d'interactions digitales ne cessant de cro&#238;tre, l'organisation avait besoin de supporter de nouvelles offres de services tout en r&#233;duisant les erreurs de compr&#233;hension du chatbot. Le d&#233;fi central : faire &#233;voluer un outil existant en un v&#233;ritable conseiller digital, sans rupture de service pour des millions d'utilisateurs.</p>
         </div>
       </div>
     </div>

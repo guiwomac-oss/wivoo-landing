@@ -347,16 +347,46 @@
   .cs-value-card__title { font-size: 0.9rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem; }
   .cs-value-card__text { font-size: 0.85rem; color: #6B7280; line-height: 1.65; }
 
-  /* ---- A : Profil consultant enrichi ---- */
-  .cs-profile { display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: flex-start; }
-  .cs-profile__avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #451DC7, #17023C); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.375rem; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
-  .cs-profile__header { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem; margin-bottom: 0.25rem; }
-  .cs-profile__name { font-size: 1.125rem; font-weight: 700; color: #111827; }
-  .cs-profile__seniority { font-size: 0.72rem; font-weight: 700; background: rgba(69,29,199,0.08); color: #451DC7; padding: 0.2rem 0.6rem; border-radius: 100px; letter-spacing: 0.04em; }
-  .cs-profile__title { font-size: 0.82rem; color: #6B7280; margin-bottom: 0.75rem; }
-  .cs-profile__tags { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 1rem; }
-  .cs-profile__bio { font-size: 0.9rem; color: #374151; line-height: 1.7; margin-bottom: 1.25rem; }
-  .cs-profile__quote { font-size: 0.9375rem; color: #374151; line-height: 1.75; font-style: italic; margin: 0; border-left: 3px solid #451DC7; padding-left: 1.25rem; }
+  /* ---- Profil consultant épuré ---- */
+  .cs-profile { display: grid; grid-template-columns: auto 1fr; gap: 1.75rem; align-items: flex-start; }
+  .cs-profile__avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    object-fit: cover; object-position: center top;
+    flex-shrink: 0; border: 2px solid #F3F4F6;
+  }
+  .cs-profile__name { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 0.15rem; }
+  .cs-profile__title { font-size: 0.78rem; color: #9CA3AF; margin-bottom: 1rem; }
+  .cs-profile__tools { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 1.25rem; }
+  .cs-profile__tool {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.22rem 0.6rem;
+    border: 1px solid #E5E7EB; border-radius: 6px;
+    background: #FAFAFA;
+    font-size: 0.72rem; font-weight: 500; color: #6B7280;
+  }
+  .cs-profile__tool-icon { font-size: 0.78rem; line-height: 1; }
+  .cs-profile__quote {
+    font-size: 0.9375rem; color: #374151; line-height: 1.75;
+    font-style: italic; margin: 0;
+    border-left: 2px solid #E5E7EB; padding-left: 1.25rem;
+  }
+  .cs-profile__kpis {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin-top: 2rem;
+    background: #F5F4FB; border-radius: 12px; overflow: hidden;
+  }
+  .cs-profile__kpi { display: flex; flex-direction: column; gap: 0.375rem; padding: 1.25rem 1.5rem; }
+  .cs-profile__kpi + .cs-profile__kpi { border-left: 2px solid #fff; }
+  .cs-profile__kpi-number {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700; color: #451DC7; line-height: 1; letter-spacing: -0.03em;
+  }
+  .cs-profile__kpi-label { font-size: 0.75rem; color: #6B7280; line-height: 1.4; }
+  @media (max-width: 768px) {
+    .cs-profile { grid-template-columns: 1fr; }
+    .cs-profile__kpis { grid-template-columns: 1fr; border-radius: 10px; }
+    .cs-profile__kpi + .cs-profile__kpi { border-left: none; border-top: 2px solid #fff; }
+  }
 
   /* ---- CTA double cible ---- */
   .cs-cta-split { display: grid; grid-template-columns: 1fr 1px 1fr; align-items: stretch; }
@@ -555,7 +585,6 @@
     .cs-deliverables { grid-template-columns: 1fr; }
     .cs-value-grid { grid-template-columns: 1fr; }
     .cs-profile { grid-template-columns: 1fr; }
-    .cs-profile__avatar { width: 64px; height: 64px; font-size: 1.125rem; }
     .cs-cta-split { grid-template-columns: 1fr; }
     .cs-cta-split__divider { width: 100%; height: 1px; }
     .cs-cta-split__col { padding: 2rem 1.5rem; }
@@ -746,25 +775,37 @@
     <div class="cs__inner fade-in">
       <span class="cs-label cs-label--violet">L&#8217;expert Wivoo sur la mission</span>
       <div class="cs-profile">
-        <div class="cs-profile__avatar" aria-hidden="true">AD</div>
+        <img class="cs-profile__avatar"
+             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=104&h=104&fit=crop&crop=faces&q=80"
+             alt="Alex Dupont, Senior Consultant Product Management" />
         <div>
-          <div class="cs-profile__header">
-            <span class="cs-profile__name">Alex Dupont</span>
-            <span class="cs-profile__seniority">10 ans d&#8217;exp&#233;rience</span>
+          <p class="cs-profile__name">Alex Dupont</p>
+          <p class="cs-profile__title">Senior Consultant Product Management · Wivoo · 10 ans d&#8217;exp&#233;rience</p>
+          <div class="cs-profile__tools">
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">📊</span>Amplitude</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">🎨</span>Figma</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">📋</span>Jira</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">🧪</span>A/B Tasty</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">📈</span>GA4</span>
+            <span class="cs-profile__tool"><span class="cs-profile__tool-icon">📝</span>Confluence</span>
           </div>
-          <p class="cs-profile__title">Senior Consultant Product Management · Wivoo</p>
-          <div class="cs-profile__tags">
-            <span class="tag tag--produit">Product Management</span>
-            <span class="tag tag--design">UX &amp; Design</span>
-            <span class="tag tag--retail">Retail &amp; E-Commerce</span>
-            <span class="tag tag--data">Data Analytics</span>
-          </div>
-          <p class="cs-profile__bio">
-            Sp&#233;cialis&#233; dans la transformation des parcours e-commerce et l&#8217;engagement utilisateur pour les retailers europ&#233;ens, Alex a pilot&#233; plus de 15 projets produit de la discovery au go-live. Avant Wivoo, il &#233;tait Head of Product chez un leader du sport retail en ligne.
-          </p>
           <blockquote class="cs-profile__quote">
             L&#8217;engagement utilisateur ne s&#8217;improvise pas &#8212; il se construit sur des donn&#233;es comportementales pr&#233;cises et une vision produit long terme. Sur cette mission, la combinaison discovery intensive + it&#233;rations rapides a multipli&#233; par 3 le trafic sur les pages de marque en moins d&#8217;un an.
           </blockquote>
+          <div class="cs-profile__kpis">
+            <div class="cs-profile__kpi">
+              <span class="cs-profile__kpi-number">+300%</span>
+              <span class="cs-profile__kpi-label">trafic brand pages</span>
+            </div>
+            <div class="cs-profile__kpi">
+              <span class="cs-profile__kpi-number">100k+</span>
+              <span class="cs-profile__kpi-label">inscriptions &#233;v&#233;nements</span>
+            </div>
+            <div class="cs-profile__kpi">
+              <span class="cs-profile__kpi-number">+65%</span>
+              <span class="cs-profile__kpi-label">croissance abonn&#233;s digitaux</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -796,40 +837,17 @@
     </div>
   </section>
 
-  <!-- ④ KPIs — Fond blanc -->
-  <section class="cs cs--white">
-    <div class="cs__inner">
-
-      <!-- KPIs — grands chiffres -->
-      <div class="cs-kpis fade-in">
-        <div class="cs-kpi">
-          <span class="cs-kpi__number">+300&#x202F;%</span>
-          <span class="cs-kpi__label">de trafic sur les pages de marque immersives</span>
-        </div>
-        <div class="cs-kpi">
-          <span class="cs-kpi__number">100&#x202F;000+</span>
-          <span class="cs-kpi__label">nouvelles inscriptions sur la plateforme &#233;v&#233;nements</span>
-        </div>
-        <div class="cs-kpi">
-          <span class="cs-kpi__number">+50&#8211;70&#x202F;%</span>
-          <span class="cs-kpi__label">de croissance annuelle des abonn&#233;s digitaux</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ⑤ CONTEXTE — Fond teinté -->
-  <section class="cs cs--tint">
+  <!-- ⑤ CONTEXTE — Fond sombre -->
+  <section class="cs cs--dark">
     <div class="cs__inner fade-in">
       <div class="cs-two-col">
         <div class="cs-col-head">
-          <span class="cs-label cs-label--violet">Contexte &amp; challenge</span>
-          <h2 class="cs-title cs-title--dark">Rebranding, croissance digitale et engagement communaut&#233;</h2>
+          <span class="cs-label cs-label--white">Contexte &amp; challenge</span>
+          <h2 class="cs-title cs-title--white">Rebranding, croissance digitale et engagement communaut&#233;</h2>
         </div>
         <div class="cs-col-content">
-          <p class="cs-text">Le client a entrepris un rebranding majeur et cherchait &#224; renforcer l&#8217;engagement en ligne tout en transformant son identit&#233; visuelle et son programme de fid&#233;lit&#233;. Les priorit&#233;s &#233;taient multiples&#x202F;: aligner la vision de marque avec les fonctionnalit&#233;s e-commerce, am&#233;liorer les parcours critiques (checkout, catalogues produits), et cr&#233;er des plateformes immersives pour la communaut&#233; des athl&#232;tes.</p>
-          <p class="cs-text">L&#8217;&#233;quipe e-commerce cherchait &#233;galement &#224; renforcer la robustesse technique et &#224; am&#233;liorer la prise de d&#233;cision data-driven dans un contexte de forte croissance.</p>
+          <p class="cs-text cs-text--light">Le client a entrepris un rebranding majeur et cherchait &#224; renforcer l&#8217;engagement en ligne tout en transformant son identit&#233; visuelle et son programme de fid&#233;lit&#233;. Les priorit&#233;s &#233;taient multiples&#x202F;: aligner la vision de marque avec les fonctionnalit&#233;s e-commerce, am&#233;liorer les parcours critiques (checkout, catalogues produits), et cr&#233;er des plateformes immersives pour la communaut&#233; des athl&#232;tes.</p>
+          <p class="cs-text cs-text--light">L&#8217;&#233;quipe e-commerce cherchait &#233;galement &#224; renforcer la robustesse technique et &#224; am&#233;liorer la prise de d&#233;cision data-driven dans un contexte de forte croissance.</p>
         </div>
       </div>
     </div>

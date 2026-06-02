@@ -368,21 +368,120 @@
   }
   .cs-method:hover { border-color: #451DC7; color: #451DC7; }
 
-  /* ---- Consultant ---- */
-  .cs-consultant { display: flex; gap: 1.5rem; align-items: flex-start; }
-  .cs-consultant__avatar {
-    width: 60px; height: 60px; border-radius: 50%;
+  /* ---- B : Ce que Wivoo a apporté ---- */
+  .cs-value-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .cs-value-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-left: 3px solid #451DC7;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .cs-value-card__icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
+  .cs-value-card__title { font-size: 0.9rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem; }
+  .cs-value-card__text { font-size: 0.85rem; color: #6B7280; line-height: 1.65; }
+
+  /* ---- A : Profil consultant enrichi ---- */
+  .cs-profile {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  .cs-profile__avatar {
+    width: 80px; height: 80px; border-radius: 50%;
     background: linear-gradient(135deg, #451DC7, #17023C);
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
+    font-size: 1.375rem; font-weight: 700; color: #fff;
+    letter-spacing: 0.02em;
   }
-  .cs-consultant__avatar svg { color: rgba(255,255,255,0.75); }
-  .cs-consultant__name { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 0.15rem; }
-  .cs-consultant__role { font-size: 0.82rem; color: #451DC7; font-weight: 600; margin-bottom: 0.875rem; }
-  .cs-consultant__quote {
-    font-size: 1rem; color: #374151; line-height: 1.75;
+  .cs-profile__header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.25rem;
+  }
+  .cs-profile__name { font-size: 1.125rem; font-weight: 700; color: #111827; }
+  .cs-profile__seniority {
+    font-size: 0.72rem; font-weight: 700;
+    background: rgba(69,29,199,0.08);
+    color: #451DC7;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+  }
+  .cs-profile__title { font-size: 0.82rem; color: #6B7280; margin-bottom: 0.75rem; }
+  .cs-profile__tags { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 1rem; }
+  .cs-profile__bio {
+    font-size: 0.9rem; color: #374151; line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+  .cs-profile__quote {
+    font-size: 0.9375rem; color: #374151; line-height: 1.75;
     font-style: italic; margin: 0;
-    border-left: 2px solid #E5E7EB; padding-left: 1.25rem;
+    border-left: 3px solid #451DC7; padding-left: 1.25rem;
+  }
+
+  /* ---- CTA double cible (milieu d'article) ---- */
+  .cs-cta-split {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    align-items: stretch;
+  }
+  .cs-cta-split__divider {
+    background: rgba(255,255,255,0.15);
+  }
+  .cs-cta-split__col {
+    padding: 2.75rem 3rem;
+  }
+  .cs-cta-split__eyebrow {
+    display: block;
+    font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.75rem;
+  }
+  .cs-cta-split__title {
+    font-size: 1.125rem; font-weight: 700;
+    color: #fff; line-height: 1.35;
+    margin-bottom: 0.5rem;
+  }
+  .cs-cta-split__sub {
+    font-size: 0.875rem; color: rgba(255,255,255,0.6);
+    line-height: 1.6; margin-bottom: 1.5rem;
+  }
+  .btn--ghost-white {
+    display: inline-block;
+    padding: 0.55rem 1.25rem;
+    border: 1.5px solid rgba(255,255,255,0.45);
+    border-radius: 50px;
+    color: #fff; font-family: var(--font-family);
+    font-size: 0.875rem; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn--ghost-white:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+  .btn--solid-white {
+    display: inline-block;
+    padding: 0.55rem 1.25rem;
+    background: #fff; border-radius: 50px;
+    color: #451DC7; font-family: var(--font-family);
+    font-size: 0.875rem; font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .btn--solid-white:hover { opacity: 0.88; }
+  @media (max-width: 768px) {
+    .cs-cta-split { grid-template-columns: 1fr; }
+    .cs-cta-split__divider { width: 100%; height: 1px; }
+    .cs-cta-split__col { padding: 2rem 1.5rem; }
   }
 
   /* ---- Citation client (sur fond sombre) ---- */
@@ -512,7 +611,9 @@
     .cs-arrow { transform: rotate(90deg); display: block; text-align: center; padding: 0.25rem 0; }
     .cs-wf-grid { grid-template-columns: 1fr; }
     .cs-deliverables { grid-template-columns: 1fr; }
-    .cs-consultant { flex-direction: column; gap: 1rem; }
+    .cs-value-grid { grid-template-columns: 1fr; }
+    .cs-profile { grid-template-columns: 1fr; }
+    .cs-profile__avatar { width: 64px; height: 64px; font-size: 1.125rem; }
     .cs-blockquote { font-size: 1.25rem; padding-left: 1.75rem; }
     .cs-related__grid { grid-template-columns: 1fr; }
     .cs-back-bar { padding: 1.5rem 1.25rem; }
@@ -636,11 +737,64 @@
     </div>
   </div>
 
-  <!-- ② KPIs — Fond blanc -->
+  <!-- ② PROFIL CONSULTANT — Fond blanc -->
+  <section class="cs cs--white">
+    <div class="cs__inner fade-in">
+      <span class="cs-label cs-label--violet">L&#8217;expert Wivoo sur la mission</span>
+      <div class="cs-profile">
+        <div class="cs-profile__avatar" aria-hidden="true">SM</div>
+        <div>
+          <div class="cs-profile__header">
+            <span class="cs-profile__name">Sophie Marchand</span>
+            <span class="cs-profile__seniority">8 ans d&#8217;exp&#233;rience</span>
+          </div>
+          <p class="cs-profile__title">Senior Consultant Data &amp; IA · Wivoo</p>
+          <div class="cs-profile__tags">
+            <span class="tag tag--ai">IA G&#233;n&#233;rative</span>
+            <span class="tag tag--data">NLP &amp; Chatbots</span>
+            <span class="tag tag--banque">Banque</span>
+            <span class="tag tag--produit">Product Management</span>
+          </div>
+          <p class="cs-profile__bio">
+            Sp&#233;cialis&#233;e dans le d&#233;ploiement de solutions IA conversationnelles dans les services financiers, Sophie a men&#233; plus de 12 projets NLP de l&#8217;ideation au run. Avant Wivoo, elle &#233;tait Lead Data Scientist dans un groupe bancaire europ&#233;en.
+          </p>
+          <blockquote class="cs-profile__quote">
+            La cl&#233; de ce projet a &#233;t&#233; de combiner la rigueur des sp&#233;cifications m&#233;tier avec la flexibilit&#233; des mod&#232;les g&#233;n&#233;ratifs. En couvrant 400+ intentions et 39&#160;000 variations, on a cr&#233;&#233; un chatbot qui comprend vraiment les clients — pas juste un arbre d&#233;cisionnel glorifi&#233;.
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ CE QUE WIVOO A APPORTÉ — Fond teinté -->
+  <section class="cs cs--tint">
+    <div class="cs__inner fade-in">
+      <span class="cs-label cs-label--violet">Ce que Wivoo a apport&#233;</span>
+      <h2 class="cs-title cs-title--dark">Pourquoi ce projet n&#8217;aurait pas abouti sans une expertise externe</h2>
+      <p class="cs-text" style="max-width:720px">L&#8217;&#233;quipe interne ma&#238;trisait bien son domaine m&#233;tier, mais manquait d&#8217;exp&#233;rience sur les architectures NLP industrielles et sur la gestion de d&#233;rive des mod&#232;les en production. Wivoo a apport&#233; trois &#233;l&#233;ments d&#233;cisifs&nbsp;:</p>
+      <div class="cs-value-grid">
+        <div class="cs-value-card">
+          <span class="cs-value-card__icon">🏦</span>
+          <p class="cs-value-card__title">Savoir-faire sectoriel banque</p>
+          <p class="cs-value-card__text">Connaissance des contraintes r&#233;glementaires et des parcours service client propres au secteur bancaire — ce qui a acc&#233;l&#233;r&#233; la validation m&#233;tier de chaque sc&#233;nario de dialogue.</p>
+        </div>
+        <div class="cs-value-card">
+          <span class="cs-value-card__icon">⚙️</span>
+          <p class="cs-value-card__title">M&#233;thode IA industrialis&#233;e</p>
+          <p class="cs-value-card__text">Framework propri&#233;taire de structuration des intentions et de g&#233;n&#233;ration de variations, d&#233;j&#224; &#233;prouv&#233; sur 8 projets NLP similaires — aucune r&#233;invention de la roue.</p>
+        </div>
+        <div class="cs-value-card">
+          <span class="cs-value-card__icon">🚀</span>
+          <p class="cs-value-card__title">Time-to-production divis&#233; par 2</p>
+          <p class="cs-value-card__text">En s&#8217;appuyant sur des patterns de d&#233;ploiement test&#233;s, l&#8217;&#233;quipe Wivoo a r&#233;duit de moiti&#233; le temps entre prototype et mise en production op&#233;rationnelle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ KPIs — Fond blanc -->
   <section class="cs cs--white">
     <div class="cs__inner">
-
-      <!-- KPIs — grands chiffres -->
       <div class="cs-kpis fade-in">
         <div class="cs-kpi">
           <span class="cs-kpi__number">+35%</span>
@@ -655,11 +809,10 @@
           <span class="cs-kpi__label">satisfaction client &#8212; mesure post-interaction sur les nouveaux dialogues</span>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- ③ CONTEXTE — Fond teinte violet clair -->
+  <!-- ⑤ CONTEXTE — Fond teinté -->
   <section class="cs cs--tint">
     <div class="cs__inner fade-in">
       <div class="cs-two-col">
@@ -675,21 +828,7 @@
     </div>
   </section>
 
-  <!-- SECTION C — Paire d'images pleine largeur entre contexte et approche -->
-  <div class="cs-img-pair fade-in">
-    <figure>
-      <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=700&h=380&fit=crop&q=80"
-           alt="Ateliers d'alignement business avec les &#233;quipes m&#233;tier" />
-      <figcaption>Ateliers d'alignement business avec les &#233;quipes m&#233;tier</figcaption>
-    </figure>
-    <figure>
-      <img src="https://images.unsplash.com/photo-1560264280-88b68371db39?w=700&h=380&fit=crop&q=80"
-           alt="D&#233;ploiement progressif et monitoring en temps r&#233;el" />
-      <figcaption>D&#233;ploiement progressif et monitoring en temps r&#233;el</figcaption>
-    </figure>
-  </div>
-
-  <!-- ⑤ APPROCHE — Fond blanc -->
+  <!-- ⑥ APPROCHE — Fond blanc -->
   <section class="cs cs--white">
     <div class="cs__inner fade-in">
       <div class="cs-two-col">
@@ -699,105 +838,67 @@
         </div>
         <div class="cs-col-content">
           <ol class="cs-timeline">
-            <li class="cs-step">
-              <span class="cs-step__num">01</span>
-              <div>
-                <strong>Workshops d'alignement business</strong>
-                <p>D&#233;finition des besoins et mod&#233;lisation des sc&#233;narios avec les &#233;quipes m&#233;tier &#8212; cartographie compl&#232;te des intentions prioritaires et des cas limites.</p>
-              </div>
-            </li>
-            <li class="cs-step">
-              <span class="cs-step__num">02</span>
-              <div>
-                <strong>Int&#233;gration de mod&#232;les IA g&#233;n&#233;ratifs</strong>
-                <p>Enrichissement des dialogues pour des interactions naturelles et contextuelles &#8212; les mod&#232;les GenAI permettent des r&#233;ponses adapt&#233;es au profil et &#224; l'historique du client.</p>
-              </div>
-            </li>
-            <li class="cs-step">
-              <span class="cs-step__num">03</span>
-              <div>
-                <strong>Sp&#233;cifications fonctionnelles &amp; sc&#233;narios de test</strong>
-                <p>400+ intentions document&#233;es avec arbres de d&#233;cision &#8212; couverture exhaustive des parcours critiques et des cas edge.</p>
-              </div>
-            </li>
-            <li class="cs-step">
-              <span class="cs-step__num">04</span>
-              <div>
-                <strong>D&#233;veloppement Watson Assistant</strong>
-                <p>Appels API dynamiques pour la personnalisation temps r&#233;el et int&#233;gration multim&#233;dia &#8212; images, vid&#233;os et GIFs enrichissent les dialogues.</p>
-              </div>
-            </li>
-            <li class="cs-step">
-              <span class="cs-step__num">05</span>
-              <div>
-                <strong>D&#233;ploiement progressif &amp; ajustements</strong>
-                <p>Monitoring et ajustements post-lancement en temps r&#233;el &#8212; dashboard de suivi des intentions non reconnues et du taux de r&#233;solution.</p>
-              </div>
-            </li>
+            <li class="cs-step"><span class="cs-step__num">01</span><div><strong>Workshops d'alignement business</strong><p>D&#233;finition des besoins et mod&#233;lisation des sc&#233;narios avec les &#233;quipes m&#233;tier &#8212; cartographie compl&#232;te des intentions prioritaires et des cas limites.</p></div></li>
+            <li class="cs-step"><span class="cs-step__num">02</span><div><strong>Int&#233;gration de mod&#232;les IA g&#233;n&#233;ratifs</strong><p>Enrichissement des dialogues pour des interactions naturelles et contextuelles &#8212; les mod&#232;les GenAI permettent des r&#233;ponses adapt&#233;es au profil et &#224; l'historique du client.</p></div></li>
+            <li class="cs-step"><span class="cs-step__num">03</span><div><strong>Sp&#233;cifications fonctionnelles &amp; sc&#233;narios de test</strong><p>400+ intentions document&#233;es avec arbres de d&#233;cision &#8212; couverture exhaustive des parcours critiques et des cas edge.</p></div></li>
+            <li class="cs-step"><span class="cs-step__num">04</span><div><strong>D&#233;veloppement Watson Assistant</strong><p>Appels API dynamiques pour la personnalisation temps r&#233;el et int&#233;gration multim&#233;dia &#8212; images, vid&#233;os et GIFs enrichissent les dialogues.</p></div></li>
+            <li class="cs-step"><span class="cs-step__num">05</span><div><strong>D&#233;ploiement progressif &amp; ajustements</strong><p>Monitoring et ajustements post-lancement en temps r&#233;el &#8212; dashboard de suivi des intentions non reconnues et du taux de r&#233;solution.</p></div></li>
           </ol>
-        </div><!-- /cs-col-content -->
-      </div><!-- /cs-two-col -->
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ⑥ SECTION A — Chat conversation mockup (fond sombre) -->
+  <!-- ✦ CTA DOUBLE CIBLE — Fond violet -->
+  <section class="cs" style="background:#451DC7;">
+    <div class="cs__inner" style="padding-top:0; padding-bottom:0;">
+      <div class="cs-cta-split fade-in">
+        <div class="cs-cta-split__col">
+          <span class="cs-cta-split__eyebrow">Vous avez un projet similaire ?</span>
+          <p class="cs-cta-split__title">Un d&#233;fi IA ou Data dans votre organisation&nbsp;?</p>
+          <p class="cs-cta-split__sub">Nos consultants r&#233;pondent en moins de 24&nbsp;h pour un premier &#233;change sans engagement.</p>
+          <a href="https://www.wivoo.fr/contact" class="btn--solid-white">Parlons-en &#8594;</a>
+        </div>
+        <div class="cs-cta-split__divider"></div>
+        <div class="cs-cta-split__col">
+          <span class="cs-cta-split__eyebrow">Ce type de mission vous parle ?</span>
+          <p class="cs-cta-split__title">Rejoignez un collectif d&#8217;experts sur des missions ambitieuses</p>
+          <p class="cs-cta-split__sub">2&#8211;3&nbsp;% des candidats rejoignent Wivoo. Si vous &#234;tes expert en IA, Data ou Produit, on veut vous rencontrer.</p>
+          <a href="mailto:guido.macaluso@wivoo.fr?subject=Candidature Wivoo" class="btn--ghost-white">Postuler &#8594;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ PAIRE D'IMAGES -->
+  <div class="cs-img-pair fade-in">
+    <figure>
+      <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=700&h=380&fit=crop&q=80" alt="Ateliers d'alignement business avec les &#233;quipes m&#233;tier" />
+      <figcaption>Ateliers d'alignement business avec les &#233;quipes m&#233;tier</figcaption>
+    </figure>
+    <figure>
+      <img src="https://images.unsplash.com/photo-1560264280-88b68371db39?w=700&h=380&fit=crop&q=80" alt="D&#233;ploiement progressif et monitoring en temps r&#233;el" />
+      <figcaption>D&#233;ploiement progressif et monitoring en temps r&#233;el</figcaption>
+    </figure>
+  </div>
+
+  <!-- ⑧ CHATBOT EN ACTION — Fond sombre -->
   <section class="cs cs--dark">
     <div class="cs__inner fade-in">
       <span class="cs-label cs-label--green">Le chatbot en action</span>
       <h2 class="cs-title cs-title--white" style="text-align:center; margin-bottom:0.5rem;">Parcours blocage de carte</h2>
       <p style="text-align:center; color:rgba(255,255,255,0.4); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:3rem;">Dialogue augment&#233; par GenAI</p>
-
       <div class="cs-chat">
-
-        <!-- Message utilisateur 1 -->
-        <div class="cs-chat__msg cs-chat__msg--user">
-          <div class="cs-chat__avatar cs-chat__avatar--user">&#128100;</div>
-          <div class="cs-chat__bubble cs-chat__bubble--user">
-            J'ai besoin de bloquer ma carte bancaire suite &#224; une perte
-          </div>
-        </div>
-
-        <!-- Message bot 1 -->
-        <div class="cs-chat__msg">
-          <div class="cs-chat__avatar cs-chat__avatar--bot">&#129302;</div>
-          <div class="cs-chat__bubble cs-chat__bubble--bot">
-            Je comprends votre situation. Je peux bloquer votre carte imm&#233;diatement. Confirmez-vous qu'il s'agit de votre carte Visa se terminant par &#8226;&#8226;&#8226; 4521&nbsp;?
-          </div>
-        </div>
-
-        <!-- Message utilisateur 2 -->
-        <div class="cs-chat__msg cs-chat__msg--user">
-          <div class="cs-chat__avatar cs-chat__avatar--user">&#128100;</div>
-          <div class="cs-chat__bubble cs-chat__bubble--user">
-            Oui c'est bien cette carte
-          </div>
-        </div>
-
-        <!-- Message bot 2 — double bulle -->
-        <div class="cs-chat__msg">
-          <div class="cs-chat__avatar cs-chat__avatar--bot">&#129302;</div>
-          <div style="display:flex; flex-direction:column; gap:0.5rem;">
-            <div class="cs-chat__bubble cs-chat__bubble--bot">
-              &#10003; Votre carte est bloqu&#233;e. Souhaitez-vous commander une nouvelle carte ? Livraison sous 3&#8211;5 jours ouv r&#233;s.
-            </div>
-            <div class="cs-chat__bubble cs-chat__bubble--bot">
-              Je vous envoie &#233;galement un email de confirmation &#224; l'adresse enregistr&#233;e sur votre compte.
-              <div class="cs-chat__email-badge">
-                &#128231; Email envoy&#233;
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /cs-chat -->
-
-      <p class="cs-chat-caption">
-        Dialogue augment&#233; par GenAI : intention reconnue en &lt;&nbsp;200ms, r&#233;ponse contextuelle personnalis&#233;e avec les donn&#233;es client en temps r&#233;el
-      </p>
+        <div class="cs-chat__msg cs-chat__msg--user"><div class="cs-chat__avatar cs-chat__avatar--user">&#128100;</div><div class="cs-chat__bubble cs-chat__bubble--user">J'ai besoin de bloquer ma carte bancaire suite &#224; une perte</div></div>
+        <div class="cs-chat__msg"><div class="cs-chat__avatar cs-chat__avatar--bot">&#129302;</div><div class="cs-chat__bubble cs-chat__bubble--bot">Je comprends votre situation. Je peux bloquer votre carte imm&#233;diatement. Confirmez-vous qu'il s'agit de votre carte Visa se terminant par &#8226;&#8226;&#8226; 4521&nbsp;?</div></div>
+        <div class="cs-chat__msg cs-chat__msg--user"><div class="cs-chat__avatar cs-chat__avatar--user">&#128100;</div><div class="cs-chat__bubble cs-chat__bubble--user">Oui c'est bien cette carte</div></div>
+        <div class="cs-chat__msg"><div class="cs-chat__avatar cs-chat__avatar--bot">&#129302;</div><div style="display:flex; flex-direction:column; gap:0.5rem;"><div class="cs-chat__bubble cs-chat__bubble--bot">&#10003; Votre carte est bloqu&#233;e. Souhaitez-vous commander une nouvelle carte ? Livraison sous 3&#8211;5 jours ouvrés.</div><div class="cs-chat__bubble cs-chat__bubble--bot">Je vous envoie &#233;galement un email de confirmation &#224; l'adresse enregistr&#233;e sur votre compte.<div class="cs-chat__email-badge">&#128231; Email envoy&#233;</div></div></div></div>
+      </div>
+      <p class="cs-chat-caption">Dialogue augment&#233; par GenAI : intention reconnue en &lt;&nbsp;200ms, r&#233;ponse contextuelle personnalis&#233;e avec les donn&#233;es client en temps r&#233;el</p>
     </div>
   </section>
 
-  <!-- ⑦ RESULTATS — Fond teinte -->
+  <!-- ⑨ RÉSULTATS — Fond teinté -->
   <section class="cs cs--tint">
     <div class="cs__inner fade-in">
       <div class="cs-two-col">
@@ -819,7 +920,7 @@
     </div>
   </section>
 
-  <!-- ⑧ SECTION B — Avant / Apres (fond blanc) -->
+  <!-- ⑩ AVANT / APRÈS — Fond blanc -->
   <section class="cs cs--white">
     <div class="cs__inner fade-in">
       <div class="cs-two-col">
@@ -829,37 +930,15 @@
         </div>
         <div class="cs-col-content">
           <div class="cs-compare">
-            <!-- Colonne Avant -->
-            <div class="cs-compare__col cs-compare__col--before">
-              <span class="cs-compare__badge cs-compare__badge--before">Avant GenAI</span>
-              <p class="cs-compare__heading">Chatbot traditionnel</p>
-              <ul class="cs-compare__list">
-                <li>280 intentions couvertes</li>
-                <li>R&#233;ponses statiques type FAQ</li>
-                <li>Taux d'erreur &#233;lev&#233; (incompr&#233;hension)</li>
-                <li>0 contenu multim&#233;dia</li>
-                <li>Aucune personnalisation contextuelle</li>
-              </ul>
-            </div>
-            <!-- Colonne Apres -->
-            <div class="cs-compare__col cs-compare__col--after">
-              <span class="cs-compare__badge cs-compare__badge--after">Avec GenAI + Watson</span>
-              <p class="cs-compare__heading">Conseiller digital augment&#233;</p>
-              <ul class="cs-compare__list">
-                <li>400+ intentions (+35&nbsp;%)</li>
-                <li>R&#233;ponses contextuelles dynamiques</li>
-                <li>39 000 variations, erreurs quasi &#233;limin&#233;es</li>
-                <li>Images, vid&#233;os, GIFs int&#233;gr&#233;s</li>
-                <li>Personnalisation temps r&#233;el avec donn&#233;es client</li>
-              </ul>
-            </div>
+            <div class="cs-compare__col cs-compare__col--before"><span class="cs-compare__badge cs-compare__badge--before">Avant GenAI</span><p class="cs-compare__heading">Chatbot traditionnel</p><ul class="cs-compare__list"><li>280 intentions couvertes</li><li>R&#233;ponses statiques type FAQ</li><li>Taux d'erreur &#233;lev&#233; (incompr&#233;hension)</li><li>0 contenu multim&#233;dia</li><li>Aucune personnalisation contextuelle</li></ul></div>
+            <div class="cs-compare__col cs-compare__col--after"><span class="cs-compare__badge cs-compare__badge--after">Avec GenAI + Watson</span><p class="cs-compare__heading">Conseiller digital augment&#233;</p><ul class="cs-compare__list"><li>400+ intentions (+35&nbsp;%)</li><li>R&#233;ponses contextuelles dynamiques</li><li>39 000 variations, erreurs quasi &#233;limin&#233;es</li><li>Images, vid&#233;os, GIFs int&#233;gr&#233;s</li><li>Personnalisation temps r&#233;el avec donn&#233;es client</li></ul></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ⑨ LIVRABLES + METHODES — Fond teinte -->
+  <!-- ⑪ LIVRABLES + MÉTHODES — Fond teinté -->
   <section class="cs cs--tint">
     <div class="cs__inner fade-in">
       <div class="cs-two-col">
@@ -869,75 +948,21 @@
         </div>
         <div class="cs-col-content">
           <div class="cs-deliverables">
-            <div class="cs-deliverable">
-              <span class="cs-deliverable__icon">&#128203;</span>
-              <div>
-                <p class="cs-deliverable__name">Sp&#233;cifications fonctionnelles</p>
-                <p class="cs-deliverable__desc">400+ intentions document&#233;es avec arbres de d&#233;cision et cas limites</p>
-              </div>
-            </div>
-            <div class="cs-deliverable">
-              <span class="cs-deliverable__icon">&#129513;</span>
-              <div>
-                <p class="cs-deliverable__name">Librairie d'intentions</p>
-                <p class="cs-deliverable__desc">39 000 variations d'expressions structur&#233;es par domaine m&#233;tier</p>
-              </div>
-            </div>
-            <div class="cs-deliverable">
-              <span class="cs-deliverable__icon">&#128202;</span>
-              <div>
-                <p class="cs-deliverable__name">Dashboard Analytics</p>
-                <p class="cs-deliverable__desc">Monitoring temps r&#233;el : taux de r&#233;solution, intentions non reconnues, satisfaction</p>
-              </div>
-            </div>
-            <div class="cs-deliverable">
-              <span class="cs-deliverable__icon">&#129514;</span>
-              <div>
-                <p class="cs-deliverable__name">Sc&#233;narios de test</p>
-                <p class="cs-deliverable__desc">Suite exhaustive couvrant les 400+ intentions et parcours critiques</p>
-              </div>
-            </div>
+            <div class="cs-deliverable"><span class="cs-deliverable__icon">&#128203;</span><div><p class="cs-deliverable__name">Sp&#233;cifications fonctionnelles</p><p class="cs-deliverable__desc">400+ intentions document&#233;es avec arbres de d&#233;cision et cas limites</p></div></div>
+            <div class="cs-deliverable"><span class="cs-deliverable__icon">&#129513;</span><div><p class="cs-deliverable__name">Librairie d'intentions</p><p class="cs-deliverable__desc">39 000 variations d'expressions structur&#233;es par domaine m&#233;tier</p></div></div>
+            <div class="cs-deliverable"><span class="cs-deliverable__icon">&#128202;</span><div><p class="cs-deliverable__name">Dashboard Analytics</p><p class="cs-deliverable__desc">Monitoring temps r&#233;el : taux de r&#233;solution, intentions non reconnues, satisfaction</p></div></div>
+            <div class="cs-deliverable"><span class="cs-deliverable__icon">&#129514;</span><div><p class="cs-deliverable__name">Sc&#233;narios de test</p><p class="cs-deliverable__desc">Suite exhaustive couvrant les 400+ intentions et parcours critiques</p></div></div>
           </div>
-
           <h3 style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#9CA3AF; margin-top:3rem; margin-bottom:0.5rem;">M&#233;thodologies utilis&#233;es</h3>
           <div class="cs-methods">
-            <span class="cs-method">GenAI / LLM</span>
-            <span class="cs-method">Watson Assistant</span>
-            <span class="cs-method">Facilitation d'ateliers</span>
-            <span class="cs-method">API Integration</span>
-            <span class="cs-method">Agile / Scrum</span>
-            <span class="cs-method">NLP</span>
-            <span class="cs-method">D&#233;ploiement progressif</span>
-            <span class="cs-method">Test &amp; Learn</span>
+            <span class="cs-method">GenAI / LLM</span><span class="cs-method">Watson Assistant</span><span class="cs-method">Facilitation d'ateliers</span><span class="cs-method">API Integration</span><span class="cs-method">Agile / Scrum</span><span class="cs-method">NLP</span><span class="cs-method">D&#233;ploiement progressif</span><span class="cs-method">Test &amp; Learn</span>
           </div>
-        </div><!-- /cs-col-content -->
-      </div><!-- /cs-two-col -->
-    </div>
-  </section>
-
-  <!-- ⑩ CONSULTANT — Fond blanc -->
-  <section class="cs cs--white">
-    <div class="cs__inner fade-in">
-      <span class="cs-label cs-label--violet">Le consultant</span>
-      <div class="cs-consultant">
-        <div class="cs-consultant__avatar">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
-        </div>
-        <div>
-          <p class="cs-consultant__name">Consultant Wivoo</p>
-          <p class="cs-consultant__role">Expert Data &amp; IA &#183; Banque &amp; Assurance</p>
-          <blockquote class="cs-consultant__quote">
-            La cl&#233; de ce projet a &#233;t&#233; de combiner la rigueur des sp&#233;cifications m&#233;tier avec la flexibilit&#233; des mod&#232;les g&#233;n&#233;ratifs. En couvrant 400+ intentions et 39 000 variations, on a cr&#233;&#233; un chatbot qui comprend vraiment les clients &#8212; pas juste un arbre d&#233;cisionnel glorifi&#233;.
-          </blockquote>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ⑪ CITATION CLIENT — Fond sombre -->
+  <!-- ⑫ VERBATIM CLIENT — Fond sombre -->
   <section class="cs cs--dark">
     <div class="cs__inner cs__inner--narrow fade-in">
       <span class="cs-label cs-label--white">Verbatim client</span>
@@ -948,7 +973,7 @@
     </div>
   </section>
 
-  <!-- ⑫ CTA — Fond vert accent -->
+  <!-- ⑬ CTA PRINCIPAL — Fond vert -->
   <section class="cs cs--green">
     <div class="cs__inner fade-in">
       <p class="cs-cta__title">Vous avez un d&#233;fi IA similaire&nbsp;?</p>
@@ -962,34 +987,22 @@
     <a href="../realisations.html" class="cs-back">&#8592; Tous les cas clients</a>
   </div>
 
-  <!-- ⑬ ARTICLES LIES -->
+  <!-- ⑭ ARTICLES LIÉS -->
   <section class="cs-related">
     <div class="cs-related__inner">
       <p class="cs-related__title">D'autres r&#233;alisations</p>
       <div class="cs-related__grid">
         <a class="cs-mini" href="retail-sport.html">
           <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=140&fit=crop&q=80" alt="Retail sport" /></div>
-          <div class="cs-mini__body">
-            <div class="cs-mini__tags"><span class="tag tag--produit">Produit</span><span class="tag tag--retail">Retail</span></div>
-            <p class="cs-mini__title">Engagement utilisateur &#8212; Retail sportif europ&#233;en</p>
-            <span class="cs-mini__link">Lire &#8594;</span>
-          </div>
+          <div class="cs-mini__body"><div class="cs-mini__tags"><span class="tag tag--produit">Produit</span><span class="tag tag--retail">Retail</span></div><p class="cs-mini__title">Engagement utilisateur &#8212; Retail sportif europ&#233;en</p><span class="cs-mini__link">Lire &#8594;</span></div>
         </a>
         <a class="cs-mini" href="ecommerce-pharma.html">
           <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&h=140&fit=crop&q=80" alt="Pharma" /></div>
-          <div class="cs-mini__body">
-            <div class="cs-mini__tags"><span class="tag tag--produit">Produit</span><span class="tag tag--pharma">Pharma</span></div>
-            <p class="cs-mini__title">E-commerce mondial &#8212; Secteur pharmaceutique</p>
-            <span class="cs-mini__link">Lire &#8594;</span>
-          </div>
+          <div class="cs-mini__body"><div class="cs-mini__tags"><span class="tag tag--produit">Produit</span><span class="tag tag--pharma">Pharma</span></div><p class="cs-mini__title">E-commerce mondial &#8212; Secteur pharmaceutique</p><span class="cs-mini__link">Lire &#8594;</span></div>
         </a>
         <a class="cs-mini" href="beaute-magasin.html">
-          <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=140&fit=crop&q=80" alt="Beaut&#233; &amp; cosmétiques" /></div>
-          <div class="cs-mini__body">
-            <div class="cs-mini__tags"><span class="tag tag--design">Design</span><span class="tag tag--beaute">Beaut&#233;</span></div>
-            <p class="cs-mini__title">Exp&#233;rience client &#8212; Leader mondial beaut&#233; &amp; cosm&#233;tiques</p>
-            <span class="cs-mini__link">Lire &#8594;</span>
-          </div>
+          <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=140&fit=crop&q=80" alt="Beaut&#233; &amp; cosm&#233;tiques" /></div>
+          <div class="cs-mini__body"><div class="cs-mini__tags"><span class="tag tag--design">Design</span><span class="tag tag--beaute">Beaut&#233;</span></div><p class="cs-mini__title">Exp&#233;rience client &#8212; Leader mondial beaut&#233; &amp; cosm&#233;tiques</p><span class="cs-mini__link">Lire &#8594;</span></div>
         </a>
       </div>
     </div>

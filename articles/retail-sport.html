@@ -388,17 +388,32 @@
     .cs-profile__kpi + .cs-profile__kpi { border-left: none; border-top: 2px solid #fff; }
   }
 
-  /* ---- CTA double cible ---- */
-  .cs-cta-split { display: grid; grid-template-columns: 1fr 1px 1fr; align-items: stretch; }
-  .cs-cta-split__divider { background: rgba(255,255,255,0.15); }
-  .cs-cta-split__col { padding: 2.75rem 3rem; }
-  .cs-cta-split__eyebrow { display: block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.4); margin-bottom: 0.75rem; }
-  .cs-cta-split__title { font-size: 1.125rem; font-weight: 700; color: #fff; line-height: 1.35; margin-bottom: 0.5rem; }
-  .cs-cta-split__sub { font-size: 0.875rem; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 1.5rem; }
-  .btn--ghost-white { display: inline-block; padding: 0.55rem 1.25rem; border: 1.5px solid rgba(255,255,255,0.45); border-radius: 50px; color: #fff; font-family: var(--font-family); font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: background 0.2s, border-color 0.2s; }
-  .btn--ghost-white:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
-  .btn--solid-white { display: inline-block; padding: 0.55rem 1.25rem; background: #fff; border-radius: 50px; color: #451DC7; font-family: var(--font-family); font-size: 0.875rem; font-weight: 700; text-decoration: none; transition: opacity 0.2s; }
-  .btn--solid-white:hover { opacity: 0.88; }
+  /* ---- Bannières CTA plein écran ---- */
+  .cs-cta-banner { padding: 1.375rem 0; }
+  .cs-cta-banner__inner {
+    max-width: 1160px; margin: 0 auto; padding: 0 1.5rem;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+  }
+  .cs-cta-banner__eyebrow {
+    display: block; font-size: 0.62rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.25rem;
+  }
+  .cs-cta-banner__title { font-size: 0.9375rem; font-weight: 700; line-height: 1.35; }
+  .cs-cta-banner--lead { background: #04F06A; }
+  .cs-cta-banner--lead .cs-cta-banner__eyebrow { color: rgba(23,2,60,0.45); }
+  .cs-cta-banner--lead .cs-cta-banner__title { color: #17023C; }
+  .cs-cta-banner--candidate { background: #fff; border-top: 1px solid #F3F4F6; border-bottom: 1px solid #F3F4F6; }
+  .cs-cta-banner--candidate .cs-cta-banner__eyebrow { color: #9CA3AF; }
+  .cs-cta-banner--candidate .cs-cta-banner__title { color: #111827; }
+  .btn--solid-violet { display: inline-block; padding: 0.5rem 1.25rem; background: #451DC7; border-radius: 50px; color: #fff; font-family: var(--font-family); font-size: 0.825rem; font-weight: 700; text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: opacity 0.2s; }
+  .btn--solid-violet:hover { opacity: 0.88; }
+  .btn--outline-violet { display: inline-block; padding: 0.5rem 1.25rem; border: 2px solid #451DC7; border-radius: 50px; color: #451DC7; font-family: var(--font-family); font-size: 0.825rem; font-weight: 700; text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: background 0.2s; }
+  .btn--outline-violet:hover { background: rgba(69,29,199,0.06); }
+  @media (max-width: 768px) {
+    .cs-cta-banner { padding: 1.25rem 0; }
+    .cs-cta-banner__inner { flex-direction: column; align-items: flex-start; gap: 0.875rem; }
+  }
 
   /* ---- Citation client (sur fond sombre) ---- */
   .cs-blockquote {
@@ -853,6 +868,17 @@
     </div>
   </section>
 
+  <!-- BANNIÈRE LEAD -->
+  <div class="cs-cta-banner cs-cta-banner--lead fade-in">
+    <div class="cs-cta-banner__inner">
+      <div>
+        <span class="cs-cta-banner__eyebrow">Vous avez un d&#233;fi similaire ?</span>
+        <p class="cs-cta-banner__title">Boostez l&#8217;engagement utilisateur de votre plateforme &#8212; parlons-en</p>
+      </div>
+      <a href="https://www.wivoo.fr/contact" class="btn--solid-violet">Prendre RDV &#8594;</a>
+    </div>
+  </div>
+
   <!-- ⑥ APPROCHE — Fond blanc -->
   <section id="s-approche" class="cs cs--white">
     <div class="cs__inner fade-in">
@@ -892,27 +918,6 @@
               </div>
             </li>
           </ol>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ✦ CTA DOUBLE CIBLE — Fond violet -->
-  <section class="cs" style="background:#451DC7;">
-    <div class="cs__inner" style="padding-top:0; padding-bottom:0;">
-      <div class="cs-cta-split fade-in">
-        <div class="cs-cta-split__col">
-          <span class="cs-cta-split__eyebrow">Vous avez un projet similaire ?</span>
-          <p class="cs-cta-split__title">Un d&#233;fi d&#8217;engagement utilisateur ou de transformation e-commerce ?</p>
-          <p class="cs-cta-split__sub">Nos consultants r&#233;pondent en moins de 24&#x202F;h pour un premier &#233;change sans engagement.</p>
-          <a href="https://www.wivoo.fr/contact" class="btn--solid-white">Parlons-en &#8594;</a>
-        </div>
-        <div class="cs-cta-split__divider"></div>
-        <div class="cs-cta-split__col">
-          <span class="cs-cta-split__eyebrow">Ce type de mission vous parle ?</span>
-          <p class="cs-cta-split__title">Rejoignez un collectif d&#8217;experts sur des missions ambitieuses</p>
-          <p class="cs-cta-split__sub">2&#8211;3&#x202F;% des candidats rejoignent Wivoo. Si vous &#234;tes expert en Product, E-Commerce ou Design, on veut vous rencontrer.</p>
-          <a href="mailto:guido.macaluso@wivoo.fr?subject=Candidature Wivoo" class="btn--ghost-white">Postuler &#8594;</a>
         </div>
       </div>
     </div>
@@ -1103,6 +1108,17 @@
       </div>
     </div>
   </section>
+
+  <!-- BANNIÈRE CANDIDAT -->
+  <div class="cs-cta-banner cs-cta-banner--candidate fade-in">
+    <div class="cs-cta-banner__inner">
+      <div>
+        <span class="cs-cta-banner__eyebrow">Ce type de mission vous parle ?</span>
+        <p class="cs-cta-banner__title">Rejoignez Wivoo et pilotez des projets produit ambitieux en retail</p>
+      </div>
+      <a href="mailto:guido.macaluso@wivoo.fr?subject=Candidature Wivoo" class="btn--outline-violet">Postuler &#8594;</a>
+    </div>
+  </div>
 
   <!-- ⑦ CITATION CLIENT — Fond sombre -->
   <section class="cs cs--dark">

@@ -49,9 +49,9 @@
   }
   .cs-hero__overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to bottom, rgba(23,2,60,0.06) 0%, rgba(23,2,60,0.82) 100%);
+    background: linear-gradient(to bottom, rgba(10,4,30,0.18) 0%, rgba(10,4,30,0.72) 100%);
     display: flex; align-items: flex-end;
-    padding: 4rem 0;
+    padding: 3.5rem 0;
   }
   .cs-hero__content {
     max-width: 1160px;
@@ -60,10 +60,13 @@
     padding: 0 1.5rem;
   }
   .cs-hero__title {
-    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-size: clamp(2rem, 3.8vw, 3.25rem);
     font-weight: 700; color: #fff;
-    line-height: 1.12; letter-spacing: -0.02em;
+    line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 0.75rem; max-width: 820px;
   }
+  .cs-hero__tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .cs-hero__client { font-size: 0.82rem; color: rgba(255,255,255,0.55); font-weight: 500; }
 
   /* Breadcrumb � overlay top-left, align� sur la grille */
   .cs-hero__breadcrumb {
@@ -96,19 +99,9 @@
     z-index: 100;
   }
   .cs-tags-bar__inner {
-    max-width: 1160px;
-    margin: 0 auto;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-  .cs-tags-bar__client {
-    font-size: 0.78rem;
-    color: #9CA3AF;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    max-width: 1160px; margin: 0 auto;
+    display: flex; gap: 0.5rem; align-items: center;
+    justify-content: center;
   }
 
   /* ---- Eyebrow label ---- */
@@ -559,7 +552,7 @@
   /* ---- Nav stepper ---- */
   .cs-article-nav {
     display: flex; align-items: flex-start; gap: 0;
-    margin-left: auto; flex-shrink: 0;
+    flex-shrink: 0;
   }
   .cs-article-nav__link {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -590,12 +583,8 @@
   .cs-article-nav__link.is-past .cs-article-nav__dot { background: #DDD8F5; border-color: #DDD8F5; }
   .cs-article-nav__line.is-past { background: #DDD8F5; }
   @media (max-width: 768px) {
-    .cs-tags-bar__inner { flex-wrap: wrap; }
     .cs-article-nav {
-      margin-left: 0; width: 100%;
-      justify-content: space-around;
-      padding-top: 0.5rem; margin-top: 0.125rem;
-      border-top: 1px solid #F3F4F6;
+      justify-content: center;
     }
     .cs-article-nav__link { min-width: 0; }
     .cs-article-nav__label { display: block; font-size: 0.58rem; }
@@ -625,7 +614,7 @@
 
   /* ---- Responsive ---- */
   @media (max-width: 1024px) {
-    .cs-hero__overlay { padding: 3rem; }
+    .cs-hero__overlay { padding: 2.5rem 0; }
     .cs-kpi + .cs-kpi { padding-left: 2rem; }
     .cs-wf-grid { grid-template-columns: repeat(2, 1fr); }
     .cs-img-pair img { height: 300px; }
@@ -643,8 +632,8 @@
 
   @media (max-width: 768px) {
     .cs__inner { padding: 2rem 1.25rem; }
-    .cs-hero { height: 280px; }
-    .cs-hero__overlay { padding: 1.5rem; }
+    .cs-hero { height: 320px; }
+    .cs-hero__overlay { padding: 1.5rem 0; }
     .cs-hero__title { font-size: 1.5rem; }
     .cs-kpis { grid-template-columns: 1fr; }
     .cs-kpi { padding: 1.25rem 0; border-bottom: 1px solid #E5E7EB; }
@@ -774,7 +763,12 @@
     </nav>
     <div class="cs-hero__overlay">
       <div class="cs-hero__content">
+        <div class="cs-hero__tags">
+          <span class="tag tag--ai">AI</span>
+          <span class="tag tag--banque">Banque</span>
+        </div>
         <h1 class="cs-hero__title">Refonte du chatbot client avec int&#233;gration<br>de technologies GenAI pour un acteur<br>majeur du secteur bancaire</h1>
+        <p class="cs-hero__client">Acteur majeur du secteur bancaire &nbsp;&#183;&nbsp; Direction Service Client</p>
       </div>
     </div>
   </div>
@@ -782,9 +776,6 @@
   <!-- Barre sticky : tags + contexte client -->
   <div class="cs-tags-bar">
     <div class="cs-tags-bar__inner">
-      <span class="tag tag--ai">AI</span>
-      <span class="tag tag--banque">Banque</span>
-      <span class="cs-tags-bar__client">Acteur majeur du secteur bancaire &nbsp;&#183;&nbsp; Direction Service Client</span>
       <nav class="cs-article-nav" aria-label="Sections de l'article">
         <a href="#s-expert" class="cs-article-nav__link" data-section="s-expert">
           <span class="cs-article-nav__dot"></span>

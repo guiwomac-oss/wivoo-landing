@@ -724,11 +724,17 @@
   .cs-article-nav__link.is-past .cs-article-nav__dot { background: #DDD8F5; border-color: #DDD8F5; }
   .cs-article-nav__line.is-past { background: #DDD8F5; }
   @media (max-width: 768px) {
-    .cs-article-nav { gap: 0; }
-    .cs-article-nav__link { min-width: 28px; }
-    .cs-article-nav__label { display: none; }
+    .cs-tags-bar__inner { flex-wrap: wrap; }
+    .cs-article-nav {
+      margin-left: 0; width: 100%;
+      justify-content: space-around;
+      padding-top: 0.5rem; margin-top: 0.125rem;
+      border-top: 1px solid #F3F4F6;
+    }
+    .cs-article-nav__link { min-width: 0; }
+    .cs-article-nav__label { display: block; font-size: 0.58rem; }
     .cs-article-nav__dot { width: 7px; height: 7px; }
-    .cs-article-nav__line { width: 12px; margin-top: 2px; }
+    .cs-article-nav__line { width: 16px; margin-top: 2px; }
   }
 
   /* ---- Barre de progression (dans la sticky bar) ---- */

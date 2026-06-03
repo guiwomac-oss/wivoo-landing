@@ -515,6 +515,58 @@
       line-height: 1.4;
     }
     .notify-success[hidden] { display: none; }
+
+    /* --- Notify panel avec qualification (has-steps) --- */
+    .notify-panel.has-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .notify-panel.has-steps.is-open {
+      max-height: 150px;
+    }
+
+    .notify-qualify {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .notify-step__label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      flex-shrink: 0;
+    }
+
+    .notify-profiles {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .notify-profile {
+      padding: 0.35rem 0.875rem;
+      border: 1.5px solid #DDD8F5;
+      border-radius: 100px;
+      background: #F5F4FB;
+      font-family: var(--font-family);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .notify-profile:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: #EDEAF8;
+    }
+    .notify-profile.is-selected {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -778,7 +830,14 @@
               </div>
             </div>
           </div>
-          <div class="notify-panel">
+          <div class="notify-panel has-steps">
+            <div class="notify-qualify">
+              <span class="notify-step__label">Je suis…</span>
+              <div class="notify-profiles">
+                <button type="button" class="notify-profile" data-team="RH">👤 Candidat</button>
+                <button type="button" class="notify-profile" data-team="commerciale">🏢 Entreprise</button>
+              </div>
+            </div>
             <form class="notify-form" novalidate>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
@@ -786,7 +845,7 @@
               </div>
               <p class="notify-error" hidden>Email invalide.</p>
             </form>
-            <p class="notify-success" hidden>✓ Vous serez notifié à la publication !</p>
+            <p class="notify-success" hidden>✓ Vous serez notifié à la publication de l'article !</p>
           </div>
         </article>
 
@@ -818,7 +877,14 @@
               </div>
             </div>
           </div>
-          <div class="notify-panel">
+          <div class="notify-panel has-steps">
+            <div class="notify-qualify">
+              <span class="notify-step__label">Je suis…</span>
+              <div class="notify-profiles">
+                <button type="button" class="notify-profile" data-team="RH">👤 Candidat</button>
+                <button type="button" class="notify-profile" data-team="commerciale">🏢 Entreprise</button>
+              </div>
+            </div>
             <form class="notify-form" novalidate>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
@@ -826,7 +892,7 @@
               </div>
               <p class="notify-error" hidden>Email invalide.</p>
             </form>
-            <p class="notify-success" hidden>✓ Vous serez notifié à la publication !</p>
+            <p class="notify-success" hidden>✓ Vous serez notifié à la publication de l'article !</p>
           </div>
         </article>
 
@@ -858,7 +924,14 @@
               </div>
             </div>
           </div>
-          <div class="notify-panel">
+          <div class="notify-panel has-steps">
+            <div class="notify-qualify">
+              <span class="notify-step__label">Je suis…</span>
+              <div class="notify-profiles">
+                <button type="button" class="notify-profile" data-team="RH">👤 Candidat</button>
+                <button type="button" class="notify-profile" data-team="commerciale">🏢 Entreprise</button>
+              </div>
+            </div>
             <form class="notify-form" novalidate>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
@@ -866,7 +939,7 @@
               </div>
               <p class="notify-error" hidden>Email invalide.</p>
             </form>
-            <p class="notify-success" hidden>✓ Vous serez notifié à la publication !</p>
+            <p class="notify-success" hidden>✓ Vous serez notifié à la publication de l'article !</p>
           </div>
         </article>
 
@@ -898,7 +971,14 @@
               </div>
             </div>
           </div>
-          <div class="notify-panel">
+          <div class="notify-panel has-steps">
+            <div class="notify-qualify">
+              <span class="notify-step__label">Je suis…</span>
+              <div class="notify-profiles">
+                <button type="button" class="notify-profile" data-team="RH">👤 Candidat</button>
+                <button type="button" class="notify-profile" data-team="commerciale">🏢 Entreprise</button>
+              </div>
+            </div>
             <form class="notify-form" novalidate>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
@@ -906,7 +986,7 @@
               </div>
               <p class="notify-error" hidden>Email invalide.</p>
             </form>
-            <p class="notify-success" hidden>✓ Vous serez notifié à la publication !</p>
+            <p class="notify-success" hidden>✓ Vous serez notifié à la publication de l'article !</p>
           </div>
         </article>
 
@@ -972,16 +1052,31 @@
         var isOpen = panel.classList.contains('is-open');
         panel.classList.toggle('is-open', !isOpen);
         badge.classList.toggle('is-active', !isOpen);
-        if (!isOpen) { panel.querySelector('.notify-input').focus(); }
+        /* Focus email seulement pour les panneaux sans qualification */
+        if (!isOpen && !panel.classList.contains('has-steps')) {
+          panel.querySelector('.notify-input').focus();
+        }
       });
     });
 
-    /* Soumission du formulaire */
-    document.querySelectorAll('.notify-form').forEach(function (form) {
-      var errorEl   = form.querySelector('.notify-error');
-      var panel     = form.closest('.notify-panel');
+    /* === Notify avec qualification (has-steps) === */
+    document.querySelectorAll('.notify-panel.has-steps').forEach(function (panel) {
+      var qualify   = panel.querySelector('.notify-qualify');
+      var form      = panel.querySelector('.notify-form');
       var successEl = panel.querySelector('.notify-success');
+      var errorEl   = form.querySelector('.notify-error');
+      var selectedTeam = '';
 
+      /* Toggle visuel sur les boutons profil */
+      panel.querySelectorAll('.notify-profile').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          panel.querySelectorAll('.notify-profile').forEach(function (b) { b.classList.remove('is-selected'); });
+          btn.classList.add('is-selected');
+          selectedTeam = btn.dataset.team;
+        });
+      });
+
+      /* Soumission */
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var email = form.querySelector('.notify-input').value.trim();
@@ -990,8 +1085,9 @@
           return;
         }
         errorEl.hidden = true;
-        console.log('[Notify]', email);
+        console.log('[Notify]', { email: email, equipe: selectedTeam });
         form.hidden = true;
+        qualify.style.display = 'none';
         successEl.hidden = false;
         var badge = panel.closest('.case-card').querySelector('.case-card__coming');
         badge.textContent = '✓ Notifié';

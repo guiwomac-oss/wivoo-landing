@@ -21,7 +21,7 @@
     }
 
     /* ============================================
-       PILLS FILTER BAR — Option A
+       FILTER BAR — Pills expertise + dropdown secteur
     ============================================ */
     .filters-bar {
       background: var(--color-white);
@@ -29,42 +29,25 @@
       position: sticky;
       top: 68px;
       z-index: 100;
-      padding: 0.875rem 1.5rem;
+      padding: 0.75rem 1.5rem;
     }
 
     .filters-bar__inner {
       max-width: var(--max-width);
       margin: 0 auto;
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    /* Ligne label + pills */
-    .pills-row {
-      display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
     }
 
-    .pills-row__label {
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: var(--color-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      min-width: 88px;
-      flex-shrink: 0;
-    }
-
+    /* Pills groupe expertise */
     .pills-group {
       display: flex;
       flex-wrap: wrap;
       gap: 0.375rem;
     }
 
-    /* Pill de base — Option B : fond teinté pour distinguer "contrôle" des tags de cards */
     .pill {
       padding: 0.3rem 0.9rem;
       border: 1.5px solid #DDD8F5;
@@ -80,83 +63,85 @@
       user-select: none;
       line-height: 1.5;
     }
-    .pill:hover:not(.is-active):not(.is-empty) {
-      border-color: #9CA3AF;
-      color: var(--color-text);
-      background: #EDEAF8;
-    }
+    .pill:hover:not(.is-active):not(.is-empty) { border-color: #9CA3AF; color: var(--color-text); background: #EDEAF8; }
     .pill:active { transform: scale(0.96); }
+    .pill.is-active:not([data-value="all"])::before { content: "✓ "; font-size: 0.78em; font-weight: 700; }
+    .pill__count { display: inline-block; font-size: 0.72em; font-weight: 600; opacity: 0.5; margin-left: 0.15em; }
+    .pill.is-empty { opacity: 0.28; pointer-events: none; cursor: default; }
 
-    /* Option B — checkmark sur pill active (hors "Tous") */
-    .pill.is-active:not([data-value="all"])::before {
-      content: "✓ ";
-      font-size: 0.78em;
-      font-weight: 700;
-    }
-
-    /* Option A — compteur de résultats */
-    .pill__count {
-      display: inline-block;
-      font-size: 0.72em;
-      font-weight: 600;
-      opacity: 0.5;
-      margin-left: 0.15em;
-    }
-    /* Option A — pill sans résultat disponible : grisée, non cliquable */
-    .pill.is-empty {
-      opacity: 0.28;
-      pointer-events: none;
-      cursor: default;
-    }
-
-    /* ---- État actif par valeur (couleur = couleur du tag) ---- */
-    .pill.is-active[data-value="all"] {
-      background: var(--color-primary);
-      border-color: var(--color-primary);
-      color: #fff;
-      font-weight: 600;
-    }
-    /* Expertise */
+    .pill.is-active[data-value="all"]     { background: var(--color-primary); border-color: var(--color-primary); color: #fff; font-weight: 600; }
     .pill.is-active[data-value="produit"] { background: var(--tag-produit-bg); border-color: var(--tag-produit-text); color: var(--tag-produit-text); font-weight: 600; }
     .pill.is-active[data-value="data"]    { background: var(--tag-data-bg);    border-color: var(--tag-data-text);    color: var(--tag-data-text);    font-weight: 600; }
     .pill.is-active[data-value="ai"]      { background: var(--tag-ai-bg);      border-color: var(--tag-ai-text);      color: var(--tag-ai-text);      font-weight: 600; }
     .pill.is-active[data-value="design"]  { background: var(--tag-design-bg);  border-color: var(--tag-design-text);  color: var(--tag-design-text);  font-weight: 600; }
-    /* Secteur */
-    .pill.is-active[data-value="banque"]  { background: var(--tag-banque-bg);  border-color: var(--tag-banque-text);  color: var(--tag-banque-text);  font-weight: 600; }
-    .pill.is-active[data-value="retail"]  { background: var(--tag-retail-bg);  border-color: var(--tag-retail-text);  color: var(--tag-retail-text);  font-weight: 600; }
-    .pill.is-active[data-value="pharma"]  { background: var(--tag-pharma-bg);  border-color: var(--tag-pharma-text);  color: var(--tag-pharma-text);  font-weight: 600; }
-    .pill.is-active[data-value="beaute"]  { background: var(--tag-beaute-bg);  border-color: var(--tag-beaute-text);  color: var(--tag-beaute-text);  font-weight: 600; }
-    .pill.is-active[data-value="media"]   { background: var(--tag-media-bg);   border-color: var(--tag-media-text);   color: var(--tag-media-text);   font-weight: 600; }
-    .pill.is-active[data-value="btp"]     { background: var(--tag-btp-bg);     border-color: var(--tag-btp-text);     color: var(--tag-btp-text);     font-weight: 600; }
 
-    /* Ligne footer : reset + compteur */
-    .pills-footer {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      min-height: 1.25rem;
+    /* Séparateur vertical */
+    .filters-sep {
+      width: 1px; height: 18px;
+      background: #E5E7EB;
+      flex-shrink: 0;
+      margin: 0 0.125rem;
     }
 
-    .filters-reset {
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: var(--font-family);
-      font-size: 0.78rem;
+    /* Dropdown secteur */
+    .secteur-dropdown { position: relative; }
+
+    .secteur-trigger {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.3rem 0.9rem;
+      border: 1.5px solid #DDD8F5; border-radius: 100px;
+      background: #F5F4FB;
+      font-family: var(--font-family); font-size: 0.8rem; font-weight: 500;
       color: var(--color-text-muted);
-      cursor: pointer;
-      text-decoration: underline;
-      transition: color 0.2s;
-      display: none;
+      cursor: pointer; white-space: nowrap; user-select: none;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      line-height: 1.5;
+    }
+    .secteur-trigger:hover { border-color: #9CA3AF; color: var(--color-text); background: #EDEAF8; }
+    .secteur-trigger.is-active { background: var(--color-primary); border-color: var(--color-primary); color: #fff; font-weight: 600; }
+    .secteur-trigger__arrow { font-size: 0.7em; transition: transform 0.2s; display: inline-block; }
+    .secteur-dropdown.is-open .secteur-trigger__arrow { transform: rotate(180deg); }
+
+    .secteur-menu {
+      position: absolute; top: calc(100% + 0.5rem); left: 0;
+      background: #fff;
+      border: 1px solid #E5E7EB; border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      min-width: 180px; padding: 0.375rem;
+      z-index: 200;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .secteur-menu[hidden] { display: none; }
+
+    .secteur-option {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+      padding: 0.45rem 0.75rem;
+      border: none; border-radius: 8px; background: none;
+      font-family: var(--font-family); font-size: 0.82rem; font-weight: 500;
+      color: var(--color-text);
+      cursor: pointer; text-align: left; white-space: nowrap; width: 100%;
+      transition: background 0.12s;
+    }
+    .secteur-option:hover { background: #F5F4FB; }
+    .secteur-option.is-active { background: #EDE8FC; color: var(--color-primary); font-weight: 600; }
+    .secteur-option.is-active::before { content: "✓ "; font-size: 0.78em; }
+    .secteur-option.is-empty { opacity: 0.32; pointer-events: none; }
+    .secteur-option__count { font-size: 0.72em; opacity: 0.45; }
+
+    /* Reset + compteur */
+    .filters-reset {
+      background: none; border: none; padding: 0 0.25rem;
+      font-family: var(--font-family); font-size: 0.76rem;
+      color: var(--color-text-muted);
+      cursor: pointer; text-decoration: underline;
+      transition: color 0.2s; display: none; margin-left: 0.25rem;
     }
     .filters-reset.is-visible { display: inline; }
     .filters-reset:hover { color: var(--color-text); }
 
     .results-count {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--color-primary);
-      margin-left: auto;
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--color-primary); margin-left: auto;
     }
 
     /* Page réalisations : grille 2 colonnes + cards riches */
@@ -642,41 +627,63 @@
     </div>
   </section>
 
-  <!-- BARRE DE FILTRES STICKY — Option A : pills multi-sélection -->
+  <!-- BARRE DE FILTRES STICKY — pills expertise + dropdown secteur -->
   <div class="filters-bar" id="filtersBar">
     <div class="filters-bar__inner">
 
-      <!-- Ligne Expertise -->
-      <div class="pills-row">
-        <span class="pills-row__label">Expertise</span>
-        <div class="pills-group" data-dimension="expertise">
-          <button class="pill is-active" data-value="all" type="button">Tous</button>
-          <button class="pill" data-value="produit" type="button">Product Management</button>
-          <button class="pill" data-value="data" type="button">Data</button>
-          <button class="pill" data-value="ai" type="button">AI</button>
-          <button class="pill" data-value="design" type="button">Design</button>
+      <!-- Pills expertise (4 valeurs fixes) -->
+      <div class="pills-group" data-dimension="expertise">
+        <button class="pill is-active" data-value="all" type="button">Tous</button>
+        <button class="pill" data-value="produit" type="button">Produit</button>
+        <button class="pill" data-value="data" type="button">Data</button>
+        <button class="pill" data-value="ai" type="button">AI</button>
+        <button class="pill" data-value="design" type="button">Design</button>
+      </div>
+
+      <!-- Séparateur -->
+      <span class="filters-sep" aria-hidden="true"></span>
+
+      <!-- Dropdown secteur -->
+      <div class="secteur-dropdown" id="secteurDropdown">
+        <button class="secteur-trigger" id="secteurTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span class="secteur-trigger__label">Secteur</span>
+          <span class="secteur-trigger__arrow">▾</span>
+        </button>
+        <div class="secteur-menu" id="secteurMenu" role="listbox" hidden>
+          <button class="secteur-option is-active" data-value="all" type="button" role="option">
+            <span>Tous les secteurs</span>
+            <span class="secteur-option__count"></span>
+          </button>
+          <button class="secteur-option" data-value="banque" type="button" role="option">
+            <span>Banque</span>
+            <span class="secteur-option__count"></span>
+          </button>
+          <button class="secteur-option" data-value="retail" type="button" role="option">
+            <span>Retail</span>
+            <span class="secteur-option__count"></span>
+          </button>
+          <button class="secteur-option" data-value="pharma" type="button" role="option">
+            <span>Pharma</span>
+            <span class="secteur-option__count"></span>
+          </button>
+          <button class="secteur-option" data-value="beaute" type="button" role="option">
+            <span>Beauté</span>
+            <span class="secteur-option__count"></span>
+          </button>
+          <button class="secteur-option" data-value="media" type="button" role="option">
+            <span>Média</span>
+            <span class="secteur-option__count"></span>
+          </button>
+          <button class="secteur-option" data-value="btp" type="button" role="option">
+            <span>BTP</span>
+            <span class="secteur-option__count"></span>
+          </button>
         </div>
       </div>
 
-      <!-- Ligne Secteur -->
-      <div class="pills-row">
-        <span class="pills-row__label">Secteur</span>
-        <div class="pills-group" data-dimension="secteur">
-          <button class="pill is-active" data-value="all" type="button">Tous</button>
-          <button class="pill" data-value="banque" type="button">Banque</button>
-          <button class="pill" data-value="retail" type="button">Retail</button>
-          <button class="pill" data-value="pharma" type="button">Pharma</button>
-          <button class="pill" data-value="beaute" type="button">Beauté</button>
-          <button class="pill" data-value="media" type="button">Média</button>
-          <button class="pill" data-value="btp" type="button">BTP</button>
-        </div>
-      </div>
-
-      <!-- Footer : reset + compteur -->
-      <div class="pills-footer">
-        <button class="filters-reset" id="filtersReset" type="button">✕ Effacer les filtres</button>
-        <span class="results-count" id="resultsCount">8 résultats</span>
-      </div>
+      <!-- Reset + compteur -->
+      <button class="filters-reset" id="filtersReset" type="button">✕ Effacer</button>
+      <span class="results-count" id="resultsCount">8 résultats</span>
 
     </div>
   </div>

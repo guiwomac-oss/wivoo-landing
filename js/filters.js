@@ -1,181 +1,192 @@
 /* =============================================
-   WIVOO — Filtres pills multi-sélection
-   Page realisations.html — Option A + B
-   - Option A : compteurs de résultats + pills grisées si vides
-   - Option B : fond teinté + checkmark sur pills actives
-   Logique : OR au sein de chaque dimension, AND entre dimensions
-   Dernière mise à jour : 29/05/2026
+   WIVOO — Filtres : pills expertise + dropdown secteur
+   Page realisations.html
 ============================================== */
 
 (function () {
 
-  /* ---- État des filtres ---- */
+  /* ---- État ---- */
   var activeExpertise = new Set(['all']);
   var activeSecteur   = new Set(['all']);
 
-  /* ---- Éléments DOM ---- */
-  var cards       = document.querySelectorAll('.case-card');
-  var resetBtn    = document.getElementById('filtersReset');
-  var countEl     = document.getElementById('resultsCount');
-  var noResultsEl = document.getElementById('noResults');
+  /* ---- DOM ---- */
+  var cards           = document.querySelectorAll('.case-card');
+  var resetBtn        = document.getElementById('filtersReset');
+  var countEl         = document.getElementById('resultsCount');
+  var noResultsEl     = document.getElementById('noResults');
+  var expertiseGroup  = document.querySelector('.pills-group[data-dimension="expertise"]');
+  var secteurDropdown = document.getElementById('secteurDropdown');
+  var secteurTrigger  = document.getElementById('secteurTrigger');
+  var secteurMenu     = document.getElementById('secteurMenu');
+  var triggerLabel    = secteurTrigger && secteurTrigger.querySelector('.secteur-trigger__label');
 
-  /* ---- Mémoriser les labels originaux des pills (avant tout innerHTML) ---- */
+  /* ---- Labels originaux (avant que updateCounts les modifie) ---- */
   var pillLabels = new Map();
-  document.querySelectorAll('.pill').forEach(function (pill) {
-    pillLabels.set(pill, pill.textContent.trim());
+  if (expertiseGroup) {
+    expertiseGroup.querySelectorAll('.pill').forEach(function (p) {
+      pillLabels.set(p, p.textContent.trim());
+    });
+  }
+
+  var optionLabels = new Map();
+  document.querySelectorAll('.secteur-option').forEach(function (o) {
+    var textEl = o.querySelector('span:first-child');
+    optionLabels.set(o, textEl ? textEl.textContent.trim() : o.dataset.value);
   });
 
-  /* ---- Brancher les clics sur les pills ---- */
-  document.querySelectorAll('.pills-group').forEach(function (group) {
-    var dimension = group.dataset.dimension;
-
-    group.querySelectorAll('.pill').forEach(function (pill) {
+  /* ---- Pills expertise ---- */
+  if (expertiseGroup) {
+    expertiseGroup.querySelectorAll('.pill').forEach(function (pill) {
       pill.addEventListener('click', function () {
-        var value = pill.dataset.value;
-
-        if (dimension === 'expertise') {
-          togglePill(activeExpertise, value);
-        } else if (dimension === 'secteur') {
-          togglePill(activeSecteur, value);
-        }
-
-        syncPillStates(group, dimension === 'expertise' ? activeExpertise : activeSecteur);
-        applyFilters();
-        updateCounts();
-        syncResetBtn();
+        toggleSet(activeExpertise, pill.dataset.value);
+        syncPills(expertiseGroup, activeExpertise);
+        run();
       });
+    });
+  }
+
+  /* ---- Dropdown secteur : ouverture / fermeture ---- */
+  if (secteurTrigger) {
+    secteurTrigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = secteurDropdown.classList.toggle('is-open');
+      secteurMenu.hidden = !open;
+      secteurTrigger.setAttribute('aria-expanded', open);
+    });
+  }
+
+  document.addEventListener('click', closeDropdown);
+  if (secteurDropdown) {
+    secteurDropdown.addEventListener('click', function (e) { e.stopPropagation(); });
+  }
+
+  function closeDropdown() {
+    if (!secteurDropdown) return;
+    secteurDropdown.classList.remove('is-open');
+    if (secteurMenu) secteurMenu.hidden = true;
+    if (secteurTrigger) secteurTrigger.setAttribute('aria-expanded', 'false');
+  }
+
+  /* ---- Options secteur ---- */
+  document.querySelectorAll('.secteur-option').forEach(function (opt) {
+    opt.addEventListener('click', function () {
+      toggleSet(activeSecteur, opt.dataset.value);
+      syncOptions();
+      syncTrigger();
+      run();
     });
   });
 
-  /* ---- Logique de bascule dans un Set ---- */
-  function togglePill (activeSet, value) {
-    if (value === 'all') {
-      activeSet.clear();
-      activeSet.add('all');
-      return;
-    }
-    activeSet.delete('all');
-    if (activeSet.has(value)) {
-      activeSet.delete(value);
-      if (activeSet.size === 0) activeSet.add('all');
-    } else {
-      activeSet.add(value);
-    }
+  /* ---- Logique toggle ---- */
+  function toggleSet(set, value) {
+    if (value === 'all') { set.clear(); set.add('all'); return; }
+    set.delete('all');
+    if (set.has(value)) { set.delete(value); if (set.size === 0) set.add('all'); }
+    else { set.add(value); }
   }
 
-  /* ---- Synchronise l'état visuel (is-active) des pills d'un groupe ---- */
-  function syncPillStates (group, activeSet) {
+  /* ---- Sync visuels ---- */
+  function syncPills(group, activeSet) {
     group.querySelectorAll('.pill').forEach(function (p) {
       p.classList.toggle('is-active', activeSet.has(p.dataset.value));
     });
   }
 
-  /* ---- Application des filtres sur les cards ---- */
-  function applyFilters () {
+  function syncOptions() {
+    document.querySelectorAll('.secteur-option').forEach(function (o) {
+      o.classList.toggle('is-active', activeSecteur.has(o.dataset.value));
+    });
+  }
+
+  function syncTrigger() {
+    if (!triggerLabel || !secteurTrigger) return;
+    if (activeSecteur.has('all')) {
+      triggerLabel.textContent = 'Secteur';
+      secteurTrigger.classList.remove('is-active');
+    } else {
+      var names = [];
+      document.querySelectorAll('.secteur-option:not([data-value="all"])').forEach(function (o) {
+        if (activeSecteur.has(o.dataset.value)) names.push(optionLabels.get(o));
+      });
+      triggerLabel.textContent = names.length === 1 ? names[0] : names.length + ' secteurs';
+      secteurTrigger.classList.add('is-active');
+    }
+  }
+
+  /* ---- Filtrage ---- */
+  function applyFilters() {
     var visible = 0;
-
     cards.forEach(function (card) {
-      var match = matchesDimension(card.dataset.expertise, activeExpertise) &&
-                  matchesDimension(card.dataset.secteur,   activeSecteur);
-
+      var match = matches(card.dataset.expertise, activeExpertise) &&
+                  matches(card.dataset.secteur, activeSecteur);
       card.classList.toggle('is-hidden', !match);
       if (match) visible++;
     });
-
-    if (countEl) {
-      countEl.textContent = visible + (visible <= 1 ? ' résultat' : ' résultats');
-    }
-    if (noResultsEl) {
-      noResultsEl.classList.toggle('is-visible', visible === 0);
-    }
+    if (countEl) countEl.textContent = visible + (visible <= 1 ? ' résultat' : ' résultats');
+    if (noResultsEl) noResultsEl.classList.toggle('is-visible', visible === 0);
   }
 
-  /* ---- Vérifie si une card correspond à un Set de filtres (OR intra-dimension) ---- */
-  function matchesDimension (dataValue, activeSet) {
+  function matches(dataVal, activeSet) {
     if (activeSet.has('all')) return true;
-    if (!dataValue) return false;
-    return dataValue.split(' ').some(function (v) { return activeSet.has(v); });
+    if (!dataVal) return false;
+    return dataVal.split(' ').some(function (v) { return activeSet.has(v); });
   }
 
-  /* ============================================================
-     Option A — Compteurs de résultats
-     Pour chaque pill : nombre de cards qui matcheraient SI cette
-     valeur était sélectionnée, compte tenu de l'autre dimension.
-  ============================================================ */
-
-  function updateCounts () {
-    document.querySelectorAll('.pills-group').forEach(function (group) {
-      var dimension = group.dataset.dimension;
-
-      group.querySelectorAll('.pill').forEach(function (pill) {
-        var value = pill.dataset.value;
-        var label = pillLabels.get(pill);  /* label original, jamais altéré */
-        var count = getCountForPill(dimension, value);
-
-        /* Mettre à jour le texte : "Label · N" */
-        pill.innerHTML = label + '<span class="pill__count"> · ' + count + '</span>';
-
-        /* Griser si 0 résultat (jamais sur "Tous") */
-        if (value !== 'all') {
-          pill.classList.toggle('is-empty', count === 0);
-        }
+  /* ---- Compteurs ---- */
+  function updateCounts() {
+    if (expertiseGroup) {
+      expertiseGroup.querySelectorAll('.pill').forEach(function (pill) {
+        var n = countFor('expertise', pill.dataset.value);
+        var label = pillLabels.get(pill) || pill.dataset.value;
+        pill.innerHTML = label + '<span class="pill__count"> · ' + n + '</span>';
+        if (pill.dataset.value !== 'all') pill.classList.toggle('is-empty', n === 0);
       });
+    }
+
+    document.querySelectorAll('.secteur-option').forEach(function (opt) {
+      var n = countFor('secteur', opt.dataset.value);
+      var countSpan = opt.querySelector('.secteur-option__count');
+      if (countSpan) countSpan.textContent = n;
+      if (opt.dataset.value !== 'all') opt.classList.toggle('is-empty', n === 0);
     });
   }
 
-  /* Compte les cards qui correspondraient à cette pill + l'autre dimension active */
-  function getCountForPill (dimension, value) {
-    var count = 0;
-
+  function countFor(dim, value) {
+    var n = 0;
     cards.forEach(function (card) {
-      var expertiseMatch, secteurMatch;
-
-      if (dimension === 'expertise') {
-        /* Pour les pills d'expertise : fixer cette valeur, garder le filtre secteur actuel */
-        expertiseMatch = (value === 'all')
-          ? true
-          : matchesDimension(card.dataset.expertise, new Set([value]));
-        secteurMatch = matchesDimension(card.dataset.secteur, activeSecteur);
-      } else {
-        /* Pour les pills de secteur : garder le filtre expertise actuel, fixer cette valeur */
-        expertiseMatch = matchesDimension(card.dataset.expertise, activeExpertise);
-        secteurMatch = (value === 'all')
-          ? true
-          : matchesDimension(card.dataset.secteur, new Set([value]));
-      }
-
-      if (expertiseMatch && secteurMatch) count++;
+      var eOk = dim === 'expertise'
+        ? (value === 'all' ? true : matches(card.dataset.expertise, new Set([value])))
+        : matches(card.dataset.expertise, activeExpertise);
+      var sOk = dim === 'secteur'
+        ? (value === 'all' ? true : matches(card.dataset.secteur, new Set([value])))
+        : matches(card.dataset.secteur, activeSecteur);
+      if (eOk && sOk) n++;
     });
-
-    return count;
+    return n;
   }
 
-  /* ---- Affiche/masque le bouton reset ---- */
-  function syncResetBtn () {
-    var hasFilter = !activeExpertise.has('all') || !activeSecteur.has('all');
-    if (resetBtn) resetBtn.classList.toggle('is-visible', hasFilter);
+  /* ---- Reset ---- */
+  function syncReset() {
+    var active = !activeExpertise.has('all') || !activeSecteur.has('all');
+    if (resetBtn) resetBtn.classList.toggle('is-visible', active);
   }
 
-  /* ---- Reset complet ---- */
   if (resetBtn) {
     resetBtn.addEventListener('click', function () {
       activeExpertise.clear(); activeExpertise.add('all');
       activeSecteur.clear();   activeSecteur.add('all');
-
-      document.querySelectorAll('.pills-group').forEach(function (group) {
-        var dimension = group.dataset.dimension;
-        syncPillStates(group, dimension === 'expertise' ? activeExpertise : activeSecteur);
-      });
-
-      applyFilters();
-      updateCounts();
-      syncResetBtn();
+      if (expertiseGroup) syncPills(expertiseGroup, activeExpertise);
+      syncOptions();
+      syncTrigger();
+      closeDropdown();
+      run();
     });
   }
 
-  /* ---- Initialisation au chargement ---- */
-  applyFilters();
-  updateCounts();
-  syncResetBtn();
+  /* ---- Pipeline ---- */
+  function run() { applyFilters(); updateCounts(); syncReset(); }
+
+  /* ---- Init ---- */
+  run();
 
 })();

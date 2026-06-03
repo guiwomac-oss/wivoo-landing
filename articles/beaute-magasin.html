@@ -587,7 +587,7 @@
   .cs-article-nav__link.is-active .cs-article-nav__label { color: #451DC7; font-weight: 700; }
   .cs-article-nav__link.is-past .cs-article-nav__dot { background: #DDD8F5; border-color: #DDD8F5; }
   .cs-article-nav__line.is-past { background: #DDD8F5; }
-  @media (max-width: 768px) { .cs-article-nav { display: none; } }
+  @media (max-width: 768px) {\n    .cs-article-nav { gap: 0; }\n    .cs-article-nav__link { min-width: 28px; }\n    .cs-article-nav__label { display: none; }\n    .cs-article-nav__dot { width: 7px; height: 7px; }\n    .cs-article-nav__line { width: 12px; margin-top: 2px; }\n  }
 
   /* ---- Barre de progression (dans la sticky bar) ---- */
   .reading-progress {

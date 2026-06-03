@@ -203,7 +203,7 @@ dl, dt, dd { margin: 0; }
   background-color: var(--color-accent) !important;
 }
 
-/* Entrées nav non cliquables (href="#") — grisées, cursor par défaut */
+/* Entrées nav non cliquables (href="#") — grisées, cursor par défaut, pas de dropdown */
 .nav__item.has-dropdown > a[href="#"] {
   color: #B0AABF;
   cursor: default;
@@ -214,6 +214,9 @@ dl, dt, dd { margin: 0; }
 }
 .nav__item.has-dropdown > a[href="#"] .nav__arrow {
   opacity: 0.4;
+}
+.nav__item.has-dropdown > a[href="#"] ~ .nav__dropdown {
+  display: none !important;
 }
 
 /* Dropdown */

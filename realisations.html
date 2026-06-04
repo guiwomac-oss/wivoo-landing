@@ -622,7 +622,7 @@
       </div>
       <div class="hero__ctas">
         <a href="https://www.wivoo.fr/contact" class="btn btn--primary">Parlons de votre projet →</a>
-        <a href="index.html#rejoindre" class="btn btn--outline">Rejoindre l'équipe</a>
+        <a href="https://www.welcometothejungle.com/fr/companies/wivoo/jobs" class="btn btn--outline" target="_blank" rel="noopener">Rejoindre l'équipe</a>
       </div>
     </div>
   </section>
@@ -1092,7 +1092,8 @@
           return;
         }
         errorEl.hidden = true;
-        console.log('[Notify]', { email: email, equipe: selectedTeam });
+
+        /* Affiche le succès immédiatement */
         form.hidden = true;
         qualify.style.display = 'none';
         successEl.hidden = false;
@@ -1100,6 +1101,18 @@
         badge.textContent = '✓ Notifié';
         badge.disabled = true;
         badge.style.background = 'rgba(4,184,78,0.88)';
+
+        /* Envoie à Brevo en arrière-plan */
+        var cardTitle = panel.closest('.case-card').querySelector('.case-card__title');
+        fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            profile: selectedTeam,
+            cardTitle: cardTitle ? cardTitle.textContent.trim() : ''
+          })
+        }).catch(function (err) { console.error('[Subscribe]', err); });
       });
     });
 

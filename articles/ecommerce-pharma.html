@@ -771,25 +771,29 @@
 <body>
   <button class="scroll-top" id="scrollTop" aria-label="Retour en haut de page">↑</button>
 
+  <a href="#main-content" class="skip-link">Passer au contenu principal</a>
+
   <!-- NAVIGATION -->
   <nav class="nav" id="nav">
     <div class="nav__container">
       <a class="nav__logo" href="../index.html"><img src="../images/6867e3036e5069059dfe3a76_LOGO-Wivoo-RGB_BLUE-p-1600.png" alt="Wivoo" /></a>
       <ul class="nav__links" id="navLinks">
-        <li class="nav__item has-dropdown"><a href="#">Nos solutions <span class="nav__arrow">▾</span></a>
+        <li class="nav__item has-dropdown"><a href="#">Nos solutions <span class="nav__arrow" aria-hidden="true">▾</span></a>
           <div class="nav__dropdown"><a href="#">Data et IA</a><a href="#">Product Management</a><a href="#">Product Design</a><a href="#">Formations WiAC!</a></div></li>
         <li class="nav__item"><a href="../realisations.html" class="is-active">Nos réalisations</a></li>
-        <li class="nav__item has-dropdown"><a href="#">Nos contenus <span class="nav__arrow">▾</span></a>
+        <li class="nav__item has-dropdown"><a href="#">Nos contenus <span class="nav__arrow" aria-hidden="true">▾</span></a>
           <div class="nav__dropdown"><a href="#">L'Observatoire des Tendances</a><a href="#">Nos Podcasts</a><a href="#">Nos Émissions</a><a href="#">Notre Blog</a></div></li>
-        <li class="nav__item has-dropdown"><a href="#">À propos <span class="nav__arrow">▾</span></a>
+        <li class="nav__item has-dropdown"><a href="#">À propos <span class="nav__arrow" aria-hidden="true">▾</span></a>
           <div class="nav__dropdown"><a href="#">Notre ADN</a><a href="#">Nos engagements</a></div></li>
-        <li class="nav__item has-dropdown"><a href="#">Carrière <span class="nav__arrow">▾</span></a>
+        <li class="nav__item has-dropdown"><a href="#">Carrière <span class="nav__arrow" aria-hidden="true">▾</span></a>
           <div class="nav__dropdown"><a href="#">La vie chez Wivoo</a><a href="#">Nous rejoindre</a></div></li>
         <li class="nav__item"><a href="https://www.wivoo.fr/contact" class="nav__cta">Prendre RDV</a></li>
       </ul>
       <button class="nav__burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </nav>
+
+  <span id="main-content" tabindex="-1" aria-hidden="true"></span>
 
   <!-- ① HERO — Image plein écran avec titre en overlay -->
   <div class="cs-hero">
@@ -931,7 +935,7 @@
         <span class="cs-cta-banner__eyebrow">Vous avez un projet similaire ?</span>
         <p class="cs-cta-banner__title">Un d&#233;ploiement e-commerce international ou une transformation digitale&nbsp;?</p>
       </div>
-      <a href="https://www.wivoo.fr/contact" class="btn--solid-violet">Parlons-en &#8594;</a>
+      <a href="https://www.wivoo.fr/contact" class="btn--solid-violet">Parlons-en <span aria-hidden="true">&#8594;</span></a>
     </div>
   </div>
 
@@ -994,7 +998,7 @@
         <span class="cs-cta-banner__eyebrow">Ce type de mission vous parle ?</span>
         <p class="cs-cta-banner__title">Rejoignez un collectif d&#8217;experts sur des missions ambitieuses en Product &amp; E-Commerce</p>
       </div>
-      <a href="https://www.welcometothejungle.com/fr/companies/wivoo/jobs" target="_blank" rel="noopener" class="btn--outline-violet">Postuler &#8594;</a>
+      <a href="https://www.welcometothejungle.com/fr/companies/wivoo/jobs" target="_blank" rel="noopener" class="btn--outline-violet">Postuler <span aria-hidden="true">&#8594;</span></a>
     </div>
   </div>
 
@@ -1204,7 +1208,7 @@
     <div class="cs__inner fade-in">
       <p class="cs-cta__title">Vous déployez à l'international ?</p>
       <p class="cs-cta__sub">Parlons-en avec un de nos consultants Wivoo.<br>On répond en moins de 24 h.</p>
-      <a href="https://www.wivoo.fr/contact" class="btn btn--violet">Prendre RDV →</a>
+      <a href="https://www.wivoo.fr/contact" class="btn btn--violet">Prendre RDV <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
@@ -1218,7 +1222,7 @@
     <div class="cs-related__inner">
       <p class="cs-related__title">D'autres réalisations</p>
       <div class="cs-related__grid">
-        <a class="cs-mini" href="chatbot-banque.html">
+        <a class="cs-mini" href="chatbot-banque.html"><span class="sr-only">Lire le cas : Chatbot GenAI banque.</span>
           <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&h=140&fit=crop&q=80" alt="Chatbot bancaire — Secteur banque" /></div>
           <div class="cs-mini__body">
             <div class="cs-mini__tags"><span class="tag tag--ai">AI</span><span class="tag tag--banque">Banque</span></div>
@@ -1226,7 +1230,7 @@
             <span class="cs-mini__link">Lire →</span>
           </div>
         </a>
-        <a class="cs-mini" href="retail-sport.html">
+        <a class="cs-mini" href="retail-sport.html"><span class="sr-only">Lire le cas : Retail sportif europ&#233;en.</span>
           <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=140&fit=crop&q=80" alt="Engagement utilisateur retail sport" /></div>
           <div class="cs-mini__body">
             <div class="cs-mini__tags"><span class="tag tag--produit">Produit</span><span class="tag tag--retail">Retail</span></div>
@@ -1234,7 +1238,7 @@
             <span class="cs-mini__link">Lire →</span>
           </div>
         </a>
-        <a class="cs-mini" href="beaute-magasin.html">
+        <a class="cs-mini" href="beaute-magasin.html"><span class="sr-only">Lire le cas : Beaut&#233; en magasin.</span>
           <div class="cs-mini__img"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=140&fit=crop&q=80" alt="Expérience client beauté en magasin" /></div>
           <div class="cs-mini__body">
             <div class="cs-mini__tags"><span class="tag tag--design">Design</span><span class="tag tag--beaute">Beauté</span></div>

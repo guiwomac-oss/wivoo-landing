@@ -599,6 +599,8 @@
 </head>
 <body>
 
+  <a href="#main-content" class="skip-link">Passer au contenu principal</a>
+
   <!-- NAVIGATION -->
   <nav class="nav" id="nav">
     <div class="nav__container">
@@ -607,7 +609,7 @@
       </a>
       <ul class="nav__links" id="navLinks">
         <li class="nav__item has-dropdown">
-          <a href="#">Nos solutions <span class="nav__arrow">▾</span></a>
+          <a href="#">Nos solutions <span class="nav__arrow" aria-hidden="true">▾</span></a>
           <div class="nav__dropdown">
             <a href="#">Data et IA</a>
             <a href="#">Product Management</a>
@@ -619,7 +621,7 @@
           <a href="realisations.html" class="is-active">Nos réalisations</a>
         </li>
         <li class="nav__item has-dropdown">
-          <a href="#">Nos contenus <span class="nav__arrow">▾</span></a>
+          <a href="#">Nos contenus <span class="nav__arrow" aria-hidden="true">▾</span></a>
           <div class="nav__dropdown">
             <a href="#">L'Observatoire des Tendances</a>
             <a href="#">Nos Podcasts</a>
@@ -628,14 +630,14 @@
           </div>
         </li>
         <li class="nav__item has-dropdown">
-          <a href="#">À propos <span class="nav__arrow">▾</span></a>
+          <a href="#">À propos <span class="nav__arrow" aria-hidden="true">▾</span></a>
           <div class="nav__dropdown">
             <a href="#">Notre ADN</a>
             <a href="#">Nos engagements</a>
           </div>
         </li>
         <li class="nav__item has-dropdown">
-          <a href="#">Carrière <span class="nav__arrow">▾</span></a>
+          <a href="#">Carrière <span class="nav__arrow" aria-hidden="true">▾</span></a>
           <div class="nav__dropdown">
             <a href="#">La vie chez Wivoo</a>
             <a href="#">Nous rejoindre</a>
@@ -664,7 +666,7 @@
         <div class="hero__stat"><span class="hero__stat-number">+100</span><span class="hero__stat-label">consultants experts</span></div>
       </div>
       <div class="hero__ctas">
-        <a href="https://www.wivoo.fr/contact" class="btn btn--primary">Parlons de votre projet →</a>
+        <a href="https://www.wivoo.fr/contact" class="btn btn--primary">Parlons de votre projet <span aria-hidden="true">→</span></a>
         <a href="https://www.welcometothejungle.com/fr/companies/wivoo/jobs" class="btn btn--outline" target="_blank" rel="noopener">Rejoindre l'équipe</a>
       </div>
     </div>
@@ -732,13 +734,14 @@
   </div>
 
   <!-- GRILLE DES CAS CLIENTS -->
-  <section class="realisations-page">
+  <section class="realisations-page" id="main-content">
     <div class="realisations-page__inner">
       <div class="cases-grid" id="casesGrid">
 
         <!-- Card 1 — Chatbot GenAI Banque -->
         <a class="case-card fade-in"
           href="articles/chatbot-banque.html"
+          aria-label="Lire le cas client : Chatbot GenAI &#8212; Secteur bancaire"
           data-expertise="ai data"
           data-secteur="banque"
           data-format="use-case"
@@ -768,6 +771,7 @@
         <!-- Card 2 — Retail Sportif -->
         <a class="case-card fade-in"
           href="articles/retail-sport.html"
+          aria-label="Lire le cas client : Engagement retail sportif europ&#233;en"
           data-expertise="produit design"
           data-secteur="retail"
           data-format="rex"
@@ -797,6 +801,7 @@
         <!-- Card 3 — Pharma E-commerce -->
         <a class="case-card fade-in"
           href="articles/ecommerce-pharma.html"
+          aria-label="Lire le cas client : E-commerce pharma mondial"
           data-expertise="produit"
           data-secteur="pharma"
           data-format="rex"
@@ -826,6 +831,7 @@
         <!-- Card 4 — Beauté -->
         <a class="case-card fade-in"
           href="articles/beaute-magasin.html"
+          aria-label="Lire le cas client : Exp&#233;rience client beaut&#233; en magasin"
           data-expertise="design"
           data-secteur="beaute"
           data-format="use-case"
@@ -891,8 +897,8 @@
             <p class="notify-profile-error" hidden>Choisissez un profil avant de continuer.</p>
             <form class="notify-form" novalidate>
               <div class="notify-row">
-                <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
-                <button type="submit" class="notify-submit">Me notifier →</button>
+                <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" aria-label="Votre adresse email" />
+                <button type="submit" class="notify-submit"><span aria-hidden=`"true`">→</span>Me notifier</button>
               </div>
               <p class="notify-error" hidden>Email invalide.</p>
             </form>
@@ -939,8 +945,8 @@
             <p class="notify-profile-error" hidden>Choisissez un profil avant de continuer.</p>
             <form class="notify-form" novalidate>
               <div class="notify-row">
-                <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
-                <button type="submit" class="notify-submit">Me notifier →</button>
+                <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" aria-label="Votre adresse email" />
+                <button type="submit" class="notify-submit"><span aria-hidden=`"true`">→</span>Me notifier</button>
               </div>
               <p class="notify-error" hidden>Email invalide.</p>
             </form>
@@ -987,8 +993,8 @@
             <p class="notify-profile-error" hidden>Choisissez un profil avant de continuer.</p>
             <form class="notify-form" novalidate>
               <div class="notify-row">
-                <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
-                <button type="submit" class="notify-submit">Me notifier →</button>
+                <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" aria-label="Votre adresse email" />
+                <button type="submit" class="notify-submit"><span aria-hidden=`"true`">→</span>Me notifier</button>
               </div>
               <p class="notify-error" hidden>Email invalide.</p>
             </form>
@@ -1035,8 +1041,8 @@
             <p class="notify-profile-error" hidden>Choisissez un profil avant de continuer.</p>
             <form class="notify-form" novalidate>
               <div class="notify-row">
-                <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
-                <button type="submit" class="notify-submit">Me notifier →</button>
+                <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" aria-label="Votre adresse email" />
+                <button type="submit" class="notify-submit"><span aria-hidden=`"true`">→</span>Me notifier</button>
               </div>
               <p class="notify-error" hidden>Email invalide.</p>
             </form>
@@ -1059,7 +1065,7 @@
   <div class="cta-contact">
     <h2 class="cta-contact__title">Un projet en tête ?</h2>
     <p class="cta-contact__sub">Parlons-en — nos consultants sont disponibles pour un premier échange sans engagement.</p>
-    <a href="https://www.wivoo.fr/contact" class="btn btn--accent">Prendre RDV →</a>
+    <a href="https://www.wivoo.fr/contact" class="btn btn--accent">Prendre RDV <span aria-hidden="true">→</span></a>
   </div>
 
   <!-- FOOTER -->

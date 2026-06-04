@@ -87,7 +87,27 @@
   }
 })();
 
-/* ---- 4. Filtrage simple (index.html — si présent) ---- */
+/* ---- 4. Nav dropdowns : aria-expanded (clavier + souris) ---- */
+(function () {
+  document.querySelectorAll('.nav__item.has-dropdown').forEach(function (item) {
+    var trigger = item.querySelector(':scope > a');
+    if (!trigger) return;
+    trigger.setAttribute('aria-haspopup', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+
+    function open()  { trigger.setAttribute('aria-expanded', 'true');  }
+    function close() { trigger.setAttribute('aria-expanded', 'false'); }
+
+    item.addEventListener('mouseenter', open);
+    item.addEventListener('mouseleave', close);
+    trigger.addEventListener('focus', open);
+    item.addEventListener('focusout', function (e) {
+      if (!item.contains(e.relatedTarget)) close();
+    });
+  });
+})();
+
+/* ---- 5. Filtrage simple (index.html — si présent) ---- */
 (function () {
   var filters = document.querySelectorAll('.rex__filter');
   var cards   = document.querySelectorAll('.rex__card');

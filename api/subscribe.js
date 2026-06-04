@@ -154,14 +154,18 @@ export default async function handler(req, res) {
       })
     });
 
+    const mailBody = await mailRes.json().catch(() => ({}));
+
     if (!mailRes.ok) {
-      const err = await mailRes.json().catch(() => ({}));
-      console.error('[Subscribe] Mail error', mailRes.status, err);
-      /* On retourne quand même succès — le contact est bien enregistré */
+      console.error('[Subscribe] Mail error', mailRes.status, JSON.stringify(mailBody));
+      /* Contact enregistré mais email échoué — on renvoie le détail pour debug */
+      return res.status(200).json({ success: true, mailError: { status: mailRes.status, detail: mailBody } });
     }
+
+    return res.status(200).json({ success: true, messageId: mailBody.messageId });
+
   } catch (err) {
     console.error('[Subscribe] Mail fetch error', err);
+    return res.status(200).json({ success: true, mailError: err.message });
   }
-
-  return res.status(200).json({ success: true });
 }

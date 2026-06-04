@@ -508,7 +508,19 @@
       gap: 0.5rem;
     }
     .notify-panel.has-steps.is-open {
-      max-height: 150px;
+      max-height: 175px;
+    }
+
+    .notify-profile-error {
+      font-size: 0.72rem;
+      color: #DC2626;
+      margin-top: -0.25rem;
+    }
+    .notify-profile-error[hidden] { display: none; }
+
+    /* Boutons profil en erreur : contour rouge discret */
+    .notify-qualify.has-error .notify-profile {
+      border-color: #FCA5A5;
     }
 
     .notify-qualify {
@@ -845,6 +857,7 @@
                 <button type="button" class="notify-profile" data-team="commerciale">🏢 Entreprise</button>
               </div>
             </div>
+            <p class="notify-profile-error" hidden>Choisissez un profil avant de continuer.</p>
             <form class="notify-form" novalidate>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
@@ -892,6 +905,7 @@
                 <button type="button" class="notify-profile" data-team="commerciale">🏢 Entreprise</button>
               </div>
             </div>
+            <p class="notify-profile-error" hidden>Choisissez un profil avant de continuer.</p>
             <form class="notify-form" novalidate>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
@@ -939,6 +953,7 @@
                 <button type="button" class="notify-profile" data-team="commerciale">🏢 Entreprise</button>
               </div>
             </div>
+            <p class="notify-profile-error" hidden>Choisissez un profil avant de continuer.</p>
             <form class="notify-form" novalidate>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
@@ -986,6 +1001,7 @@
                 <button type="button" class="notify-profile" data-team="commerciale">🏢 Entreprise</button>
               </div>
             </div>
+            <p class="notify-profile-error" hidden>Choisissez un profil avant de continuer.</p>
             <form class="notify-form" novalidate>
               <div class="notify-row">
                 <input type="email" class="notify-input" placeholder="votre@email.fr" autocomplete="email" />
@@ -1068,10 +1084,11 @@
 
     /* === Notify avec qualification (has-steps) === */
     document.querySelectorAll('.notify-panel.has-steps').forEach(function (panel) {
-      var qualify   = panel.querySelector('.notify-qualify');
-      var form      = panel.querySelector('.notify-form');
-      var successEl = panel.querySelector('.notify-success');
-      var errorEl   = form.querySelector('.notify-error');
+      var qualify      = panel.querySelector('.notify-qualify');
+      var form         = panel.querySelector('.notify-form');
+      var successEl    = panel.querySelector('.notify-success');
+      var errorEl      = form.querySelector('.notify-error');
+      var profileError = panel.querySelector('.notify-profile-error');
       var selectedTeam = '';
 
       /* Toggle visuel sur les boutons profil */
@@ -1080,12 +1097,26 @@
           panel.querySelectorAll('.notify-profile').forEach(function (b) { b.classList.remove('is-selected'); });
           btn.classList.add('is-selected');
           selectedTeam = btn.dataset.team;
+          /* Efface l'erreur profil dès qu'un profil est sélectionné */
+          if (profileError) profileError.hidden = true;
+          qualify.classList.remove('has-error');
         });
       });
 
       /* Soumission */
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+
+        /* Validation profil */
+        if (!selectedTeam) {
+          if (profileError) profileError.hidden = false;
+          qualify.classList.add('has-error');
+          return;
+        }
+        if (profileError) profileError.hidden = true;
+        qualify.classList.remove('has-error');
+
+        /* Validation email */
         var email = form.querySelector('.notify-input').value.trim();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
           errorEl.hidden = false;

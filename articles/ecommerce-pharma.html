@@ -695,22 +695,19 @@
 
   /* ---- Nav stepper ---- */
   .cs-article-nav {
-    display: flex; align-items: flex-start; gap: 0;
-    flex-shrink: 0;
+    display: flex; align-items: center; gap: 0; flex-shrink: 0;
   }
   .cs-article-nav__link {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
-    text-decoration: none; min-width: 52px;
-    transition: opacity 0.2s;
+    text-decoration: none; min-width: 60px; min-height: 44px; padding: 6px 4px; justify-content: center; transition: opacity 0.2s;
   }
   .cs-article-nav__dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    border: 1.5px solid #D1D5DB; background: #fff;
+    width: 10px; height: 10px; border-radius: 50%; border: 2px solid #D1D5DB; background: #fff;
     display: block; flex-shrink: 0;
     transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
   }
   .cs-article-nav__label {
-    font-size: 0.6rem; font-weight: 500; color: #9CA3AF;
+    font-size: 0.65rem; font-weight: 500; color: #9CA3AF;
     white-space: nowrap; transition: color 0.2s;
     text-align: center;
   }
@@ -736,10 +733,10 @@
     .cs-article-nav {
       justify-content: center;
     }
-    .cs-article-nav__link { min-width: 0; }
-    .cs-article-nav__label { display: block; font-size: 0.58rem; }
-    .cs-article-nav__dot { width: 7px; height: 7px; }
-    .cs-article-nav__line { width: 16px; margin-top: 2px; }
+    .cs-article-nav__link { min-width: 44px; min-height: 44px; }
+    .cs-article-nav__label { display: block; font-size: 0.62rem; }
+    .cs-article-nav__dot { width: 10px; height: 10px; }
+    .cs-article-nav__line { width: 18px; }
   }
 
   /* ---- Barre de progression (dans la sticky bar) ---- */

@@ -70,23 +70,22 @@
 
   /* Breadcrumb � overlay top-left, align� sur la grille */
   .cs-hero__breadcrumb {
-    position: absolute;
-    top: 1.5rem;
-    left: max(1.5rem, calc(50% - 556px));
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.55);
-    z-index: 2;
+    position: absolute; top: 1.5rem; left: max(1.5rem, calc(50% - 556px));
+    display: flex; align-items: center; gap: 0.4rem; flex-wrap: nowrap;
+    font-size: 0.78rem; color: rgba(255,255,255,0.5); z-index: 2;
+    max-width: calc(100% - 3rem); overflow: hidden;
   }
   .cs-hero__breadcrumb a {
-    color: rgba(255,255,255,0.8);
-    font-weight: 500;
-    transition: color 0.2s;
+    color: rgba(255,255,255,0.75); font-weight: 500;
+    text-decoration: none; transition: color 0.2s;
+    white-space: nowrap; flex-shrink: 0;
   }
   .cs-hero__breadcrumb a:hover { color: #fff; }
-  .cs-hero__breadcrumb__sep { color: rgba(255,255,255,0.3); }
+  .cs-hero__breadcrumb__sep { color: rgba(255,255,255,0.25); flex-shrink: 0; }
+  .cs-hero__breadcrumb span:last-child {
+    white-space: nowrap; overflow: hidden;
+    text-overflow: ellipsis; min-width: 0;
+  }
 
   /* Barre de tags � sticky, toujours visible au scroll */
   .cs-tags-bar {

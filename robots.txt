@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wivoo-showcase-one.vercel.app/sitemap.xml

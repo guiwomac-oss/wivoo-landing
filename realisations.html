@@ -1125,26 +1125,49 @@
         errorEl.hidden = true;
 
         /* Affiche le succès immédiatement */
-        form.hidden = true;
-        qualify.style.display = 'none';
-        successEl.hidden = false;
-        var badge = panel.closest('.case-card').querySelector('.case-card__coming');
-        badge.textContent = '✓ Notifié';
-        badge.disabled = true;
-        badge.style.background = 'rgba(4,184,78,0.88)';
+        var cardTitle = panel.closest('.case-card').querySelector('.case-card__title');
+        var titleText = cardTitle ? cardTitle.textContent.trim() : '';
+        markNotified(panel.closest('.case-card'), titleText);
+
+        /* Persiste l'inscription dans localStorage */
+        try { localStorage.setItem('wivoo_notify_' + titleText.substring(0, 60), '1'); } catch(e) {}
 
         /* Envoie à Brevo en arrière-plan */
-        var cardTitle = panel.closest('.case-card').querySelector('.case-card__title');
         fetch('/api/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: email,
-            profile: selectedTeam,
-            cardTitle: cardTitle ? cardTitle.textContent.trim() : ''
-          })
+          body: JSON.stringify({ email: email, profile: selectedTeam, cardTitle: titleText })
         }).catch(function (err) { console.error('[Subscribe]', err); });
       });
+    });
+
+    /* Marque une card comme "déjà notifiée" */
+    function markNotified(card, titleText) {
+      var panel   = card.querySelector('.notify-panel');
+      var badge   = card.querySelector('.case-card__coming');
+      var form    = panel ? panel.querySelector('.notify-form') : null;
+      var qualify = panel ? panel.querySelector('.notify-qualify') : null;
+      var success = panel ? panel.querySelector('.notify-success') : null;
+      if (form)    form.hidden = true;
+      if (qualify) qualify.style.display = 'none';
+      if (success) success.hidden = false;
+      if (panel)   panel.classList.remove('is-open');
+      if (badge) {
+        badge.textContent = '✓ Notifié';
+        badge.disabled = true;
+        badge.style.background = 'rgba(4,184,78,0.88)';
+        badge.style.cursor = 'default';
+      }
+    }
+
+    /* Restaure l'état au chargement depuis localStorage */
+    document.querySelectorAll('.case-card').forEach(function (card) {
+      var titleEl = card.querySelector('.case-card__title');
+      if (!titleEl) return;
+      var key = 'wivoo_notify_' + titleEl.textContent.trim().substring(0, 60);
+      try {
+        if (localStorage.getItem(key)) markNotified(card, titleEl.textContent.trim());
+      } catch(e) {}
     });
 
   })();
